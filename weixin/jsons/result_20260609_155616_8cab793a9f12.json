@@ -1,0 +1,522 @@
+{
+  "platform": "weixin",
+  "search_keyword": "我修仙归来把众神训成了小学生",
+  "capture_time": "2026-06-09T15:52:27+08:00",
+  "capture_timestamp": "2026-06-09T15:52:27+08:00",
+  "candidate": {
+    "keyword": "我修仙归来把众神训成了小学生",
+    "hit_text": "video_1",
+    "title_text": "video_1",
+    "author_name": "",
+    "publish_time": "",
+    "fingerprint": "8cab793a9f12b355c1c26ebeede1a7e5",
+    "score": 1,
+    "click_x": 0,
+    "click_y": 0
+  },
+  "video_info": {
+    "blogger_name": "菊子21261",
+    "video_channel_id": "sph3HDgpgFMeOZj",
+    "video_channel_id_raw": "sph3HDgpgFMeOZj",
+    "video_channel_id_needs_review": true,
+    "video_channel_id_ambiguous_positions": [
+      {
+        "index": 12,
+        "char": "O"
+      }
+    ],
+    "video_link": "https://weixin.qq.com/sph/ACnqSgFBJR",
+    "publish_time": "",
+    "like_count": "7",
+    "comment_count": "",
+    "share_count": "",
+    "raw_ocr": [
+      {
+        "text": "10.0",
+        "x": 338,
+        "y": 9,
+        "w": 87,
+        "h": 18
+      },
+      {
+        "text": "Xv: 0.050Yv: 0.0",
+        "x": 587,
+        "y": 22,
+        "w": 277,
+        "h": 48
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 840,
+        "y": 42,
+        "w": 106,
+        "h": 48
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 1019,
+        "y": 42,
+        "w": 120,
+        "h": 45
+      },
+      {
+        "text": "我修仙归来，把众神训成了小学生",
+        "x": 540,
+        "y": 177,
+        "w": 949,
+        "h": 175
+      },
+      {
+        "text": "柴甲超萝",
+        "x": 542,
+        "y": 828,
+        "w": 322,
+        "h": 647
+      },
+      {
+        "text": "前辈应当找个僻静的地",
+        "x": 540,
+        "y": 1467,
+        "w": 1061,
+        "h": 144
+      },
+      {
+        "text": "方",
+        "x": 543,
+        "y": 1577,
+        "w": 119,
+        "h": 119
+      },
+      {
+        "text": "15:31",
+        "x": 948,
+        "y": 1558,
+        "w": 112,
+        "h": 53
+      },
+      {
+        "text": "免费剧集：一笔定..全56集",
+        "x": 382,
+        "y": 1743,
+        "w": 558,
+        "h": 58
+      },
+      {
+        "text": "可能含有AI生成内容",
+        "x": 224,
+        "y": 1885,
+        "w": 437,
+        "h": 51
+      },
+      {
+        "text": "点击左下角免费剧集光片花下务着全集#这个",
+        "x": 540,
+        "y": 2010,
+        "w": 1080,
+        "h": 66
+      },
+      {
+        "text": "结局太爽了#影视综艺",
+        "x": 245,
+        "y": 2081,
+        "w": 491,
+        "h": 58
+      },
+      {
+        "text": "CRVideoMatev1.9.2.5:2026-05-1115:3",
+        "x": 649,
+        "y": 2130,
+        "w": 860,
+        "h": 42
+      },
+      {
+        "text": "菊子21261",
+        "x": 268,
+        "y": 2233,
+        "w": 174,
+        "h": 38
+      },
+      {
+        "text": "+关注",
+        "x": 454,
+        "y": 2230,
+        "w": 113,
+        "h": 44
+      },
+      {
+        "text": "7",
+        "x": 895,
+        "y": 2272,
+        "w": 34,
+        "h": 39
+      }
+    ]
+  },
+  "profile_info": {
+    "name": "菊子21261",
+    "account": "sph3HDgpgFMeOZj",
+    "raw_ocr": [
+      {
+        "text": "qX:1.0",
+        "x": 189,
+        "y": 8,
+        "w": 79,
+        "h": 17
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 349,
+        "y": 10,
+        "w": 89,
+        "h": 20
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 524,
+        "y": 14,
+        "w": 133,
+        "h": 30
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 668,
+        "y": 18,
+        "w": 96,
+        "h": 31
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 824,
+        "y": 20,
+        "w": 93,
+        "h": 34
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 994,
+        "y": 19,
+        "w": 110,
+        "h": 39
+      },
+      {
+        "text": "你们去斗姆宫找大师姐",
+        "x": 541,
+        "y": 392,
+        "w": 397,
+        "h": 48
+      },
+      {
+        "text": "基础信息",
+        "x": 157,
+        "y": 688,
+        "w": 218,
+        "h": 73
+      },
+      {
+        "text": "性别",
+        "x": 105,
+        "y": 808,
+        "w": 118,
+        "h": 71
+      },
+      {
+        "text": "女",
+        "x": 439,
+        "y": 813,
+        "w": 68,
+        "h": 72
+      },
+      {
+        "text": "IP归属地",
+        "x": 149,
+        "y": 932,
+        "w": 206,
+        "h": 66
+      },
+      {
+        "text": "广东",
+        "x": 467,
+        "y": 937,
+        "w": 120,
+        "h": 70
+      },
+      {
+        "text": "资料所在地",
+        "x": 179,
+        "y": 1052,
+        "w": 269,
+        "h": 69
+      },
+      {
+        "text": "四川成都",
+        "x": 532,
+        "y": 1059,
+        "w": 249,
+        "h": 74
+      },
+      {
+        "text": "视频号ID",
+        "x": 148,
+        "y": 1173,
+        "w": 218,
+        "h": 73
+      },
+      {
+        "text": "sph3HDgpgFMeOZj",
+        "x": 664,
+        "y": 1183,
+        "w": 509,
+        "h": 71
+      },
+      {
+        "text": "0",
+        "x": 537,
+        "y": 2125,
+        "w": 6,
+        "h": 5
+      }
+    ]
+  },
+  "traffic_info": {
+    "has_traffic_marker": true,
+    "marker_text": "免费剧集：一笔定..",
+    "target_blogger_name": "悠米悠米短剧",
+    "target_video_channel_id": "sph5uzE8qNReluu",
+    "target_video_channel_id_raw": "sph5uzE8qNReluu",
+    "target_video_channel_id_needs_review": true,
+    "target_video_channel_id_ambiguous_positions": [
+      {
+        "index": 12,
+        "char": "l"
+      }
+    ],
+    "company_full_name": "惠州市云尘传媒有限公",
+    "company_verified_at": "2026年4月27日完成微",
+    "raw_ocr": [
+      {
+        "text": "dX: 1.0",
+        "x": 189,
+        "y": 14,
+        "w": 86,
+        "h": 29
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 350,
+        "y": 14,
+        "w": 90,
+        "h": 29
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 526,
+        "y": 18,
+        "w": 131,
+        "h": 28
+      },
+      {
+        "text": "Yv:0.0",
+        "x": 674,
+        "y": 20,
+        "w": 94,
+        "h": 28
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 827,
+        "y": 20,
+        "w": 89,
+        "h": 32
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 994,
+        "y": 17,
+        "w": 107,
+        "h": 36
+      },
+      {
+        "text": "基础信息",
+        "x": 162,
+        "y": 696,
+        "w": 220,
+        "h": 75
+      },
+      {
+        "text": "IP归属地",
+        "x": 157,
+        "y": 812,
+        "w": 206,
+        "h": 67
+      },
+      {
+        "text": "广东",
+        "x": 470,
+        "y": 814,
+        "w": 121,
+        "h": 73
+      },
+      {
+        "text": "视频号ID",
+        "x": 157,
+        "y": 932,
+        "w": 211,
+        "h": 65
+      },
+      {
+        "text": "sph5uzE8qNReluu",
+        "x": 641,
+        "y": 936,
+        "w": 451,
+        "h": 60
+      },
+      {
+        "text": "认证信息",
+        "x": 155,
+        "y": 1169,
+        "w": 218,
+        "h": 63
+      },
+      {
+        "text": "企业全称",
+        "x": 154,
+        "y": 1289,
+        "w": 220,
+        "h": 65
+      },
+      {
+        "text": "惠州市云尘传媒有限公",
+        "x": 683,
+        "y": 1298,
+        "w": 545,
+        "h": 67
+      },
+      {
+        "text": "司",
+        "x": 439,
+        "y": 1381,
+        "w": 57,
+        "h": 56
+      },
+      {
+        "text": "🌸",
+        "x": 488,
+        "y": 1381,
+        "w": 49,
+        "h": 45
+      },
+      {
+        "text": "主体类型",
+        "x": 152,
+        "y": 1493,
+        "w": 216,
+        "h": 60
+      },
+      {
+        "text": "企业",
+        "x": 463,
+        "y": 1500,
+        "w": 121,
+        "h": 71
+      },
+      {
+        "text": "认证时间",
+        "x": 148,
+        "y": 1612,
+        "w": 216,
+        "h": 62
+      },
+      {
+        "text": "2026年4月27日完成微",
+        "x": 687,
+        "y": 1626,
+        "w": 564,
+        "h": 72
+      },
+      {
+        "text": "信认证，每年腾讯及第",
+        "x": 682,
+        "y": 1716,
+        "w": 553,
+        "h": 79
+      },
+      {
+        "text": "三方审核机构都会对其",
+        "x": 683,
+        "y": 1806,
+        "w": 553,
+        "h": 72
+      },
+      {
+        "text": "资料进行审核",
+        "x": 573,
+        "y": 1893,
+        "w": 334,
+        "h": 66
+      },
+      {
+        "text": "一般经营范围",
+        "x": 196,
+        "y": 2011,
+        "w": 331,
+        "h": 81
+      },
+      {
+        "text": "一般项目：广告发布；",
+        "x": 668,
+        "y": 2019,
+        "w": 529,
+        "h": 75
+      },
+      {
+        "text": "互联网销售（除销售需",
+        "x": 682,
+        "y": 2107,
+        "w": 551,
+        "h": 68
+      },
+      {
+        "text": "要许可的商品）；玩具",
+        "x": 682,
+        "y": 2197,
+        "w": 552,
+        "h": 68
+      },
+      {
+        "text": "销售；文具用品批发；",
+        "x": 669,
+        "y": 2283,
+        "w": 529,
+        "h": 67
+      },
+      {
+        "text": "办公用品销售；办公设",
+        "x": 680,
+        "y": 2369,
+        "w": 551,
+        "h": 61
+      }
+    ]
+  },
+  "media_info": {
+    "full_recording_required": true,
+    "recording_video_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260609_155227.mp4",
+    "recording_audio_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260609_155227.wav",
+    "recording_started_at": "2026-06-09T15:52:27+08:00",
+    "recording_ended_at": "2026-06-09T15:52:41+08:00",
+    "recording_duration_seconds": 12,
+    "has_audio": true,
+    "asr_text": "",
+    "asr_json_path": ""
+  },
+  "screenshots": [
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\play_8cab793a9f12_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_marker_region_8cab793a9f12.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_8cab793a9f12_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_name_region_8cab793a9f12.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_info_8cab793a9f12_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_8cab793a9f12_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_name_region_8cab793a9f12.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_info_8cab793a9f12_0.png"
+  ]
+}

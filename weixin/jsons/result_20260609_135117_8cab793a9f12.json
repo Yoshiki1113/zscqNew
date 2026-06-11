@@ -1,0 +1,218 @@
+{
+  "platform": "weixin",
+  "search_keyword": "我修仙归来把众神训成了小学生",
+  "capture_time": "2026-06-09T13:49:57+08:00",
+  "capture_timestamp": "2026-06-09T13:49:57+08:00",
+  "candidate": {
+    "keyword": "我修仙归来把众神训成了小学生",
+    "hit_text": "video_1",
+    "title_text": "video_1",
+    "author_name": "",
+    "publish_time": "",
+    "fingerprint": "8cab793a9f12b355c1c26ebeede1a7e5",
+    "score": 1,
+    "click_x": 0,
+    "click_y": 0
+  },
+  "video_info": {
+    "blogger_name": "来财第六居",
+    "video_channel_id": "",
+    "video_channel_id_raw": "",
+    "video_channel_id_needs_review": false,
+    "video_channel_id_ambiguous_positions": [],
+    "video_link": "https://weixin.qq.com/sph/AlZ9EgrXvU",
+    "publish_time": "",
+    "like_count": "33",
+    "comment_count": "40",
+    "share_count": "35",
+    "raw_ocr": [
+      {
+        "text": "13:50",
+        "x": 84,
+        "y": 56,
+        "w": 115,
+        "h": 37
+      },
+      {
+        "text": "目 5G+  0100%",
+        "x": 869,
+        "y": 55,
+        "w": 384,
+        "h": 50
+      },
+      {
+        "text": "35:53",
+        "x": 267,
+        "y": 57,
+        "w": 159,
+        "h": 35
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 47,
+        "y": 130,
+        "w": 94,
+        "h": 36
+      },
+      {
+        "text": "dx: 1.0",
+        "x": 195,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 353,
+        "y": 132,
+        "w": 99,
+        "h": 35
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 523,
+        "y": 131,
+        "w": 130,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 648,
+        "y": 131,
+        "w": 115,
+        "h": 27
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 817,
+        "y": 131,
+        "w": 92,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 973,
+        "y": 131,
+        "w": 104,
+        "h": 27
+      },
+      {
+        "text": "A",
+        "x": 1043,
+        "y": 325,
+        "w": 36,
+        "h": 34
+      },
+      {
+        "text": "0:",
+        "x": 906,
+        "y": 1590,
+        "w": 346,
+        "h": 70
+      },
+      {
+        "text": "免费剧集：凤冠无主",
+        "x": 336,
+        "y": 1763,
+        "w": 364,
+        "h": 43
+      },
+      {
+        "text": "全28集",
+        "x": 593,
+        "y": 1765,
+        "w": 120,
+        "h": 34
+      },
+      {
+        "text": "可能含有AI生成内容",
+        "x": 260,
+        "y": 1903,
+        "w": 381,
+        "h": 50
+      },
+      {
+        "text": "下角免费看全集",
+        "x": 313,
+        "y": 2026,
+        "w": 305,
+        "h": 58
+      },
+      {
+        "text": "来财第六居",
+        "x": 287,
+        "y": 2179,
+        "w": 174,
+        "h": 42
+      },
+      {
+        "text": "+关注",
+        "x": 460,
+        "y": 2178,
+        "w": 101,
+        "h": 47
+      },
+      {
+        "text": "特运德鲜",
+        "x": 133,
+        "y": 2205,
+        "w": 65,
+        "h": 26
+      },
+      {
+        "text": "33",
+        "x": 594,
+        "y": 2225,
+        "w": 51,
+        "h": 40
+      },
+      {
+        "text": "40",
+        "x": 729,
+        "y": 2225,
+        "w": 51,
+        "h": 34
+      },
+      {
+        "text": "35",
+        "x": 863,
+        "y": 2225,
+        "w": 48,
+        "h": 40
+      }
+    ]
+  },
+  "profile_info": {
+    "name": "",
+    "account": "",
+    "raw_ocr": []
+  },
+  "traffic_info": {
+    "has_traffic_marker": false,
+    "marker_text": "",
+    "target_blogger_name": "",
+    "target_video_channel_id": "",
+    "target_video_channel_id_raw": "",
+    "target_video_channel_id_needs_review": false,
+    "target_video_channel_id_ambiguous_positions": [],
+    "company_full_name": "",
+    "company_verified_at": "",
+    "raw_ocr": []
+  },
+  "media_info": {
+    "full_recording_required": true,
+    "recording_video_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260609_134957.mp4",
+    "recording_audio_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260609_134957.wav",
+    "recording_started_at": "2026-06-09T13:49:57+08:00",
+    "recording_ended_at": "2026-06-09T13:50:10+08:00",
+    "recording_duration_seconds": 12,
+    "has_audio": true,
+    "asr_text": "",
+    "asr_json_path": ""
+  },
+  "screenshots": [
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\play_8cab793a9f12_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_marker_region_8cab793a9f12.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_info_8cab793a9f12_0.png"
+  ]
+}

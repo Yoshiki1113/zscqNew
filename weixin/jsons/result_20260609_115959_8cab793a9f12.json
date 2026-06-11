@@ -1,0 +1,217 @@
+{
+  "platform": "weixin",
+  "search_keyword": "我修仙归来把众神训成了小学生",
+  "capture_time": "2026-06-09T11:58:59+08:00",
+  "capture_timestamp": "2026-06-09T11:58:59+08:00",
+  "candidate": {
+    "keyword": "我修仙归来把众神训成了小学生",
+    "hit_text": "video_1",
+    "title_text": "video_1",
+    "author_name": "",
+    "publish_time": "",
+    "fingerprint": "8cab793a9f12b355c1c26ebeede1a7e5",
+    "score": 1,
+    "click_x": 0,
+    "click_y": 0
+  },
+  "video_info": {
+    "blogger_name": "菊子21261",
+    "video_channel_id": "",
+    "video_channel_id_raw": "",
+    "video_channel_id_needs_review": false,
+    "video_channel_id_ambiguous_positions": [],
+    "video_link": "",
+    "publish_time": "",
+    "like_count": "12",
+    "comment_count": "8",
+    "share_count": "13",
+    "raw_ocr": [
+      {
+        "text": "热门",
+        "x": 541,
+        "y": 30,
+        "w": 70,
+        "h": 40
+      },
+      {
+        "text": "05:48",
+        "x": 271,
+        "y": 55,
+        "w": 177,
+        "h": 50
+      },
+      {
+        "text": "目 5G+ ①26%",
+        "x": 877,
+        "y": 53,
+        "w": 361,
+        "h": 50
+      },
+      {
+        "text": "11:31",
+        "x": 82,
+        "y": 56,
+        "w": 116,
+        "h": 37
+      },
+      {
+        "text": "短剧",
+        "x": 540,
+        "y": 65,
+        "w": 72,
+        "h": 40
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 43,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dX:1.00园dY:0.0剧xv:0.0501Y:0.0更",
+        "x": 452,
+        "y": 130,
+        "w": 596,
+        "h": 36
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 817,
+        "y": 131,
+        "w": 92,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 971,
+        "y": 131,
+        "w": 107,
+        "h": 27
+      },
+      {
+        "text": "-0",
+        "x": 182,
+        "y": 193,
+        "w": 46,
+        "h": 33
+      },
+      {
+        "text": "我修仙归来，把众神训成了小学生一晴天",
+        "x": 540,
+        "y": 252,
+        "w": 602,
+        "h": 35
+      },
+      {
+        "text": "污了贤尊的真身呢",
+        "x": 532,
+        "y": 1550,
+        "w": 797,
+        "h": 102
+      },
+      {
+        "text": "h",
+        "x": 987,
+        "y": 1534,
+        "w": 31,
+        "h": 18
+      },
+      {
+        "text": "免费剧集：一笔定..．全56集",
+        "x": 399,
+        "y": 1697,
+        "w": 494,
+        "h": 50
+      },
+      {
+        "text": "可能含有AI生成内容",
+        "x": 258,
+        "y": 1833,
+        "w": 372,
+        "h": 43
+      },
+      {
+        "text": "下角熏下角[免费剧集】，不花一分钱看全集#这个",
+        "x": 514,
+        "y": 1958,
+        "w": 1030,
+        "h": 83
+      },
+      {
+        "text": "结局太爽了#影视综艺",
+        "x": 266,
+        "y": 2027,
+        "w": 437,
+        "h": 50
+      },
+      {
+        "text": "菊子21261",
+        "x": 282,
+        "y": 2179,
+        "w": 164,
+        "h": 42
+      },
+      {
+        "text": "+关注",
+        "x": 453,
+        "y": 2178,
+        "w": 101,
+        "h": 47
+      },
+      {
+        "text": "12",
+        "x": 594,
+        "y": 2223,
+        "w": 27,
+        "h": 23
+      },
+      {
+        "text": "8",
+        "x": 728,
+        "y": 2223,
+        "w": 20,
+        "h": 23
+      },
+      {
+        "text": "13",
+        "x": 863,
+        "y": 2223,
+        "w": 35,
+        "h": 31
+      }
+    ]
+  },
+  "profile_info": {
+    "name": "",
+    "account": "",
+    "raw_ocr": []
+  },
+  "traffic_info": {
+    "has_traffic_marker": false,
+    "marker_text": "",
+    "target_blogger_name": "",
+    "target_video_channel_id": "",
+    "target_video_channel_id_raw": "",
+    "target_video_channel_id_needs_review": false,
+    "target_video_channel_id_ambiguous_positions": [],
+    "company_full_name": "",
+    "company_verified_at": "",
+    "raw_ocr": []
+  },
+  "media_info": {
+    "full_recording_required": true,
+    "recording_video_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260609_115859.mp4",
+    "recording_audio_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260609_115859.wav",
+    "recording_started_at": "2026-06-09T11:58:59+08:00",
+    "recording_ended_at": "2026-06-09T11:59:12+08:00",
+    "recording_duration_seconds": 12,
+    "has_audio": true,
+    "asr_text": "",
+    "asr_json_path": ""
+  },
+  "screenshots": [
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\play_8cab793a9f12_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_info_8cab793a9f12_0.png"
+  ]
+}

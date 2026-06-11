@@ -1,0 +1,63 @@
+{
+  "platform": "weixin",
+  "search_keyword": "我修仙归来把众神训成了小学生",
+  "capture_time": "2026-06-09T13:39:48+08:00",
+  "capture_timestamp": "2026-06-09T13:39:48+08:00",
+  "candidate": {
+    "keyword": "我修仙归来把众神训成了小学生",
+    "hit_text": "video_1",
+    "title_text": "video_1",
+    "author_name": "",
+    "publish_time": "",
+    "fingerprint": "8cab793a9f12b355c1c26ebeede1a7e5",
+    "score": 1,
+    "click_x": 0,
+    "click_y": 0
+  },
+  "video_info": {
+    "blogger_name": "",
+    "video_channel_id": "",
+    "video_channel_id_raw": "",
+    "video_channel_id_needs_review": false,
+    "video_channel_id_ambiguous_positions": [],
+    "video_link": "https://weixin.qq.com/sph/AP0JqpnP4L",
+    "publish_time": "",
+    "like_count": "",
+    "comment_count": "",
+    "share_count": "",
+    "raw_ocr": []
+  },
+  "profile_info": {
+    "name": "",
+    "account": "",
+    "raw_ocr": []
+  },
+  "traffic_info": {
+    "has_traffic_marker": false,
+    "marker_text": "",
+    "target_blogger_name": "",
+    "target_video_channel_id": "",
+    "target_video_channel_id_raw": "",
+    "target_video_channel_id_needs_review": false,
+    "target_video_channel_id_ambiguous_positions": [],
+    "company_full_name": "",
+    "company_verified_at": "",
+    "raw_ocr": []
+  },
+  "media_info": {
+    "full_recording_required": true,
+    "recording_video_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260609_133948.mp4",
+    "recording_audio_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260609_133948.wav",
+    "recording_started_at": "2026-06-09T13:39:48+08:00",
+    "recording_ended_at": "2026-06-09T13:40:01+08:00",
+    "recording_duration_seconds": 12,
+    "has_audio": true,
+    "asr_text": "",
+    "asr_json_path": ""
+  },
+  "screenshots": [
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\play_8cab793a9f12_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_marker_region_8cab793a9f12.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_info_8cab793a9f12_0.png"
+  ]
+}

@@ -1,0 +1,232 @@
+{
+  "platform": "weixin",
+  "search_keyword": "我修仙归来把众神训成了小学生",
+  "capture_time": "2026-06-09T13:58:25+08:00",
+  "capture_timestamp": "2026-06-09T13:58:25+08:00",
+  "candidate": {
+    "keyword": "我修仙归来把众神训成了小学生",
+    "hit_text": "video_1",
+    "title_text": "video_1",
+    "author_name": "",
+    "publish_time": "",
+    "fingerprint": "8cab793a9f12b355c1c26ebeede1a7e5",
+    "score": 1,
+    "click_x": 0,
+    "click_y": 0
+  },
+  "video_info": {
+    "blogger_name": "来财第六居",
+    "video_channel_id": "",
+    "video_channel_id_raw": "",
+    "video_channel_id_needs_review": false,
+    "video_channel_id_ambiguous_positions": [],
+    "video_link": "https://weixin.qq.com/sph/AmDySJY90B",
+    "publish_time": "",
+    "like_count": "33",
+    "comment_count": "40",
+    "share_count": "35",
+    "raw_ocr": [
+      {
+        "text": "13:58",
+        "x": 84,
+        "y": 56,
+        "w": 115,
+        "h": 37
+      },
+      {
+        "text": "44:22",
+        "x": 270,
+        "y": 55,
+        "w": 174,
+        "h": 50
+      },
+      {
+        "text": "目 5G+  0100%",
+        "x": 869,
+        "y": 55,
+        "w": 384,
+        "h": 50
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 47,
+        "y": 130,
+        "w": 94,
+        "h": 36
+      },
+      {
+        "text": "dX: 1.0",
+        "x": 194,
+        "y": 130,
+        "w": 90,
+        "h": 36
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 353,
+        "y": 131,
+        "w": 94,
+        "h": 27
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 523,
+        "y": 131,
+        "w": 130,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 650,
+        "y": 131,
+        "w": 111,
+        "h": 27
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 819,
+        "y": 131,
+        "w": 91,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 973,
+        "y": 131,
+        "w": 104,
+        "h": 27
+      },
+      {
+        "text": "A",
+        "x": 1041,
+        "y": 326,
+        "w": 29,
+        "h": 23
+      },
+      {
+        "text": "那道人的过去与未来",
+        "x": 539,
+        "y": 1475,
+        "w": 764,
+        "h": 80
+      },
+      {
+        "text": "14:06/60弹",
+        "x": 880,
+        "y": 1594,
+        "w": 290,
+        "h": 52
+      },
+      {
+        "text": "免费剧集：凤冠无主",
+        "x": 341,
+        "y": 1763,
+        "w": 374,
+        "h": 43
+      },
+      {
+        "text": "全28集",
+        "x": 581,
+        "y": 1765,
+        "w": 140,
+        "h": 34
+      },
+      {
+        "text": "可能含有AI生成内容",
+        "x": 259,
+        "y": 1903,
+        "w": 378,
+        "h": 50
+      },
+      {
+        "text": "下角免费看全集",
+        "x": 311,
+        "y": 2027,
+        "w": 304,
+        "h": 50
+      },
+      {
+        "text": "斤",
+        "x": 68,
+        "y": 2026,
+        "w": 27,
+        "h": 23
+      },
+      {
+        "text": "来财第六居",
+        "x": 287,
+        "y": 2179,
+        "w": 174,
+        "h": 42
+      },
+      {
+        "text": "+关注",
+        "x": 461,
+        "y": 2178,
+        "w": 103,
+        "h": 47
+      },
+      {
+        "text": "好运像鲜",
+        "x": 136,
+        "y": 2206,
+        "w": 60,
+        "h": 23
+      },
+      {
+        "text": "33",
+        "x": 594,
+        "y": 2224,
+        "w": 46,
+        "h": 32
+      },
+      {
+        "text": "40",
+        "x": 729,
+        "y": 2225,
+        "w": 46,
+        "h": 30
+      },
+      {
+        "text": "35",
+        "x": 863,
+        "y": 2225,
+        "w": 48,
+        "h": 40
+      }
+    ]
+  },
+  "profile_info": {
+    "name": "",
+    "account": "",
+    "raw_ocr": []
+  },
+  "traffic_info": {
+    "has_traffic_marker": false,
+    "marker_text": "",
+    "target_blogger_name": "",
+    "target_video_channel_id": "",
+    "target_video_channel_id_raw": "",
+    "target_video_channel_id_needs_review": false,
+    "target_video_channel_id_ambiguous_positions": [],
+    "company_full_name": "",
+    "company_verified_at": "",
+    "raw_ocr": []
+  },
+  "media_info": {
+    "full_recording_required": true,
+    "recording_video_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260609_135825.mp4",
+    "recording_audio_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260609_135825.wav",
+    "recording_started_at": "2026-06-09T13:58:25+08:00",
+    "recording_ended_at": "2026-06-09T13:58:39+08:00",
+    "recording_duration_seconds": 12,
+    "has_audio": true,
+    "asr_text": "",
+    "asr_json_path": ""
+  },
+  "screenshots": [
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\play_8cab793a9f12_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_marker_region_8cab793a9f12.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_info_8cab793a9f12_0.png"
+  ]
+}
