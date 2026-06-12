@@ -15,6 +15,7 @@ def main() -> None:
         print("Usage: python test_insert_json_to_db.py <json_path>")
         return
     json_path = sys.argv[1]
+    print(f"[db] importing json: {json_path}")
     row_id = insert_json_file(json_path)
     print(f"[db] inserted row id: {row_id}")
 

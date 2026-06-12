@@ -135,7 +135,7 @@ coordinates are defined as constants in `collector.py` (lines 20–54).
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `WEIXIN_MAX_VIDEOS` | 10 | Max videos to collect per run |
-| `WEIXIN_RECORD_SECONDS` | 90 | Duration of screen recording per video |
+| `WEIXIN_RECORD_SECONDS` | 300 (5 min) | Duration of screen recording per video |
 | `WEIXIN_VERIFY_VIDEO_PAGE` | false | Whether to OCR-verify entry to video detail page |
 | `WEIXIN_WRITE_DB` | false | Whether to insert records into MySQL |
 | `WEIXIN_DB_HOST` | localhost | MySQL host |

@@ -1,83 +1,129 @@
 """
-单步测试：在视频播放页向上滑动加载下一个视频，验证是否切换成功
-用法: python test_swipe_up.py
+Step test: swipe up on a Weixin playback page and verify whether the next video loaded.
+
+Usage:
+    python weixin/step_tests/test_swipe_up.py
 """
-import asyncio, json, re, sys
+import asyncio
+import json
+import re
+import subprocess
+import sys
+from pathlib import Path
+
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
-sys.stdout.reconfigure(encoding='utf-8')
+sys.stdout.reconfigure(encoding="utf-8")
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from main import find_adb  # noqa: E402
+
 
 PHONE_IP = "172.16.1.216"
 PHONE_PORT = 9096
 
 
-async def run_on_phone(session, code, log_sec=5):
-    r = await session.call_tool("deploy_and_run", {
-        "project_name": "zscqAndroid",
-        "code": code,
-        "log_seconds": log_sec,
-    })
-    out = {"log": "", "images": []}
-    for item in r.content:
-        if item.type == "text":
-            out["log"] += item.text + "\n"
-        elif item.type == "image":
-            out["images"].append(item.data)
-    return out
+def adb_swipe_up() -> tuple[bool, str]:
+    proc = subprocess.run(
+        [find_adb(), "shell", "input", "swipe", "540", "2100", "540", "500", "300"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
+    if proc.returncode != 0:
+        return False, proc.stderr.strip()
+    return True, proc.stdout.strip()
 
 
 async def get_ui_tree(session):
-    r = await session.call_tool("dump_ui_tree", {"mode": 0})
-    for item in r.content:
+    result = await session.call_tool("dump_ui_tree", {"mode": 0})
+    for item in result.content:
         if item.type == "text":
             return json.loads(item.text)
     return {}
 
 
-def find_visible_by_id(nodes, target_id, min_y=500, max_y=2800):
-    def walk(nlist):
-        for n in nlist:
-            nid = n.get("id", "") or ""
-            cy = n.get("center_y")
-            if target_id in nid and cy is not None and min_y <= cy <= max_y:
-                return n
-            childs = n.get("childs", [])
-            if childs:
-                r = walk(childs)
-                if r:
-                    return r
-        return None
-    return walk(nodes)
+def tool_call_succeeded(result) -> bool:
+    texts = [item.text for item in result.content if item.type == "text"]
+    merged = "\n".join(texts).lower()
+    if not merged.strip():
+        return False
+    if any(token in merged for token in ("fail", "error", "失败", "错误", "未连接")):
+        return False
+    return any(token in merged for token in ("success", "connected", "成功", "已连接", "本地端口"))
 
 
 async def connect_device_auto(session):
-    print(f"[连接] 尝试直连 {PHONE_IP}:{PHONE_PORT} ...")
-    r = await session.call_tool("connect_device", {
-        "ip": PHONE_IP, "port": PHONE_PORT, "connection_mode": "LocalIP",
-    })
-    ok = False
-    for item in r.content:
-        if item.type == "text":
-            if "失败" not in item.text and "fail" not in item.text.lower():
-                ok = True
-    if ok:
-        print("[连接] 直连成功")
+    print(f"[connect] try direct LocalIP {PHONE_IP}:{PHONE_PORT} ...")
+    result = await session.call_tool(
+        "connect_device",
+        {"ip": PHONE_IP, "port": PHONE_PORT, "connection_mode": "LocalIP"},
+    )
+    if tool_call_succeeded(result):
+        print("[connect] direct LocalIP connected")
         return True
-    print("[连接] 直连失败，开始扫描设备...")
-    r = await session.call_tool("scan_devices", {"port": PHONE_PORT})
-    for item in r.content:
-        if item.type == "text":
-            for line in item.text.split("\n"):
-                m = re.search(r"IP:\s*([\d.]+):(\d+)", line)
-                if m:
-                    ip2, port2 = m.group(1), int(m.group(2))
-                    await session.call_tool("connect_device", {
-                        "ip": ip2, "port": port2, "connection_mode": "LocalIP",
-                    })
-                    print(f"[连接] 扫描发现设备 {ip2}:{port2}")
-                    return True
+
+    print("[connect] direct LocalIP failed, scanning devices ...")
+    result = await session.call_tool("scan_devices", {"port": PHONE_PORT})
+    for item in result.content:
+        if item.type != "text":
+            continue
+        for line in item.text.splitlines():
+            if "USB(ADB)" in line:
+                prefix = line.split("USB(ADB)", 1)[0]
+                serial_match = re.search(r":\s*([A-Za-z0-9._:-]+)\s*$", prefix)
+                if serial_match:
+                    serial = serial_match.group(1)
+                    print(f"[connect] try USB ADB serial {serial} ...")
+                    adb_result = await session.call_tool(
+                        "connect_device",
+                        {"ip": serial, "connection_mode": "ADB"},
+                    )
+                    if tool_call_succeeded(adb_result):
+                        print(f"[connect] USB ADB connected: {serial}")
+                        return True
+
+            lan_match = re.search(r"IP:\s*([\d.]+):(\d+)", line)
+            if not lan_match:
+                continue
+            ip2, port2 = lan_match.group(1), int(lan_match.group(2))
+            print(f"[connect] try scanned LocalIP {ip2}:{port2} ...")
+            lan_result = await session.call_tool(
+                "connect_device",
+                {"ip": ip2, "port": port2, "connection_mode": "LocalIP"},
+            )
+            if tool_call_succeeded(lan_result):
+                print(f"[connect] scanned LocalIP connected: {ip2}:{port2}")
+                return True
     return False
+
+
+def collect_visible_texts(ui_tree: dict) -> list[dict]:
+    views = ui_tree.get("data", {}).get("views", [])
+    visible = []
+
+    def walk(nodes):
+        for node in nodes:
+            text = (node.get("text", "") or "").strip()
+            cy = node.get("center_y")
+            if text and len(text) > 1 and cy and 300 < cy < 2800:
+                visible.append({"text": text, "y": cy, "id": node.get("id", "")})
+            walk(node.get("childs", []))
+
+    walk(views)
+    visible.sort(key=lambda item: item["y"])
+    return visible
+
+
+def top_snapshot(items: list[dict], limit: int = 12) -> list[str]:
+    return [item["text"] for item in items[:limit]]
 
 
 async def main():
@@ -85,86 +131,50 @@ async def main():
     async with stdio_client(sp) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
-            print("[MCP] 服务端已启动\n")
+            print("[MCP] server started\n")
 
             if not await connect_device_auto(session):
-                print("[✗] 未找到设备")
+                print("[x] device not connected")
                 return
 
-            # 第一步：上滑前 dump 并记录当前页面特征
             print("=" * 50)
-            print("【步骤 1】上滑前获取当前页面文本节点...")
+            print("[step 1] capture visible texts before swipe")
             print("=" * 50)
-            ui1 = await get_ui_tree(session)
-            views1 = ui1.get("data", {}).get("views", [])
+            before_items = collect_visible_texts(await get_ui_tree(session))
+            for item in before_items[:15]:
+                print(f"  y={item['y']:4d} text={item['text']!r} id={item['id']!r}")
+            before_snapshot = top_snapshot(before_items)
 
-            before_texts = []
-            def collect_before(nodes):
-                for n in nodes:
-                    t = n.get("text", "") or ""
-                    cy = n.get("center_y")
-                    if t and len(t) > 1 and cy and 300 < cy < 2800:
-                        before_texts.append({"text": t, "y": cy, "id": n.get("id", "")})
-                    collect_before(n.get("childs", []))
-            collect_before(views1)
-            before_texts.sort(key=lambda n: n["y"])
-
-            print(f"      上滑前可见文本节点（前15个）：")
-            for bt in before_texts[:15]:
-                print(f"        y={bt['y']:4d} text={bt['text']!r} id={bt['id']!r}")
-
-            before_snapshot = [bt["text"] for bt in before_texts[:10]]
-
-            # 第二步：执行上滑
             print("\n" + "=" * 50)
-            print("【步骤 2】执行上滑操作...")
+            print("[step 2] swipe up with adb")
             print("=" * 50)
-            out = await run_on_phone(session, """
-import time
-from ascript.android import action
-action.slide(600, 2200, 600, 800, 300)
-time.sleep(2.0)
-print("[OK] SWIPE_UP_DONE")
-""", log_sec=5)
-            print(f"      日志: {out['log'].strip()}")
-            print("      等待页面切换...")
-            await asyncio.sleep(2.0)
+            ok, detail = adb_swipe_up()
+            if not ok:
+                print(f"[result] adb swipe failed: {detail}")
+                return
+            print("[swipe] adb swipe sent")
+            await asyncio.sleep(2.5)
 
-            # 第三步：上滑后 dump 并对比
             print("\n" + "=" * 50)
-            print("【步骤 3】上滑后获取当前页面文本节点...")
+            print("[step 3] capture visible texts after swipe")
             print("=" * 50)
-            ui2 = await get_ui_tree(session)
-            views2 = ui2.get("data", {}).get("views", [])
+            after_items = collect_visible_texts(await get_ui_tree(session))
+            for item in after_items[:15]:
+                print(f"  y={item['y']:4d} text={item['text']!r} id={item['id']!r}")
+            after_snapshot = top_snapshot(after_items)
 
-            after_texts = []
-            def collect_after(nodes):
-                for n in nodes:
-                    t = n.get("text", "") or ""
-                    cy = n.get("center_y")
-                    if t and len(t) > 1 and cy and 300 < cy < 2800:
-                        after_texts.append({"text": t, "y": cy, "id": n.get("id", "")})
-                    collect_after(n.get("childs", []))
-            collect_after(views2)
-            after_texts.sort(key=lambda n: n["y"])
-
-            print(f"      上滑后可见文本节点（前15个）：")
-            for at in after_texts[:15]:
-                print(f"        y={at['y']:4d} text={at['text']!r} id={at['id']!r}")
-
-            after_snapshot = [at["text"] for at in after_texts[:10]]
-
-            # 对比判断
             print("\n" + "=" * 50)
-            print("【判断】上滑结果")
+            print("[judge] swipe result")
             print("=" * 50)
+            changed = [index for index, (a, b) in enumerate(zip(before_snapshot, after_snapshot)) if a != b]
             if before_snapshot == after_snapshot:
-                print("[结果] 文本完全未变化，可能未切换成功")
+                print("[result] no visible text change detected; likely still on the same video")
             else:
-                changed = [i for i, (a, b) in enumerate(zip(before_snapshot, after_snapshot)) if a != b]
-                print(f"[结果] 页面已变化！{len(changed)} 个节点文本不同，索引: {changed}")
+                print(f"[result] visible text changed at indexes: {changed}")
+                print(f"[result] before top texts: {before_snapshot[:6]}")
+                print(f"[result] after  top texts: {after_snapshot[:6]}")
 
-            print("\n[完成] 测试结束")
+            print("\n[done] swipe test finished")
 
 
 if __name__ == "__main__":

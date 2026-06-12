@@ -9,8 +9,8 @@ from datetime import datetime
 
 import cv2
 
-from main import SCREENSHOT_DIR, find_adb, run_on_phone
-from media_capture import capture_video, extract_audio, probe_audio
+from main import SCREENSHOT_DIR, find_adb, run_on_phone, scale_point, scale_rect
+from media_capture import extract_audio, probe_audio
 from models import EvidenceRecord
 from text_quality import analyze_video_channel_id
 
@@ -78,7 +78,7 @@ def _now_iso() -> str:
     return datetime.now().astimezone().isoformat(timespec="seconds")
 
 
-async def collect_current_video(session, keyword, candidate_dict, seen, record_seconds: int = DEFAULT_RECORD_SECONDS):
+async def collect_current_video(session, keyword, candidate_dict, seen, recording_video_path: str = ""):
     """Collect one complete evidence record from the current playback page."""
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     slug = candidate_dict.get("fingerprint", ts)[:12]
@@ -91,20 +91,16 @@ async def collect_current_video(session, keyword, candidate_dict, seen, record_s
         candidate=candidate_dict,
     )
 
-    print(f"[evidence] recording current video for {record_seconds}s...")
-    record.media_info["recording_started_at"] = _now_iso()
-    video_path = await capture_video(duration=record_seconds, method="scrcpy")
-    record.media_info["recording_ended_at"] = _now_iso()
-    record.media_info["recording_duration_seconds"] = record_seconds
-    record.media_info["recording_video_path"] = str(video_path)
-
-    has_audio = probe_audio(video_path)
-    record.media_info["has_audio"] = has_audio
-    if has_audio:
-        wav_path = extract_audio(video_path)
-        if wav_path:
-            record.media_info["recording_audio_path"] = str(wav_path)
-    print(f"[evidence] recorded: {video_path} audio={has_audio}")
+    if recording_video_path:
+        video_path = recording_video_path
+        record.media_info["recording_video_path"] = str(video_path)
+        has_audio = probe_audio(video_path)
+        record.media_info["has_audio"] = has_audio
+        if has_audio:
+            wav_path = extract_audio(video_path)
+            if wav_path:
+                record.media_info["recording_audio_path"] = str(wav_path)
+        print(f"[evidence] use pre-recorded segment: {video_path} audio={has_audio}")
 
     print("[evidence] capture playback screenshot...")
     play_path = os.path.join(SCREENSHOT_DIR, f"play_{slug}_0.png")
@@ -295,15 +291,18 @@ async def copy_video_link(session, slug: str = "") -> str:
 
 
 async def open_share_sheet_to_copy_area(session) -> None:
+    share_x, share_y = scale_point(SHARE_BUTTON_X, SHARE_BUTTON_Y)
+    tray_start_x, tray_y = scale_point(SHARE_TRAY_SWIPE_START_X, SHARE_TRAY_Y)
+    tray_end_x, _ = scale_point(SHARE_TRAY_SWIPE_END_X, SHARE_TRAY_Y)
     code = f"""
 import time
 from ascript.android import action
 
-action.click({SHARE_BUTTON_X}, {SHARE_BUTTON_Y})
+action.click({share_x}, {share_y})
 time.sleep(1.2)
-action.swipe({SHARE_TRAY_SWIPE_START_X}, {SHARE_TRAY_Y}, {SHARE_TRAY_SWIPE_END_X}, {SHARE_TRAY_Y}, 350)
+action.swipe({tray_start_x}, {tray_y}, {tray_end_x}, {tray_y}, 350)
 time.sleep(0.5)
-action.swipe({SHARE_TRAY_SWIPE_START_X}, {SHARE_TRAY_Y}, {SHARE_TRAY_SWIPE_END_X}, {SHARE_TRAY_Y}, 350)
+action.swipe({tray_start_x}, {tray_y}, {tray_end_x}, {tray_y}, 350)
 time.sleep(0.8)
 print("[OK] SHARE_SHEET_READY")
 """
@@ -311,11 +310,12 @@ print("[OK] SHARE_SHEET_READY")
 
 
 async def tap_copy_link_button(session, x: int, y: int) -> None:
+    tap_x, tap_y = scale_point(x, y)
     code = f"""
 import time
 from ascript.android import action
 
-action.click({x}, {y})
+action.click({tap_x}, {tap_y})
 time.sleep(1.0)
 print("[OK] COPY_LINK_TAPPED")
 """
@@ -385,7 +385,8 @@ def extract_link_from_clipboard_text(raw_text: str) -> str:
 
 def find_copy_link_button_from_image(image_path: str, tag: str) -> tuple[int, int] | None:
     region_path = os.path.join(SCREENSHOT_DIR, f"share_copy_region_{tag}.png")
-    if not crop_image_region(image_path, region_path, 520, 1760, 1080, 2025):
+    left, top, right, bottom = scale_rect(520, 1760, 1080, 2025)
+    if not crop_image_region(image_path, region_path, left, top, right, bottom):
         return None
 
     items = local_ocr_image(region_path)
@@ -398,8 +399,8 @@ def find_copy_link_button_from_image(image_path: str, tag: str) -> tuple[int, in
             continue
         if "链接" not in text and "口令" in text:
             continue
-        x = item.get("x", 0) + 520
-        y = item.get("y", 0) + 1760
+        x = item.get("x", 0) + left
+        y = item.get("y", 0) + top
         candidates.append((abs(x - COPY_LINK_X) + abs(y - COPY_LINK_Y), x, y, text))
 
     if not candidates:
@@ -433,13 +434,19 @@ async def collect_traffic_info(session, record: EvidenceRecord, slug: str, play_
     if await capture_single_with_adb_fallback(session, traffic_page_path, f"traffic_page_{slug}"):
         record.screenshots.append(traffic_page_path)
         traffic_name_region_path = os.path.join(SCREENSHOT_DIR, f"traffic_page_name_region_{slug}.png")
-        if crop_image_region(
-            traffic_page_path,
-            traffic_name_region_path,
+        left, top, right, bottom = scale_rect(
             AUTHOR_CARD_NAME_LEFT,
             AUTHOR_CARD_NAME_TOP,
             AUTHOR_CARD_NAME_RIGHT,
             AUTHOR_CARD_NAME_BOTTOM,
+        )
+        if crop_image_region(
+            traffic_page_path,
+            traffic_name_region_path,
+            left,
+            top,
+            right,
+            bottom,
         ):
             record.screenshots.append(traffic_name_region_path)
         target_name = extract_author_name_from_card_image(traffic_page_path, traffic_name_region_path)
@@ -463,11 +470,12 @@ async def collect_traffic_info(session, record: EvidenceRecord, slug: str, play_
 
 
 async def open_author_profile_card(session) -> None:
+    avatar_x, avatar_y = scale_point(AUTHOR_AVATAR_X, AUTHOR_AVATAR_Y)
     code = f"""
 import time
 from ascript.android import action
 
-action.click({AUTHOR_AVATAR_X}, {AUTHOR_AVATAR_Y})
+action.click({avatar_x}, {avatar_y})
 time.sleep(1.6)
 print("[OK] AUTHOR_PROFILE_CARD_OPENED")
 """
@@ -476,13 +484,15 @@ print("[OK] AUTHOR_PROFILE_CARD_OPENED")
 
 
 async def open_author_more_info_from_card(session) -> None:
+    more_button_x, more_button_y = scale_point(AUTHOR_MORE_BUTTON_X, AUTHOR_MORE_BUTTON_Y)
+    more_info_x, more_info_y = scale_point(AUTHOR_MORE_INFO_X, AUTHOR_MORE_INFO_Y)
     code = f"""
 import time
 from ascript.android import action
 
-action.click({AUTHOR_MORE_BUTTON_X}, {AUTHOR_MORE_BUTTON_Y})
+action.click({more_button_x}, {more_button_y})
 time.sleep(1.2)
-action.click({AUTHOR_MORE_INFO_X}, {AUTHOR_MORE_INFO_Y})
+action.click({more_info_x}, {more_info_y})
 time.sleep(2.0)
 print("[OK] AUTHOR_MORE_INFO_OPENED")
 """
@@ -497,13 +507,19 @@ async def capture_author_profile_card(session, record: EvidenceRecord, slug: str
 
     record.screenshots.append(card_path)
     region_path = os.path.join(SCREENSHOT_DIR, f"profile_card_name_region_{slug}.png")
-    if crop_image_region(
-        card_path,
-        region_path,
+    left, top, right, bottom = scale_rect(
         AUTHOR_CARD_NAME_LEFT,
         AUTHOR_CARD_NAME_TOP,
         AUTHOR_CARD_NAME_RIGHT,
         AUTHOR_CARD_NAME_BOTTOM,
+    )
+    if crop_image_region(
+        card_path,
+        region_path,
+        left,
+        top,
+        right,
+        bottom,
     ):
         record.screenshots.append(region_path)
 
@@ -583,13 +599,19 @@ async def detect_traffic_marker(session, slug: str) -> tuple[str, str]:
         return "", ""
 
     region_path = os.path.join(SCREENSHOT_DIR, f"traffic_marker_region_{slug}.png")
-    if not crop_image_region(
-        screen_path,
-        region_path,
+    left, top, right, bottom = scale_rect(
         TRAFFIC_MARKER_LEFT,
         TRAFFIC_MARKER_TOP,
         TRAFFIC_MARKER_RIGHT,
         TRAFFIC_MARKER_BOTTOM,
+    )
+    if not crop_image_region(
+        screen_path,
+        region_path,
+        left,
+        top,
+        right,
+        bottom,
     ):
         return "", ""
 
@@ -838,13 +860,15 @@ def find_traffic_marker_text_from_texts(texts: list[str]) -> str:
 
 
 async def open_traffic_subject(session) -> None:
+    marker_x, marker_y = scale_point(TRAFFIC_MARKER_X, TRAFFIC_MARKER_Y)
+    episode_x, episode_y = scale_point(TRAFFIC_FIRST_EPISODE_X, TRAFFIC_FIRST_EPISODE_Y)
     code = f"""
 import time
 from ascript.android import action
 
-action.click({TRAFFIC_MARKER_X}, {TRAFFIC_MARKER_Y})
+action.click({marker_x}, {marker_y})
 time.sleep(1.5)
-action.click({TRAFFIC_FIRST_EPISODE_X}, {TRAFFIC_FIRST_EPISODE_Y})
+action.click({episode_x}, {episode_y})
 time.sleep(2.8)
 print("[OK] TRAFFIC_SUBJECT_OPENED")
 """
@@ -853,11 +877,12 @@ print("[OK] TRAFFIC_SUBJECT_OPENED")
 
 
 async def open_traffic_avatar_card(session) -> None:
+    avatar_x, avatar_y = scale_point(TRAFFIC_AVATAR_X, TRAFFIC_AVATAR_Y)
     code = f"""
 import time
 from ascript.android import action
 
-action.click({TRAFFIC_AVATAR_X}, {TRAFFIC_AVATAR_Y})
+action.click({avatar_x}, {avatar_y})
 time.sleep(1.8)
 print("[OK] TRAFFIC_AVATAR_CARD_OPENED")
 """
@@ -922,13 +947,15 @@ def fill_video_channel_id_from_profile(video_info: dict, profile_info: dict) -> 
 
 
 async def open_traffic_more_info_from_avatar_card(session) -> None:
+    more_button_x, more_button_y = scale_point(TRAFFIC_MORE_BUTTON_X, TRAFFIC_MORE_BUTTON_Y)
+    more_info_x, more_info_y = scale_point(TRAFFIC_MORE_INFO_X, TRAFFIC_MORE_INFO_Y)
     code = f"""
 import time
 from ascript.android import action
 
-action.click({TRAFFIC_MORE_BUTTON_X}, {TRAFFIC_MORE_BUTTON_Y})
+action.click({more_button_x}, {more_button_y})
 time.sleep(1.6)
-action.click({TRAFFIC_MORE_INFO_X}, {TRAFFIC_MORE_INFO_Y})
+action.click({more_info_x}, {more_info_y})
 time.sleep(2.0)
 print("[OK] TRAFFIC_MORE_INFO_OPENED")
 """

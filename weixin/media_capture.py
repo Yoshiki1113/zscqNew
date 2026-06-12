@@ -5,6 +5,8 @@ import base64
 import re
 import shutil
 import subprocess
+import time
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
@@ -17,6 +19,16 @@ import main
 MEDIA_DIR = Path(main.BASE_DIR) / "media"
 MEDIA_DIR.mkdir(exist_ok=True)
 DEFAULT_SCRCPY_DIR = Path(r"D:\software\scrcpy-win64-v3.3.3")
+
+
+@dataclass
+class RecordingSession:
+    method: str
+    local_path: Path
+    process: subprocess.Popen
+    started_at: str
+    device_id: str | None = None
+    remote_path: str = ""
 
 
 def find_executable(name: str) -> str | None:
@@ -231,6 +243,122 @@ def _adb_prefix(device_id: str | None = None) -> list[str]:
     if device_id:
         args.extend(["-s", device_id])
     return args
+
+
+def _resolve_single_adb_device(device_id: str | None = None) -> str | None:
+    devices = _adb_devices()
+    if device_id:
+        return device_id
+    if not devices:
+        raise RuntimeError("adb is available but no authorized device is connected")
+    if len(devices) > 1:
+        raise RuntimeError(f"multiple adb devices found; pass device_id explicitly: {devices}")
+    return devices[0]
+
+
+def start_capture_session(
+    method: str = "auto",
+    prefer_scrcpy: bool = True,
+    device_id: str | None = None,
+    bit_rate: int = 1_200_000,
+) -> RecordingSession:
+    method = method.lower()
+    if method not in {"auto", "scrcpy", "adb"}:
+        raise ValueError("method must be one of: auto, scrcpy, adb")
+
+    resolved_method = method
+    if method == "auto":
+        if prefer_scrcpy and has_command("scrcpy"):
+            resolved_method = "scrcpy"
+        elif has_command("adb"):
+            resolved_method = "adb"
+        else:
+            raise RuntimeError("no supported long-running capture method is available")
+
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    started_at = datetime.now().astimezone().isoformat(timespec="seconds")
+
+    if resolved_method == "scrcpy":
+        if not has_command("scrcpy"):
+            raise RuntimeError("scrcpy is not available on PATH")
+        local = MEDIA_DIR / f"scrcpy_{ts}.mp4"
+        executable = find_executable("scrcpy") or "scrcpy"
+        process = subprocess.Popen(
+            [
+                executable,
+                "--no-playback",
+                "--record",
+                str(local),
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        time.sleep(1.0)
+        return RecordingSession(
+            method="scrcpy",
+            local_path=local,
+            process=process,
+            started_at=started_at,
+        )
+
+    if resolved_method == "adb":
+        if not has_command("adb"):
+            raise RuntimeError("adb is not available on PATH")
+        device_id = _resolve_single_adb_device(device_id)
+        local = MEDIA_DIR / f"adb_screen_{ts}.mp4"
+        remote = f"/sdcard/zscq_screen_{ts}.mp4"
+        executable = find_executable("adb") or "adb"
+        process = subprocess.Popen(
+            _adb_prefix(device_id)
+            + [
+                "shell",
+                "screenrecord",
+                "--bit-rate",
+                str(int(bit_rate)),
+                remote,
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        time.sleep(1.0)
+        return RecordingSession(
+            method="adb",
+            local_path=local,
+            process=process,
+            started_at=started_at,
+            device_id=device_id,
+            remote_path=remote,
+        )
+
+    raise RuntimeError(f"unsupported recording method: {resolved_method}")
+
+
+def stop_capture_session(session: RecordingSession) -> Path:
+    process = session.process
+    if process.poll() is None:
+        process.terminate()
+        try:
+            process.wait(timeout=20)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=10)
+
+    if session.method == "adb":
+        prefix = _adb_prefix(session.device_id)
+        pull = run_checked(prefix + ["pull", session.remote_path, str(session.local_path)], timeout=120)
+        run_checked(prefix + ["shell", "rm", "-f", session.remote_path], timeout=15)
+        if pull.returncode != 0:
+            raise RuntimeError(f"adb pull failed: {pull.stderr[-1000:]}")
+
+    if not session.local_path.exists() or session.local_path.stat().st_size == 0:
+        raise RuntimeError(f"recording file missing or empty: {session.local_path}")
+    return session.local_path
 
 
 def capture_with_adb(duration: int = 12, device_id: str | None = None, bit_rate: int = 1_200_000) -> Path:

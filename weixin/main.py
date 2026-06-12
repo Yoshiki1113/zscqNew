@@ -20,6 +20,7 @@ import shutil
 import subprocess
 import sys
 from datetime import datetime
+from pathlib import Path
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
@@ -33,12 +34,15 @@ WECHAT_ACTIVITY = "com.tencent.mm/.ui.LauncherUI"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCREENSHOT_DIR = os.path.join(BASE_DIR, "screenshots")
 JSONS_DIR = os.path.join(BASE_DIR, "jsons")
+BASE_SCREEN_WIDTH = 1080
+BASE_SCREEN_HEIGHT = 2400
 DEFAULT_KEYWORD = "我修仙归来把众神训成了小学生"
 os.makedirs(SCREENSHOT_DIR, exist_ok=True)
 os.makedirs(JSONS_DIR, exist_ok=True)
 
 
 DEFAULT_SCRCPY_DIR = r"D:\software\scrcpy-win64-v3.3.3"
+_SCREEN_SIZE_CACHE = None
 
 
 def find_adb():
@@ -64,6 +68,74 @@ def get_phone_wlan_ip_via_adb():
         return ""
     match = re.search(r"inet\s+(\d+\.\d+\.\d+\.\d+)/", proc.stdout)
     return match.group(1) if match else ""
+
+
+def get_phone_screen_size_via_adb(force_refresh: bool = False) -> tuple[int, int]:
+    global _SCREEN_SIZE_CACHE
+    if _SCREEN_SIZE_CACHE and not force_refresh:
+        return _SCREEN_SIZE_CACHE
+
+    adb = find_adb()
+    proc = subprocess.run(
+        [adb, "shell", "wm", "size"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
+    if proc.returncode == 0:
+        match = re.search(r"Physical size:\s*(\d+)x(\d+)", proc.stdout)
+        if not match:
+            match = re.search(r"Override size:\s*(\d+)x(\d+)", proc.stdout)
+        if match:
+            _SCREEN_SIZE_CACHE = (int(match.group(1)), int(match.group(2)))
+            return _SCREEN_SIZE_CACHE
+
+    _SCREEN_SIZE_CACHE = (BASE_SCREEN_WIDTH, BASE_SCREEN_HEIGHT)
+    return _SCREEN_SIZE_CACHE
+
+
+def scale_x(x: int, width: int | None = None) -> int:
+    width = width or get_phone_screen_size_via_adb()[0]
+    return int(round(x * width / BASE_SCREEN_WIDTH))
+
+
+def scale_y(y: int, height: int | None = None) -> int:
+    height = height or get_phone_screen_size_via_adb()[1]
+    return int(round(y * height / BASE_SCREEN_HEIGHT))
+
+
+def scale_point(x: int, y: int) -> tuple[int, int]:
+    width, height = get_phone_screen_size_via_adb()
+    return scale_x(x, width), scale_y(y, height)
+
+
+def scale_rect(left: int, top: int, right: int, bottom: int) -> tuple[int, int, int, int]:
+    width, height = get_phone_screen_size_via_adb()
+    return (
+        scale_x(left, width),
+        scale_y(top, height),
+        scale_x(right, width),
+        scale_y(bottom, height),
+    )
+
+
+def now_iso() -> str:
+    return datetime.now().astimezone().isoformat(timespec="seconds")
+
+
+def iso_duration_seconds(started_at: str, ended_at: str) -> int:
+    return max(
+        1,
+        int(
+            (
+                datetime.fromisoformat(ended_at)
+                - datetime.fromisoformat(started_at)
+            ).total_seconds()
+        ),
+    )
 
 
 def env_int(name, default):
@@ -188,6 +260,74 @@ async def connect_device_auto(session):
     return False
 
 
+def _tool_call_succeeded(result) -> bool:
+    texts = [c.text for c in result.content if getattr(c, "type", "") == "text"]
+    merged = "\n".join(texts).lower()
+    if not merged.strip():
+        return False
+    failure_tokens = ("fail", "error", "失败", "错误", "未连接")
+    success_tokens = ("connected", "已连接", "success", "成功", "本地端口")
+    if any(token in merged for token in failure_tokens):
+        return False
+    return any(token in merged for token in success_tokens)
+
+
+async def connect_device_auto_v2(session):
+    print(f"[connect] try direct LocalIP {PHONE_IP}:{PHONE_PORT} ...")
+    result = await session.call_tool(
+        "connect_device",
+        {"ip": PHONE_IP, "port": PHONE_PORT, "connection_mode": "LocalIP"},
+    )
+    if _tool_call_succeeded(result):
+        print("[connect] direct LocalIP connected")
+        return True
+
+    adb_ip = get_phone_wlan_ip_via_adb()
+    if adb_ip and adb_ip != PHONE_IP:
+        print(f"[connect] try current WLAN IP from adb {adb_ip}:{PHONE_PORT} ...")
+        result = await session.call_tool(
+            "connect_device",
+            {"ip": adb_ip, "port": PHONE_PORT, "connection_mode": "LocalIP"},
+        )
+        if _tool_call_succeeded(result):
+            print(f"[connect] current WLAN IP connected: {adb_ip}:{PHONE_PORT}")
+            return True
+
+    print("[connect] LocalIP failed, scanning devices ...")
+    result = await session.call_tool("scan_devices", {"port": PHONE_PORT})
+    for item in result.content:
+        if getattr(item, "type", "") != "text":
+            continue
+        for line in item.text.splitlines():
+            if "USB(ADB)" in line:
+                prefix = line.split("USB(ADB)", 1)[0]
+                serial_match = re.search(r":\s*([A-Za-z0-9._:-]+)\s*$", prefix)
+                if serial_match:
+                    serial = serial_match.group(1)
+                    print(f"[connect] found USB ADB device, try serial {serial} ...")
+                    adb_result = await session.call_tool(
+                        "connect_device",
+                        {"ip": serial, "connection_mode": "ADB"},
+                    )
+                    if _tool_call_succeeded(adb_result):
+                        print(f"[connect] USB ADB connected: {serial}")
+                        return True
+
+            lan_match = re.search(r"IP:\s*([\d.]+):(\d+)", line)
+            if not lan_match:
+                continue
+            ip2, port2 = lan_match.group(1), int(lan_match.group(2))
+            print(f"[connect] try scanned LocalIP {ip2}:{port2} ...")
+            lan_result = await session.call_tool(
+                "connect_device",
+                {"ip": ip2, "port": port2, "connection_mode": "LocalIP"},
+            )
+            if _tool_call_succeeded(lan_result):
+                print(f"[connect] scanned LocalIP connected: {ip2}:{port2}")
+                return True
+    return False
+
+
 async def ensure_wechat_home(session):
     await run_on_phone(
         session,
@@ -204,7 +344,7 @@ print("[OK] WECHAT_LAUNCHED")
 async def navigate_to_discover(session):
     await run_on_phone(
         session,
-        """
+        f"""
 import time
 from ascript.android import action, node
 discover = node.Selector().text("发现").find()
@@ -316,17 +456,23 @@ async def go_back(session):
 
 
 async def swipe_up(session):
-    await run_on_phone(
-        session,
-        """
-import time
-from ascript.android import action
-action.swipe(540, 2000, 540, 400, 300)
-time.sleep(0.8)
-print("[OK] SWIPED")
-""",
-        log_sec=5,
+    adb = find_adb()
+    x1, y1 = scale_point(540, 2000)
+    x2, y2 = scale_point(540, 400)
+    proc = subprocess.run(
+        [adb, "shell", "input", "swipe", str(x1), str(y1), str(x2), str(y2), "300"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
     )
+    if proc.returncode != 0:
+        print(f"[swipe] adb swipe failed: {proc.stderr.strip()}")
+    else:
+        print("[swipe] adb swipe sent")
+    await asyncio.sleep(1.2)
 
 
 async def ocr_recognize(session, engine="paddle"):
@@ -533,7 +679,7 @@ async def click_first_video_result(session):
 import time
 from ascript.android import action
 # Search results page: click inside the first video card body.
-action.click(266, 964)
+action.click({scale_point(266, 964)[0]}, {scale_point(266, 964)[1]})
 time.sleep(1.8)
 print("[OK] FIRST_VIDEO_OPENED")
 """,
@@ -603,27 +749,33 @@ async def search_keyword(session, keyword):
     """Fixed-coordinate search path with slightly slower pacing for stability."""
     print(f"[search] {keyword}")
     escaped = keyword.replace("'", "\\'")
+    header_safe_x, header_safe_y = scale_point(540, 100)
+    open_search_x, open_search_y = scale_point(885, 180)
+    focus_input_x, focus_input_y = scale_point(300, 210)
+    clear_input_x, clear_input_y = scale_point(957, 1703)
+    submit_x, submit_y = scale_point(950, 215)
+    video_tab_x, video_tab_y = scale_point(302, 350)
 
     await run_on_phone(
         session,
         f"""
 import time
 from ascript.android import action
-action.click(540, 100)
+action.click({header_safe_x}, {header_safe_y})
 time.sleep(0.5)
-action.click(885, 180)
+action.click({open_search_x}, {open_search_y})
 time.sleep(1.0)
-action.click(300, 210)
+action.click({focus_input_x}, {focus_input_y})
 time.sleep(0.35)
 for _ in range(20):
-    action.click(957, 1703)
+    action.click({clear_input_x}, {clear_input_y})
     time.sleep(0.02)
 time.sleep(0.35)
 action.input('{escaped}')
 time.sleep(0.8)
-action.click(950, 215)
+action.click({submit_x}, {submit_y})
 time.sleep(2.0)
-action.click(302, 350)
+action.click({video_tab_x}, {video_tab_y})
 time.sleep(1.8)
 print("[OK] SEARCH_SUBMITTED")
 """,
@@ -709,76 +861,152 @@ if img is not None:
     return True
 
 
+def attach_recording_media(record, video_path: str, started_at: str, ended_at: str):
+    from media_capture import extract_audio, probe_audio
+
+    record.media_info["recording_video_path"] = str(video_path)
+    record.media_info["recording_started_at"] = started_at
+    record.media_info["recording_ended_at"] = ended_at
+    record.media_info["recording_duration_seconds"] = iso_duration_seconds(started_at, ended_at)
+
+    has_audio = False
+    try:
+        has_audio = probe_audio(video_path)
+    except Exception as exc:
+        print(f"[record] probe audio failed: {exc}")
+    record.media_info["has_audio"] = has_audio
+
+    if has_audio:
+        try:
+            wav_path = extract_audio(video_path)
+        except Exception as exc:
+            print(f"[record] extract audio failed: {exc}")
+        else:
+            if wav_path:
+                record.media_info["recording_audio_path"] = str(wav_path)
+
+
 async def run():
     print("=" * 60)
-    print("微信视频号监测 v2 — 视频结果直达取证")
+    print("weixin video monitor main flow")
     print("=" * 60)
 
     sp = StdioServerParameters(command="python", args=["-m", "ascript_mcp.local"])
     async with stdio_client(sp) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
-            print("[MCP] 服务端已启动")
+            print("[mcp] initialized")
 
-            if not await connect_device_auto(session):
-                print("[x] 设备未连接")
+            if not await connect_device_auto_v2(session):
+                print("[x] device not connected")
                 return
-            print("[✓] 设备已连接")
-            print("[起点] 当前从微信视频号页面开始")
+            print("[ok] device connected")
 
             keyword = DEFAULT_KEYWORD
-            ok = await search_keyword(session, keyword)
-            if not ok:
-                print("[错误] 搜索失败，无法继续")
+            if not await search_keyword(session, keyword):
+                print("[x] search failed")
                 return
 
-            from db import insert_evidence_record
-            from navigator import swipe, wait_for_video_page
             from collector import collect_current_video
-            from store import save_record, load_seen
+            from db import insert_evidence_record
+            from media_capture import start_capture_session, stop_capture_session
+            from store import load_seen, save_record
+            from navigator import wait_for_video_page
 
-            await click_first_video_result(session)
-            if env_bool("WEIXIN_VERIFY_VIDEO_PAGE", False) and not await wait_for_video_page(session, timeout=5):
-                print("[错误] 未能从搜索结果进入第一个视频")
-                return
-
-            print("[视频] 已进入第一个视频，开始视频流取证")
-            seen = load_seen()
-            duplicate_rounds = 0
-            max_duplicate_rounds = 3
+            capture_method = os.environ.get("WEIXIN_CAPTURE_METHOD", "auto").strip().lower() or "auto"
+            capture_prefer_scrcpy = env_bool("WEIXIN_PREFER_SCRCPY", True)
+            hold_seconds = env_int("WEIXIN_POST_EVIDENCE_HOLD_SECONDS", 240)
             max_videos = env_int("WEIXIN_MAX_VIDEOS", 10)
-            record_seconds = env_int("WEIXIN_RECORD_SECONDS", 90)
-            print(f"[config] max_videos={max_videos}, record_seconds={record_seconds}")
+            verify_video_page = env_bool("WEIXIN_VERIFY_VIDEO_PAGE", False)
+            write_db = env_bool("WEIXIN_WRITE_DB", False)
+            print(
+                f"[config] max_videos={max_videos}, hold_seconds={hold_seconds}, "
+                f"capture_method={capture_method}, prefer_scrcpy={capture_prefer_scrcpy}"
+            )
 
-            for index in range(1, max_videos + 1):
-                print(f"\n{'=' * 50}\n[视频] 第 {index} 条")
-                candidate = await build_current_video_candidate(session, keyword, index)
-
-                if candidate["fingerprint"] in seen:
-                    duplicate_rounds += 1
-                    print(f"[视频] 命中已采集内容，连续重复 {duplicate_rounds}/{max_duplicate_rounds}")
-                    if duplicate_rounds >= max_duplicate_rounds:
-                        print("[结束] 连续重复达到上限")
-                        break
-                else:
-                    duplicate_rounds = 0
-
-                record = await collect_current_video(
-                    session,
-                    keyword,
-                    candidate,
-                    seen,
-                    record_seconds=record_seconds,
+            segment = None
+            try:
+                segment = start_capture_session(
+                    method=capture_method,
+                    prefer_scrcpy=capture_prefer_scrcpy,
                 )
-                save_record(record)
-                if env_bool("WEIXIN_WRITE_DB", False):
-                    row_id = insert_evidence_record(record)
-                    print(f"[db] inserted row id={row_id}")
+                print(f"[record] first segment started: {segment.local_path}")
 
-                await swipe(session)
-                await asyncio.sleep(2)
+                await click_first_video_result(session)
+                if verify_video_page and not await wait_for_video_page(session, timeout=5):
+                    print("[x] first video page not confirmed")
+                    return
 
-    print("\n[完成]")
+                seen = load_seen()
+                duplicate_rounds = 0
+                max_duplicate_rounds = 3
+
+                for index in range(1, max_videos + 1):
+                    print(f"\n{'=' * 50}\n[video] index={index}")
+                    candidate = await build_current_video_candidate(session, keyword, index)
+
+                    if candidate["fingerprint"] in seen:
+                        duplicate_rounds += 1
+                        print(
+                            f"[video] duplicate fingerprint {duplicate_rounds}/{max_duplicate_rounds}: "
+                            f"{candidate['fingerprint']}"
+                        )
+                        if duplicate_rounds >= max_duplicate_rounds:
+                            print("[flow] stop after repeated duplicates")
+                            break
+                    else:
+                        duplicate_rounds = 0
+
+                    record = await collect_current_video(session, keyword, candidate, seen)
+
+                    print(f"[record] hold current video for {hold_seconds}s before stop")
+                    await asyncio.sleep(hold_seconds)
+
+                    ended_at = now_iso()
+                    video_path = stop_capture_session(segment)
+                    attach_recording_media(record, str(video_path), segment.started_at, ended_at)
+                    print(f"[record] segment saved: {video_path}")
+                    segment = None
+
+                    save_record(record)
+                    if write_db:
+                        row_id = insert_evidence_record(record)
+                        print(f"[db] inserted row id={row_id}")
+
+                    if index >= max_videos:
+                        print("[flow] reached max_videos; stop after current segment")
+                        continue
+
+                    next_segment = start_capture_session(
+                        method=capture_method,
+                        prefer_scrcpy=capture_prefer_scrcpy,
+                    )
+                    print(f"[record] next segment started before swipe: {next_segment.local_path}")
+
+                    try:
+                        await swipe_up(session)
+                        await asyncio.sleep(2.0)
+                        if verify_video_page:
+                            ok = await wait_for_video_page(session, timeout=5)
+                            if ok:
+                                print("[flow] swipe completed; next video page detected")
+                            else:
+                                print("[flow] swipe sent but next video page was not confirmed")
+                                stop_capture_session(next_segment)
+                                break
+                    except Exception:
+                        stop_capture_session(next_segment)
+                        raise
+
+                    segment = next_segment
+            finally:
+                if segment is not None:
+                    try:
+                        stop_capture_session(segment)
+                    except Exception as exc:
+                        print(f"[record] final segment cleanup failed: {exc}")
+
+    print("\n[done]")
 
 
 if __name__ == "__main__":
