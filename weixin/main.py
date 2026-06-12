@@ -675,7 +675,7 @@ async def click_first_video_result(session):
     print("[结果页] 点击左上角第一个视频...")
     await run_on_phone(
         session,
-        """
+        f"""
 import time
 from ascript.android import action
 # Search results page: click inside the first video card body.
