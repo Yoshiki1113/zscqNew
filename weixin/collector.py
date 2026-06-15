@@ -918,6 +918,8 @@ def fill_profile_fields_from_ocr(profile_info: dict, ocr_items) -> None:
     texts = [(item.get("text", "") or "").strip() for item in items]
 
     account = ""
+    company_name = ""
+    has_company_label = False
     for index, text in enumerate(texts):
         if not text:
             continue
@@ -932,7 +934,108 @@ def fill_profile_fields_from_ocr(profile_info: dict, ocr_items) -> None:
                 account = compact
                 break
 
+    for index, text in enumerate(texts):
+        if not text:
+            continue
+        if "企业全称" not in text:
+            continue
+        has_company_label = True
+        company_name = pick_company_name_from_profile_items(items, index, texts)
+        if company_name:
+            break
+
+    if not company_name:
+        for item in items:
+            text = (item.get("text", "") or "").strip()
+            if "有限公司" in text or "有限责任公司" in text:
+                company_name = text
+                has_company_label = True
+                break
+
     profile_info["account"] = account
+    profile_info["company_full_name"] = company_name
+    profile_info["subject_type"] = "企业" if has_company_label or company_name else "个人"
+
+
+def pick_company_name_from_profile_items(items: list[dict], label_index: int, texts: list[str]) -> str:
+    label_item = items[label_index] if label_index < len(items) else {}
+    label_text = texts[label_index] if label_index < len(texts) else ""
+    inline = pick_inline_value(label_text)
+    if inline:
+        return inline
+
+    value = pick_multiline_value_after_label(items, label_item, "企业全称")
+    if value:
+        return value
+
+    return pick_neighbor_value(texts, label_index)
+
+
+def pick_multiline_value_after_label(items: list[dict], label_item: dict, label_text: str) -> str:
+    label_x = label_item.get("x", 0)
+    label_y = label_item.get("y", 0)
+    if not label_y:
+        return ""
+
+    next_label_y = find_next_left_label_y(items, label_x, label_y)
+    bottom_y = (next_label_y - 30) if next_label_y else (label_y + 220)
+    candidates = []
+    for item in items:
+        text = (item.get("text", "") or "").strip()
+        if not text or label_text in text or is_profile_field_label(text):
+            continue
+        x = item.get("x", 0)
+        y = item.get("y", 0)
+        if x <= label_x + 120:
+            continue
+        if label_y - 45 <= y < bottom_y:
+            candidates.append((y, x, text))
+    if not candidates:
+        return ""
+
+    parts = [text for _, _, text in sorted(candidates, key=lambda row: (row[0], row[1]))]
+    return clean_joined_company_name("".join(parts))
+
+
+def find_next_left_label_y(items: list[dict], label_x: int, label_y: int) -> int:
+    candidates = []
+    for item in items:
+        text = (item.get("text", "") or "").strip()
+        y = item.get("y", 0)
+        x = item.get("x", 0)
+        if y <= label_y + 30:
+            continue
+        if is_profile_field_label(text) or x <= label_x + 80:
+            candidates.append(y)
+    return min(candidates) if candidates else 0
+
+
+def is_profile_field_label(text: str) -> bool:
+    return text in (
+        "IP归属地",
+        "资料所在地",
+        "视频号ID",
+        "认证信息",
+        "企业全称",
+        "主体类型",
+        "认证时间",
+        "一般经营范围",
+    )
+
+
+def clean_joined_company_name(text: str) -> str:
+    text = re.sub(r"\s+", "", text or "")
+    text = re.sub(r"(蓝V|认证|✓|✔|✅)$", "", text)
+    return text.strip()
+
+
+def pick_inline_value(text: str) -> str:
+    for sep in ("：", ":", " "):
+        if sep in text:
+            value = text.split(sep, 1)[1].strip()
+            if value and "企业全称" not in value:
+                return value
+    return ""
 
 
 def fill_video_channel_id_from_profile(video_info: dict, profile_info: dict) -> None:
@@ -976,8 +1079,8 @@ def fill_traffic_fields_from_ocr(traffic_info: dict, ocr_items) -> None:
             continue
         if not raw_id and ("视频号ID" in text or "视频号" in text or "账号" in text):
             raw_id = pick_neighbor_value(texts, index)
-        if not company_name and ("企业全称" in text or "企业" in text or "公司" in text or "主体" in text):
-            company_name = pick_neighbor_value(texts, index)
+        if not company_name and "企业全称" in text:
+            company_name = pick_company_name_from_profile_items(items, index, texts)
         if not verified_at and ("认证时间" in text or "完成微信认证" in text):
             verified_at = pick_neighbor_value(texts, index) if "认证时间" in text else text
 
@@ -991,7 +1094,7 @@ def fill_traffic_fields_from_ocr(traffic_info: dict, ocr_items) -> None:
     if not company_name:
         for text in texts:
             if any(token in text for token in ("有限公司", "有限责任公司", "公司")):
-                company_name = text
+                company_name = clean_joined_company_name(text)
                 break
 
     if not verified_at:

@@ -60,6 +60,8 @@ class EvidenceRecord:
     profile_info: dict = field(default_factory=lambda: {
         "name": "",
         "account": "",
+        "subject_type": "",
+        "company_full_name": "",
         "raw_ocr": [],
     })
     traffic_info: dict = field(default_factory=lambda: {

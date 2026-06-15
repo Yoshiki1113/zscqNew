@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import base64
+import os
+import signal
 import re
 import shutil
 import subprocess
@@ -295,6 +297,7 @@ def start_capture_session(
             text=True,
             encoding="utf-8",
             errors="replace",
+            creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0,
         )
         time.sleep(1.0)
         return RecordingSession(
@@ -342,7 +345,10 @@ def start_capture_session(
 def stop_capture_session(session: RecordingSession) -> Path:
     process = session.process
     if process.poll() is None:
-        process.terminate()
+        if session.method == "scrcpy":
+            stop_scrcpy_process(process)
+        else:
+            process.terminate()
         try:
             process.wait(timeout=20)
         except subprocess.TimeoutExpired:
@@ -359,6 +365,16 @@ def stop_capture_session(session: RecordingSession) -> Path:
     if not session.local_path.exists() or session.local_path.stat().st_size == 0:
         raise RuntimeError(f"recording file missing or empty: {session.local_path}")
     return session.local_path
+
+
+def stop_scrcpy_process(process: subprocess.Popen) -> None:
+    if os.name == "nt":
+        try:
+            process.send_signal(signal.CTRL_BREAK_EVENT)
+            return
+        except Exception:
+            pass
+    process.terminate()
 
 
 def capture_with_adb(duration: int = 12, device_id: str | None = None, bit_rate: int = 1_200_000) -> Path:

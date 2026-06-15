@@ -1,0 +1,651 @@
+{
+  "platform": "weixin",
+  "search_keyword": "弃子归来震万城",
+  "capture_time": "2026-06-12T14:58:36+08:00",
+  "capture_timestamp": "2026-06-12T14:58:36+08:00",
+  "candidate": {
+    "keyword": "弃子归来震万城",
+    "hit_text": "video_3",
+    "title_text": "video_3",
+    "author_name": "",
+    "publish_time": "",
+    "fingerprint": "f22fb518b60ef639311fc32503ea6f31",
+    "score": 1,
+    "click_x": 0,
+    "click_y": 0,
+    "video_identifier": "d1de2126a250d2d8"
+  },
+  "video_info": {
+    "blogger_name": "依好剧场",
+    "video_channel_id": "sph5I9UUTYZL22C",
+    "video_channel_id_raw": "sph5I9UUTYZL22C",
+    "video_channel_id_needs_review": true,
+    "video_channel_id_ambiguous_positions": [
+      {
+        "index": 4,
+        "char": "I"
+      }
+    ],
+    "video_link": "https://weixin.qq.com/sph/Agse1CcbtI",
+    "publish_time": "",
+    "like_count": "3",
+    "comment_count": "2",
+    "share_count": "",
+    "raw_ocr": [
+      {
+        "text": "214:58",
+        "x": 72,
+        "y": 56,
+        "w": 145,
+        "h": 54
+      },
+      {
+        "text": "56:59",
+        "x": 266,
+        "y": 59,
+        "w": 161,
+        "h": 42
+      },
+      {
+        "text": "%00LD",
+        "x": 934,
+        "y": 55,
+        "w": 254,
+        "h": 50
+      },
+      {
+        "text": "月",
+        "x": 37,
+        "y": 83,
+        "w": 75,
+        "h": 47
+      },
+      {
+        "text": "P:0/T/",
+        "x": 61,
+        "y": 130,
+        "w": 123,
+        "h": 36
+      },
+      {
+        "text": "dx: 0.0",
+        "x": 196,
+        "y": 130,
+        "w": 103,
+        "h": 36
+      },
+      {
+        "text": "dY: -1600.0",
+        "x": 382,
+        "y": 130,
+        "w": 147,
+        "h": 36
+      },
+      {
+        "text": "Xv: 0.0",
+        "x": 507,
+        "y": 131,
+        "w": 94,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 660,
+        "y": 131,
+        "w": 97,
+        "h": 27
+      },
+      {
+        "text": "Prs: 0.0",
+        "x": 818,
+        "y": 131,
+        "w": 99,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 976,
+        "y": 130,
+        "w": 106,
+        "h": 36
+      },
+      {
+        "text": "你竟敢",
+        "x": 552,
+        "y": 1619,
+        "w": 284,
+        "h": 98
+      },
+      {
+        "text": "05:38 6d",
+        "x": 924,
+        "y": 1595,
+        "w": 215,
+        "h": 60
+      },
+      {
+        "text": "免费剧集：深海之...",
+        "x": 336,
+        "y": 1763,
+        "w": 369,
+        "h": 53
+      },
+      {
+        "text": "全45集",
+        "x": 584,
+        "y": 1768,
+        "w": 123,
+        "h": 40
+      },
+      {
+        "text": "里春风",
+        "x": 1036,
+        "y": 1891,
+        "w": 59,
+        "h": 174
+      },
+      {
+        "text": "可能含有A生成内容",
+        "x": 260,
+        "y": 1903,
+        "w": 376,
+        "h": 43
+      },
+      {
+        "text": "不如你",
+        "x": 990,
+        "y": 1968,
+        "w": 53,
+        "h": 147
+      },
+      {
+        "text": "奔子归来震万城",
+        "x": 239,
+        "y": 1970,
+        "w": 208,
+        "h": 50
+      },
+      {
+        "text": "点击视频左下角",
+        "x": 206,
+        "y": 2026,
+        "w": 321,
+        "h": 58
+      },
+      {
+        "text": "观看全集精彩内容",
+        "x": 582,
+        "y": 2026,
+        "w": 374,
+        "h": 53
+      },
+      {
+        "text": "，",
+        "x": 377,
+        "y": 2030,
+        "w": 55,
+        "h": 30
+      },
+      {
+        "text": "依好剧场",
+        "x": 277,
+        "y": 2179,
+        "w": 150,
+        "h": 42
+      },
+      {
+        "text": "+关注",
+        "x": 442,
+        "y": 2178,
+        "w": 103,
+        "h": 47
+      },
+      {
+        "text": "转发",
+        "x": 729,
+        "y": 2226,
+        "w": 80,
+        "h": 43
+      },
+      {
+        "text": "评论",
+        "x": 996,
+        "y": 2224,
+        "w": 82,
+        "h": 48
+      },
+      {
+        "text": "3",
+        "x": 595,
+        "y": 2224,
+        "w": 25,
+        "h": 28
+      },
+      {
+        "text": "2",
+        "x": 863,
+        "y": 2224,
+        "w": 20,
+        "h": 28
+      }
+    ]
+  },
+  "profile_info": {
+    "name": "依好剧场",
+    "account": "sph5I9UUTYZL22C",
+    "subject_type": "个人",
+    "company_full_name": "",
+    "raw_ocr": [
+      {
+        "text": "14:59",
+        "x": 82,
+        "y": 59,
+        "w": 116,
+        "h": 38
+      },
+      {
+        "text": "58:07",
+        "x": 263,
+        "y": 59,
+        "w": 164,
+        "h": 42
+      },
+      {
+        "text": "%00L",
+        "x": 933,
+        "y": 57,
+        "w": 256,
+        "h": 50
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 44,
+        "y": 130,
+        "w": 89,
+        "h": 36
+      },
+      {
+        "text": "dX: 1.0",
+        "x": 194,
+        "y": 130,
+        "w": 90,
+        "h": 36
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 352,
+        "y": 131,
+        "w": 96,
+        "h": 27
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 524,
+        "y": 131,
+        "w": 133,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 652,
+        "y": 131,
+        "w": 108,
+        "h": 27
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 815,
+        "y": 131,
+        "w": 92,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 973,
+        "y": 131,
+        "w": 104,
+        "h": 27
+      },
+      {
+        "text": "你竞敢咒我死",
+        "x": 542,
+        "y": 543,
+        "w": 237,
+        "h": 43
+      },
+      {
+        "text": "基础信息",
+        "x": 172,
+        "y": 769,
+        "w": 209,
+        "h": 62
+      },
+      {
+        "text": "性别",
+        "x": 122,
+        "y": 879,
+        "w": 108,
+        "h": 58
+      },
+      {
+        "text": "女",
+        "x": 449,
+        "y": 878,
+        "w": 61,
+        "h": 60
+      },
+      {
+        "text": "IP归属地",
+        "x": 166,
+        "y": 987,
+        "w": 209,
+        "h": 67
+      },
+      {
+        "text": "广东",
+        "x": 475,
+        "y": 987,
+        "w": 116,
+        "h": 65
+      },
+      {
+        "text": "资料所在地",
+        "x": 200,
+        "y": 1098,
+        "w": 260,
+        "h": 60
+      },
+      {
+        "text": "广东中山",
+        "x": 529,
+        "y": 1098,
+        "w": 229,
+        "h": 60
+      },
+      {
+        "text": "视频号ID",
+        "x": 172,
+        "y": 1208,
+        "w": 205,
+        "h": 53
+      },
+      {
+        "text": "sph5I9UUTYZL22C",
+        "x": 640,
+        "y": 1207,
+        "w": 442,
+        "h": 50
+      }
+    ]
+  },
+  "traffic_info": {
+    "has_traffic_marker": true,
+    "marker_text": "免费剧集：深海之...",
+    "target_blogger_name": "阿尚短剧",
+    "target_video_channel_id": "sphCnR49bl8hf6M",
+    "target_video_channel_id_raw": "sphCnR49bl8hf6M",
+    "target_video_channel_id_needs_review": true,
+    "target_video_channel_id_ambiguous_positions": [
+      {
+        "index": 9,
+        "char": "l"
+      }
+    ],
+    "company_full_name": "广州米到科技有限公司",
+    "company_verified_at": "2026年4月3日完成微",
+    "raw_ocr": [
+      {
+        "text": "14:59",
+        "x": 83,
+        "y": 57,
+        "w": 118,
+        "h": 45
+      },
+      {
+        "text": "57:36",
+        "x": 263,
+        "y": 59,
+        "w": 164,
+        "h": 42
+      },
+      {
+        "text": "%00L",
+        "x": 933,
+        "y": 57,
+        "w": 256,
+        "h": 50
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 43,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dx: 1.0",
+        "x": 195,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 353,
+        "y": 131,
+        "w": 94,
+        "h": 27
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 523,
+        "y": 131,
+        "w": 130,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 653,
+        "y": 131,
+        "w": 106,
+        "h": 27
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 816,
+        "y": 131,
+        "w": 84,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 975,
+        "y": 131,
+        "w": 99,
+        "h": 27
+      },
+      {
+        "text": "林婉清",
+        "x": 537,
+        "y": 476,
+        "w": 91,
+        "h": 37
+      },
+      {
+        "text": "基础信息",
+        "x": 172,
+        "y": 768,
+        "w": 209,
+        "h": 60
+      },
+      {
+        "text": "广东",
+        "x": 473,
+        "y": 873,
+        "w": 120,
+        "h": 75
+      },
+      {
+        "text": "IP归属地",
+        "x": 167,
+        "y": 878,
+        "w": 205,
+        "h": 60
+      },
+      {
+        "text": "视频号ID",
+        "x": 171,
+        "y": 988,
+        "w": 207,
+        "h": 60
+      },
+      {
+        "text": "sphCnR49bl8hf6M",
+        "x": 643,
+        "y": 983,
+        "w": 444,
+        "h": 58
+      },
+      {
+        "text": "认证信息",
+        "x": 172,
+        "y": 1205,
+        "w": 209,
+        "h": 60
+      },
+      {
+        "text": "企业全称",
+        "x": 174,
+        "y": 1315,
+        "w": 212,
+        "h": 60
+      },
+      {
+        "text": "广州米到科技有限公司",
+        "x": 677,
+        "y": 1313,
+        "w": 507,
+        "h": 50
+      },
+      {
+        "text": "☆",
+        "x": 448,
+        "y": 1380,
+        "w": 43,
+        "h": 50
+      },
+      {
+        "text": "主体类型",
+        "x": 174,
+        "y": 1478,
+        "w": 205,
+        "h": 53
+      },
+      {
+        "text": "企业",
+        "x": 473,
+        "y": 1477,
+        "w": 113,
+        "h": 65
+      },
+      {
+        "text": "认证时间",
+        "x": 172,
+        "y": 1588,
+        "w": 205,
+        "h": 53
+      },
+      {
+        "text": "2026年4月3日完成微",
+        "x": 670,
+        "y": 1586,
+        "w": 497,
+        "h": 58
+      },
+      {
+        "text": "信认证，每年腾讯及第",
+        "x": 679,
+        "y": 1667,
+        "w": 504,
+        "h": 51
+      },
+      {
+        "text": "三方审核机构都会对其",
+        "x": 680,
+        "y": 1747,
+        "w": 506,
+        "h": 50
+      },
+      {
+        "text": "资料进行审核",
+        "x": 577,
+        "y": 1826,
+        "w": 306,
+        "h": 52
+      },
+      {
+        "text": "一般经营范围",
+        "x": 227,
+        "y": 1937,
+        "w": 301,
+        "h": 50
+      },
+      {
+        "text": "信息技术咨询服务；人工",
+        "x": 683,
+        "y": 1937,
+        "w": 523,
+        "h": 50
+      },
+      {
+        "text": "智能基础资源与技术平",
+        "x": 679,
+        "y": 2019,
+        "w": 504,
+        "h": 52
+      },
+      {
+        "text": "台;人工智能公共服务平",
+        "x": 684,
+        "y": 2095,
+        "w": 526,
+        "h": 66
+      },
+      {
+        "text": "台技术咨询服务；网络技",
+        "x": 685,
+        "y": 2178,
+        "w": 516,
+        "h": 53
+      },
+      {
+        "text": "术服务；生物质能资源数",
+        "x": 685,
+        "y": 2257,
+        "w": 523,
+        "h": 50
+      }
+    ]
+  },
+  "media_info": {
+    "full_recording_required": true,
+    "recording_video_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260612_145812.mp4",
+    "recording_audio_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260612_145812.wav",
+    "recording_started_at": "2026-06-12T14:58:12+08:00",
+    "recording_ended_at": "2026-06-12T15:04:27+08:00",
+    "recording_duration_seconds": 375,
+    "has_audio": true,
+    "asr_text": "",
+    "asr_json_path": ""
+  },
+  "screenshots": [
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\play_f22fb518b60e_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_marker_region_f22fb518b60e.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_f22fb518b60e_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_name_region_f22fb518b60e.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_info_f22fb518b60e_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_f22fb518b60e_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_name_region_f22fb518b60e.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_info_f22fb518b60e_0.png"
+  ]
+}

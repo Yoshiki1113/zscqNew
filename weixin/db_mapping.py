@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS weixin_video_evidence (
     captured_at_raw VARCHAR(64) NOT NULL DEFAULT '',
 
     candidate_fingerprint VARCHAR(64) NOT NULL,
+    candidate_video_identifier VARCHAR(64) NOT NULL DEFAULT '',
     candidate_title VARCHAR(500) NOT NULL DEFAULT '',
     candidate_author_name VARCHAR(255) NOT NULL DEFAULT '',
     candidate_publish_time VARCHAR(255) NOT NULL DEFAULT '',
@@ -35,6 +36,8 @@ CREATE TABLE IF NOT EXISTS weixin_video_evidence (
 
     profile_name VARCHAR(255) NOT NULL DEFAULT '',
     profile_account VARCHAR(255) NOT NULL DEFAULT '',
+    profile_subject_type VARCHAR(32) NOT NULL DEFAULT '',
+    profile_company_full_name VARCHAR(255) NOT NULL DEFAULT '',
 
     has_traffic_marker BOOLEAN NOT NULL DEFAULT FALSE,
     traffic_marker_text VARCHAR(255) NOT NULL DEFAULT '',
@@ -94,6 +97,7 @@ def evidence_record_to_db_row(record: EvidenceRecord) -> dict:
         "captured_at": _to_mysql_datetime(captured_at_raw),
         "captured_at_raw": captured_at_raw,
         "candidate_fingerprint": candidate.get("fingerprint", "") or "",
+        "candidate_video_identifier": candidate.get("video_identifier", "") or "",
         "candidate_title": candidate.get("title_text", "") or candidate.get("hit_text", "") or "",
         "candidate_author_name": candidate.get("author_name", "") or "",
         "candidate_publish_time": candidate.get("publish_time", "") or "",
@@ -113,6 +117,8 @@ def evidence_record_to_db_row(record: EvidenceRecord) -> dict:
         "share_count": video_info.get("share_count", "") or "",
         "profile_name": profile_info.get("name", "") or "",
         "profile_account": profile_info.get("account", "") or "",
+        "profile_subject_type": profile_info.get("subject_type", "") or "",
+        "profile_company_full_name": profile_info.get("company_full_name", "") or "",
         "has_traffic_marker": bool(traffic_info.get("has_traffic_marker", False)),
         "traffic_marker_text": traffic_info.get("marker_text", "") or "",
         "target_blogger_name": traffic_info.get("target_blogger_name", "") or "",

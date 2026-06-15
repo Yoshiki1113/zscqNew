@@ -36,7 +36,7 @@ SCREENSHOT_DIR = os.path.join(BASE_DIR, "screenshots")
 JSONS_DIR = os.path.join(BASE_DIR, "jsons")
 BASE_SCREEN_WIDTH = 1080
 BASE_SCREEN_HEIGHT = 2400
-DEFAULT_KEYWORD = "我修仙归来把众神训成了小学生"
+DEFAULT_KEYWORD = "弃子归来震万城"
 os.makedirs(SCREENSHOT_DIR, exist_ok=True)
 os.makedirs(JSONS_DIR, exist_ok=True)
 

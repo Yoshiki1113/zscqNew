@@ -1,0 +1,722 @@
+{
+  "platform": "weixin",
+  "search_keyword": "弃子归来震万城",
+  "capture_time": "2026-06-12T15:04:56+08:00",
+  "capture_timestamp": "2026-06-12T15:04:56+08:00",
+  "candidate": {
+    "keyword": "弃子归来震万城",
+    "hit_text": "video_4",
+    "title_text": "video_4",
+    "author_name": "",
+    "publish_time": "",
+    "fingerprint": "fc767954892abf8ed3e9cf1eeddc46f6",
+    "score": 1,
+    "click_x": 0,
+    "click_y": 0,
+    "video_identifier": "e05c45163358ff49"
+  },
+  "video_info": {
+    "blogger_name": "比翼短剧biyi",
+    "video_channel_id": "sphghYEkUDwOsl8",
+    "video_channel_id_raw": "sphghYEkUDwOsl8",
+    "video_channel_id_needs_review": true,
+    "video_channel_id_ambiguous_positions": [
+      {
+        "index": 11,
+        "char": "O"
+      },
+      {
+        "index": 13,
+        "char": "l"
+      }
+    ],
+    "video_link": "https://weixin.qq.com/sph/ATs7nTo4db",
+    "publish_time": "",
+    "like_count": "18",
+    "comment_count": "9",
+    "share_count": "8",
+    "raw_ocr": [
+      {
+        "text": "15:04",
+        "x": 84,
+        "y": 56,
+        "w": 115,
+        "h": 37
+      },
+      {
+        "text": "1:03:19",
+        "x": 274,
+        "y": 59,
+        "w": 176,
+        "h": 42
+      },
+      {
+        "text": "%00L0",
+        "x": 934,
+        "y": 56,
+        "w": 248,
+        "h": 43
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 44,
+        "y": 130,
+        "w": 89,
+        "h": 36
+      },
+      {
+        "text": "dX: 0.0",
+        "x": 200,
+        "y": 131,
+        "w": 92,
+        "h": 27
+      },
+      {
+        "text": "dY: -1600.0",
+        "x": 383,
+        "y": 131,
+        "w": 145,
+        "h": 27
+      },
+      {
+        "text": "Xv: 0.0",
+        "x": 507,
+        "y": 131,
+        "w": 94,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 658,
+        "y": 131,
+        "w": 96,
+        "h": 27
+      },
+      {
+        "text": "Prs: 0.0",
+        "x": 817,
+        "y": 132,
+        "w": 106,
+        "h": 35
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 977,
+        "y": 130,
+        "w": 103,
+        "h": 36
+      },
+      {
+        "text": "09:37",
+        "x": 882,
+        "y": 1530,
+        "w": 121,
+        "h": 44
+      },
+      {
+        "text": "6d",
+        "x": 994,
+        "y": 1532,
+        "w": 65,
+        "h": 45
+      },
+      {
+        "text": "免费剧集：弃子归...",
+        "x": 336,
+        "y": 1699,
+        "w": 359,
+        "h": 42
+      },
+      {
+        "text": "全46集",
+        "x": 581,
+        "y": 1699,
+        "w": 130,
+        "h": 42
+      },
+      {
+        "text": "可能含有AI生成内容",
+        "x": 259,
+        "y": 1836,
+        "w": 374,
+        "h": 43
+      },
+      {
+        "text": "亲生父母下跪逼认亲，下一秒全网声#真少爷归",
+        "x": 540,
+        "y": 1963,
+        "w": 984,
+        "h": 50
+      },
+      {
+        "text": "来#冲突反转#短剧推荐",
+        "x": 294,
+        "y": 2027,
+        "w": 496,
+        "h": 50
+      },
+      {
+        "text": "比翼短剧b",
+        "x": 289,
+        "y": 2179,
+        "w": 169,
+        "h": 42
+      },
+      {
+        "text": "+关注",
+        "x": 460,
+        "y": 2178,
+        "w": 101,
+        "h": 47
+      },
+      {
+        "text": "18",
+        "x": 594,
+        "y": 2224,
+        "w": 36,
+        "h": 32
+      },
+      {
+        "text": "9",
+        "x": 729,
+        "y": 2221,
+        "w": 17,
+        "h": 18
+      },
+      {
+        "text": "8",
+        "x": 863,
+        "y": 2224,
+        "w": 24,
+        "h": 28
+      },
+      {
+        "text": "评论",
+        "x": 997,
+        "y": 2226,
+        "w": 80,
+        "h": 43
+      }
+    ]
+  },
+  "profile_info": {
+    "name": "比翼短剧biyi",
+    "account": "sphghYEkUDwOsl8",
+    "subject_type": "企业",
+    "company_full_name": "公司",
+    "raw_ocr": [
+      {
+        "text": "15:06",
+        "x": 83,
+        "y": 57,
+        "w": 118,
+        "h": 45
+      },
+      {
+        "text": "1:04:31",
+        "x": 270,
+        "y": 57,
+        "w": 184,
+        "h": 51
+      },
+      {
+        "text": "%00L",
+        "x": 933,
+        "y": 57,
+        "w": 256,
+        "h": 50
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 43,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dx: 1.0",
+        "x": 195,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 352,
+        "y": 131,
+        "w": 96,
+        "h": 27
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 524,
+        "y": 131,
+        "w": 128,
+        "h": 28
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 652,
+        "y": 131,
+        "w": 108,
+        "h": 27
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 817,
+        "y": 131,
+        "w": 87,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 974,
+        "y": 131,
+        "w": 102,
+        "h": 27
+      },
+      {
+        "text": "合作方更是惊恐地打来电话",
+        "x": 538,
+        "y": 512,
+        "w": 379,
+        "h": 41
+      },
+      {
+        "text": "基础信息",
+        "x": 172,
+        "y": 768,
+        "w": 209,
+        "h": 60
+      },
+      {
+        "text": "IP归属地",
+        "x": 165,
+        "y": 877,
+        "w": 201,
+        "h": 61
+      },
+      {
+        "text": "浙江",
+        "x": 474,
+        "y": 877,
+        "w": 111,
+        "h": 65
+      },
+      {
+        "text": "资料所在地",
+        "x": 199,
+        "y": 988,
+        "w": 258,
+        "h": 60
+      },
+      {
+        "text": "浙江杭州",
+        "x": 533,
+        "y": 988,
+        "w": 222,
+        "h": 60
+      },
+      {
+        "text": "视频号ID",
+        "x": 171,
+        "y": 1098,
+        "w": 207,
+        "h": 60
+      },
+      {
+        "text": "sphghYEkUDwOsl8",
+        "x": 648,
+        "y": 1093,
+        "w": 453,
+        "h": 58
+      },
+      {
+        "text": "认证信息",
+        "x": 172,
+        "y": 1315,
+        "w": 209,
+        "h": 60
+      },
+      {
+        "text": "企业全称",
+        "x": 174,
+        "y": 1424,
+        "w": 205,
+        "h": 52
+      },
+      {
+        "text": "嘉兴奇克文化传媒有限",
+        "x": 676,
+        "y": 1421,
+        "w": 509,
+        "h": 53
+      },
+      {
+        "text": "公司",
+        "x": 498,
+        "y": 1505,
+        "w": 152,
+        "h": 54
+      },
+      {
+        "text": "主体类型",
+        "x": 173,
+        "y": 1612,
+        "w": 207,
+        "h": 60
+      },
+      {
+        "text": "企业",
+        "x": 473,
+        "y": 1612,
+        "w": 113,
+        "h": 65
+      },
+      {
+        "text": "认证时间",
+        "x": 172,
+        "y": 1724,
+        "w": 205,
+        "h": 52
+      },
+      {
+        "text": "2025年7月17日完成微",
+        "x": 675,
+        "y": 1724,
+        "w": 502,
+        "h": 52
+      },
+      {
+        "text": "信认证，每年腾讯及第",
+        "x": 679,
+        "y": 1804,
+        "w": 504,
+        "h": 52
+      },
+      {
+        "text": "三方审核机构都会对其",
+        "x": 680,
+        "y": 1884,
+        "w": 506,
+        "h": 52
+      },
+      {
+        "text": "资料进行审核",
+        "x": 575,
+        "y": 1964,
+        "w": 306,
+        "h": 52
+      },
+      {
+        "text": "一般经营范围",
+        "x": 226,
+        "y": 2073,
+        "w": 299,
+        "h": 50
+      },
+      {
+        "text": "一般项目：组织文化艺",
+        "x": 673,
+        "y": 2070,
+        "w": 514,
+        "h": 56
+      },
+      {
+        "text": "术交流活动；技术服",
+        "x": 654,
+        "y": 2153,
+        "w": 455,
+        "h": 50
+      },
+      {
+        "text": "务、技术开发、技术咨",
+        "x": 677,
+        "y": 2233,
+        "w": 507,
+        "h": 50
+      },
+      {
+        "text": "询、技术交流、技术转",
+        "x": 677,
+        "y": 2313,
+        "w": 511,
+        "h": 50
+      }
+    ]
+  },
+  "traffic_info": {
+    "has_traffic_marker": true,
+    "marker_text": "免费剧集：弃子归..．全46集",
+    "target_blogger_name": "比翼短剧biyi",
+    "target_video_channel_id": "sphghYEkUDwOsl8",
+    "target_video_channel_id_raw": "sphghYEkUDwOsl8",
+    "target_video_channel_id_needs_review": true,
+    "target_video_channel_id_ambiguous_positions": [
+      {
+        "index": 11,
+        "char": "O"
+      },
+      {
+        "index": 13,
+        "char": "l"
+      }
+    ],
+    "company_full_name": "嘉兴奇克文化传媒有限",
+    "company_verified_at": "2025年7月17日完成微",
+    "raw_ocr": [
+      {
+        "text": "15:05",
+        "x": 84,
+        "y": 57,
+        "w": 121,
+        "h": 45
+      },
+      {
+        "text": "1:03:59",
+        "x": 277,
+        "y": 59,
+        "w": 188,
+        "h": 42
+      },
+      {
+        "text": "%00L",
+        "x": 933,
+        "y": 57,
+        "w": 256,
+        "h": 50
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 43,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dx: 1.0",
+        "x": 195,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 353,
+        "y": 131,
+        "w": 99,
+        "h": 27
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 523,
+        "y": 131,
+        "w": 130,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 652,
+        "y": 131,
+        "w": 108,
+        "h": 27
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 817,
+        "y": 131,
+        "w": 87,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 974,
+        "y": 131,
+        "w": 102,
+        "h": 27
+      },
+      {
+        "text": "基础信息",
+        "x": 172,
+        "y": 768,
+        "w": 209,
+        "h": 60
+      },
+      {
+        "text": "IP归属地",
+        "x": 165,
+        "y": 877,
+        "w": 201,
+        "h": 61
+      },
+      {
+        "text": "浙江",
+        "x": 474,
+        "y": 877,
+        "w": 111,
+        "h": 65
+      },
+      {
+        "text": "资料所在地",
+        "x": 199,
+        "y": 988,
+        "w": 258,
+        "h": 60
+      },
+      {
+        "text": "浙江杭州",
+        "x": 533,
+        "y": 988,
+        "w": 222,
+        "h": 60
+      },
+      {
+        "text": "视频号ID",
+        "x": 171,
+        "y": 1098,
+        "w": 207,
+        "h": 60
+      },
+      {
+        "text": "sphghYEkUDwOsl8",
+        "x": 648,
+        "y": 1093,
+        "w": 453,
+        "h": 58
+      },
+      {
+        "text": "认证信息",
+        "x": 172,
+        "y": 1315,
+        "w": 209,
+        "h": 60
+      },
+      {
+        "text": "企业全称",
+        "x": 174,
+        "y": 1424,
+        "w": 205,
+        "h": 52
+      },
+      {
+        "text": "嘉兴奇克文化传媒有限",
+        "x": 676,
+        "y": 1421,
+        "w": 509,
+        "h": 53
+      },
+      {
+        "text": "公司",
+        "x": 496,
+        "y": 1503,
+        "w": 161,
+        "h": 69
+      },
+      {
+        "text": "主体类型",
+        "x": 175,
+        "y": 1612,
+        "w": 210,
+        "h": 60
+      },
+      {
+        "text": "企业",
+        "x": 473,
+        "y": 1612,
+        "w": 113,
+        "h": 65
+      },
+      {
+        "text": "认证时间",
+        "x": 173,
+        "y": 1724,
+        "w": 207,
+        "h": 52
+      },
+      {
+        "text": "2025年7月17日完成微",
+        "x": 675,
+        "y": 1724,
+        "w": 502,
+        "h": 52
+      },
+      {
+        "text": "信认证，每年腾讯及第",
+        "x": 679,
+        "y": 1804,
+        "w": 504,
+        "h": 52
+      },
+      {
+        "text": "三方审核机构都会对其",
+        "x": 680,
+        "y": 1884,
+        "w": 506,
+        "h": 52
+      },
+      {
+        "text": "资料进行审核",
+        "x": 577,
+        "y": 1964,
+        "w": 306,
+        "h": 52
+      },
+      {
+        "text": "一般经营范围",
+        "x": 225,
+        "y": 2073,
+        "w": 297,
+        "h": 50
+      },
+      {
+        "text": "一般项目：组织文化艺",
+        "x": 675,
+        "y": 2070,
+        "w": 512,
+        "h": 56
+      },
+      {
+        "text": "术交流活动；技术服",
+        "x": 653,
+        "y": 2153,
+        "w": 453,
+        "h": 50
+      },
+      {
+        "text": "务、技术开发、技术咨",
+        "x": 677,
+        "y": 2233,
+        "w": 507,
+        "h": 50
+      },
+      {
+        "text": "询、技术交流、技术转",
+        "x": 675,
+        "y": 2311,
+        "w": 512,
+        "h": 53
+      }
+    ]
+  },
+  "media_info": {
+    "full_recording_required": true,
+    "recording_video_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260612_150428.mp4",
+    "recording_audio_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260612_150428.wav",
+    "recording_started_at": "2026-06-12T15:04:28+08:00",
+    "recording_ended_at": "2026-06-12T15:10:51+08:00",
+    "recording_duration_seconds": 383,
+    "has_audio": true,
+    "asr_text": "",
+    "asr_json_path": ""
+  },
+  "screenshots": [
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\play_fc767954892a_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_marker_region_fc767954892a.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_fc767954892a_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_name_region_fc767954892a.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_info_fc767954892a_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_fc767954892a_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_name_region_fc767954892a.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_info_fc767954892a_0.png"
+  ]
+}

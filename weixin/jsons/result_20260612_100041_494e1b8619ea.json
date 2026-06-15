@@ -1,0 +1,578 @@
+{
+  "platform": "weixin",
+  "search_keyword": "我修仙归来把众神训成了小学生",
+  "capture_time": "2026-06-12T09:54:49+08:00",
+  "capture_timestamp": "2026-06-12T09:54:49+08:00",
+  "candidate": {
+    "keyword": "我修仙归来把众神训成了小学生",
+    "hit_text": "video_3",
+    "title_text": "video_3",
+    "author_name": "",
+    "publish_time": "",
+    "fingerprint": "494e1b8619eab3ce6443fff8130990c2",
+    "score": 1,
+    "click_x": 0,
+    "click_y": 0
+  },
+  "video_info": {
+    "blogger_name": "杰鼎7142",
+    "video_channel_id": "sphjwcPjVsSYXgl",
+    "video_channel_id_raw": "sphjwcPjVsSYXgl",
+    "video_channel_id_needs_review": true,
+    "video_channel_id_ambiguous_positions": [
+      {
+        "index": 14,
+        "char": "l"
+      }
+    ],
+    "video_link": "https://weixin.qq.com/sph/A8HC2JrXeH",
+    "publish_time": "",
+    "like_count": "19",
+    "comment_count": "",
+    "share_count": "",
+    "raw_ocr": [
+      {
+        "text": "09:54",
+        "x": 82,
+        "y": 56,
+        "w": 116,
+        "h": 37
+      },
+      {
+        "text": "35:49",
+        "x": 262,
+        "y": 56,
+        "w": 169,
+        "h": 43
+      },
+      {
+        "text": "1100%",
+        "x": 993,
+        "y": 57,
+        "w": 125,
+        "h": 35
+      },
+      {
+        "text": "把众神训成了小学生》",
+        "x": 694,
+        "y": 87,
+        "w": 463,
+        "h": 50
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 44,
+        "y": 130,
+        "w": 89,
+        "h": 36
+      },
+      {
+        "text": "dX: 0.0",
+        "x": 200,
+        "y": 130,
+        "w": 102,
+        "h": 36
+      },
+      {
+        "text": "dY: -1600.0",
+        "x": 383,
+        "y": 131,
+        "w": 145,
+        "h": 27
+      },
+      {
+        "text": "Xv: 0.0",
+        "x": 516,
+        "y": 131,
+        "w": 106,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 658,
+        "y": 130,
+        "w": 106,
+        "h": 36
+      },
+      {
+        "text": "Prs: 0.0",
+        "x": 817,
+        "y": 131,
+        "w": 106,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 976,
+        "y": 130,
+        "w": 106,
+        "h": 36
+      },
+      {
+        "text": "这些年",
+        "x": 539,
+        "y": 1487,
+        "w": 284,
+        "h": 107
+      },
+      {
+        "text": "免费剧集：温顺主..",
+        "x": 340,
+        "y": 1697,
+        "w": 372,
+        "h": 50
+      },
+      {
+        "text": "全42集",
+        "x": 582,
+        "y": 1697,
+        "w": 128,
+        "h": 35
+      },
+      {
+        "text": "可能含有AI生成内容",
+        "x": 260,
+        "y": 1836,
+        "w": 376,
+        "h": 43
+      },
+      {
+        "text": "点击左下角[免赞剧集属木势钱看全集#这个",
+        "x": 535,
+        "y": 1957,
+        "w": 984,
+        "h": 65
+      },
+      {
+        "text": "结局太爽了#影视综艺",
+        "x": 264,
+        "y": 2027,
+        "w": 442,
+        "h": 55
+      },
+      {
+        "text": "杰鼎7142",
+        "x": 279,
+        "y": 2180,
+        "w": 159,
+        "h": 44
+      },
+      {
+        "text": "+关注",
+        "x": 448,
+        "y": 2177,
+        "w": 111,
+        "h": 55
+      },
+      {
+        "text": "19",
+        "x": 863,
+        "y": 2224,
+        "w": 38,
+        "h": 32
+      },
+      {
+        "text": "评论",
+        "x": 997,
+        "y": 2226,
+        "w": 80,
+        "h": 43
+      }
+    ]
+  },
+  "profile_info": {
+    "name": "杰鼎7142",
+    "account": "sphjwcPjVsSYXgl",
+    "raw_ocr": [
+      {
+        "text": "09:55",
+        "x": 79,
+        "y": 55,
+        "w": 122,
+        "h": 52
+      },
+      {
+        "text": "36:59",
+        "x": 263,
+        "y": 59,
+        "w": 164,
+        "h": 42
+      },
+      {
+        "text": "5G+",
+        "x": 804,
+        "y": 55,
+        "w": 258,
+        "h": 56
+      },
+      {
+        "text": "100%",
+        "x": 986,
+        "y": 59,
+        "w": 144,
+        "h": 42
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 44,
+        "y": 130,
+        "w": 89,
+        "h": 36
+      },
+      {
+        "text": "dX: 1.0",
+        "x": 194,
+        "y": 130,
+        "w": 90,
+        "h": 36
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 353,
+        "y": 131,
+        "w": 94,
+        "h": 27
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 525,
+        "y": 131,
+        "w": 135,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 650,
+        "y": 131,
+        "w": 111,
+        "h": 27
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 817,
+        "y": 131,
+        "w": 87,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 973,
+        "y": 131,
+        "w": 104,
+        "h": 27
+      },
+      {
+        "text": "本座便成全了",
+        "x": 523,
+        "y": 491,
+        "w": 232,
+        "h": 42
+      },
+      {
+        "text": "基础信息",
+        "x": 172,
+        "y": 769,
+        "w": 209,
+        "h": 62
+      },
+      {
+        "text": "IP归属地",
+        "x": 166,
+        "y": 878,
+        "w": 203,
+        "h": 53
+      },
+      {
+        "text": "广东",
+        "x": 475,
+        "y": 877,
+        "w": 116,
+        "h": 65
+      },
+      {
+        "text": "视频号ID",
+        "x": 171,
+        "y": 988,
+        "w": 207,
+        "h": 60
+      },
+      {
+        "text": "sphjwcPjVsSYXgl",
+        "x": 623,
+        "y": 988,
+        "w": 402,
+        "h": 53
+      }
+    ]
+  },
+  "traffic_info": {
+    "has_traffic_marker": true,
+    "marker_text": "免费剧集：温顺主..．全42集",
+    "target_blogger_name": "娜美短剧",
+    "target_video_channel_id": "sphEnFHKAFI5zJB",
+    "target_video_channel_id_raw": "sphEnFHKAFI5zJB",
+    "target_video_channel_id_needs_review": true,
+    "target_video_channel_id_ambiguous_positions": [
+      {
+        "index": 10,
+        "char": "I"
+      }
+    ],
+    "company_full_name": "惠州市云尘传媒有限公",
+    "company_verified_at": "2026年4月13日完成微",
+    "raw_ocr": [
+      {
+        "text": "图 5G+ 100%",
+        "x": 870,
+        "y": 53,
+        "w": 381,
+        "h": 58
+      },
+      {
+        "text": "09:55",
+        "x": 81,
+        "y": 57,
+        "w": 118,
+        "h": 45
+      },
+      {
+        "text": "36:28",
+        "x": 264,
+        "y": 59,
+        "w": 162,
+        "h": 42
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 43,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dx: 1.0",
+        "x": 195,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 354,
+        "y": 131,
+        "w": 97,
+        "h": 27
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 524,
+        "y": 131,
+        "w": 133,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 653,
+        "y": 131,
+        "w": 106,
+        "h": 27
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 817,
+        "y": 131,
+        "w": 87,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 974,
+        "y": 131,
+        "w": 102,
+        "h": 27
+      },
+      {
+        "text": "闪过几分不自在",
+        "x": 538,
+        "y": 523,
+        "w": 273,
+        "h": 53
+      },
+      {
+        "text": "基础信息",
+        "x": 172,
+        "y": 768,
+        "w": 209,
+        "h": 60
+      },
+      {
+        "text": "IP归属地",
+        "x": 168,
+        "y": 878,
+        "w": 200,
+        "h": 53
+      },
+      {
+        "text": "广东",
+        "x": 475,
+        "y": 877,
+        "w": 116,
+        "h": 65
+      },
+      {
+        "text": "视频号ID",
+        "x": 171,
+        "y": 988,
+        "w": 207,
+        "h": 60
+      },
+      {
+        "text": "sphEnFHKAFI5zJB",
+        "x": 636,
+        "y": 985,
+        "w": 429,
+        "h": 56
+      },
+      {
+        "text": "认证信息",
+        "x": 172,
+        "y": 1205,
+        "w": 209,
+        "h": 60
+      },
+      {
+        "text": "企业全称",
+        "x": 174,
+        "y": 1315,
+        "w": 212,
+        "h": 60
+      },
+      {
+        "text": "惠州市云尘传媒有限公",
+        "x": 679,
+        "y": 1314,
+        "w": 504,
+        "h": 52
+      },
+      {
+        "text": "司",
+        "x": 470,
+        "y": 1395,
+        "w": 102,
+        "h": 60
+      },
+      {
+        "text": "主体类型",
+        "x": 173,
+        "y": 1504,
+        "w": 203,
+        "h": 52
+      },
+      {
+        "text": "企业",
+        "x": 473,
+        "y": 1503,
+        "w": 109,
+        "h": 57
+      },
+      {
+        "text": "认证时间",
+        "x": 173,
+        "y": 1614,
+        "w": 207,
+        "h": 52
+      },
+      {
+        "text": "2026年4月13日完成微",
+        "x": 678,
+        "y": 1613,
+        "w": 509,
+        "h": 50
+      },
+      {
+        "text": "信认证，每年腾讯及第",
+        "x": 676,
+        "y": 1690,
+        "w": 504,
+        "h": 50
+      },
+      {
+        "text": "三方审核机构都会对其",
+        "x": 677,
+        "y": 1770,
+        "w": 507,
+        "h": 50
+      },
+      {
+        "text": "资料进行审核",
+        "x": 575,
+        "y": 1851,
+        "w": 306,
+        "h": 53
+      },
+      {
+        "text": "一般经营范围",
+        "x": 229,
+        "y": 1963,
+        "w": 294,
+        "h": 43
+      },
+      {
+        "text": "一般项目：广告发布；",
+        "x": 662,
+        "y": 1962,
+        "w": 494,
+        "h": 55
+      },
+      {
+        "text": "互联网销售（除销售需",
+        "x": 677,
+        "y": 2042,
+        "w": 507,
+        "h": 55
+      },
+      {
+        "text": "要许可的商品）；玩具",
+        "x": 677,
+        "y": 2122,
+        "w": 507,
+        "h": 55
+      },
+      {
+        "text": "销售；文具用品批发；",
+        "x": 668,
+        "y": 2204,
+        "w": 482,
+        "h": 52
+      },
+      {
+        "text": "办公用品销售；办公设",
+        "x": 676,
+        "y": 2282,
+        "w": 514,
+        "h": 55
+      }
+    ]
+  },
+  "media_info": {
+    "full_recording_required": true,
+    "recording_video_path": "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260612_095426.mp4",
+    "recording_audio_path": "",
+    "recording_started_at": "2026-06-12T09:54:26+08:00",
+    "recording_ended_at": "2026-06-12T10:00:41+08:00",
+    "recording_duration_seconds": 375,
+    "has_audio": false,
+    "asr_text": "",
+    "asr_json_path": ""
+  },
+  "screenshots": [
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\play_494e1b8619ea_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_marker_region_494e1b8619ea.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_494e1b8619ea_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_name_region_494e1b8619ea.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_info_494e1b8619ea_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_494e1b8619ea_0.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_name_region_494e1b8619ea.png",
+    "D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_info_494e1b8619ea_0.png"
+  ]
+}
