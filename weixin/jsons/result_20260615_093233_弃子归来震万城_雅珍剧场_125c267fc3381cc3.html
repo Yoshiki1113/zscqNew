@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>video_2</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --paper: #fffdf8;
+      --ink: #22211f;
+      --muted: #6d675f;
+      --line: #ddd5c8;
+      --accent: #1f6f68;
+      --accent-soft: #dfeeea;
+      --warn: #9a5b13;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top left, #ffffff 0, var(--bg) 38rem);
+      color: var(--ink);
+      font: 15px/1.6 "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+    }
+    main {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 28px auto 56px;
+    }
+    header {
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(26px, 4vw, 42px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+    }
+    h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+    a { color: var(--accent); }
+    .subtitle { color: var(--muted); font-size: 16px; }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 18px;
+      align-items: start;
+    }
+    section {
+      background: color-mix(in srgb, var(--paper) 92%, white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 12px 24px rgba(54, 45, 31, 0.05);
+    }
+    .evidence-block {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.15fr);
+      gap: 16px;
+    }
+    .evidence-text {
+      min-width: 0;
+    }
+    .evidence-shots {
+      min-width: 0;
+    }
+    dl {
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1fr);
+      gap: 8px 12px;
+      margin: 0;
+    }
+    dt { color: var(--muted); }
+    dd { margin: 0; word-break: break-word; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 2px 10px;
+      margin: 0 6px 6px 0;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .video-box {
+      background: #111;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #111;
+    }
+    video {
+      display: block;
+      width: 100%;
+      max-height: 70vh;
+      background: #111;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .shot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+    figure img {
+      display: block;
+      width: 100%;
+      height: 260px;
+      object-fit: contain;
+      background: #171717;
+    }
+    figcaption {
+      padding: 8px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      word-break: break-all;
+    }
+    details {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 12px;
+    }
+    summary { cursor: pointer; color: var(--accent); font-weight: 700; }
+    pre {
+      margin: 12px 0 0;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .empty {
+      color: var(--warn);
+      background: #fff8e8;
+      border: 1px dashed #dfbd78;
+      border-radius: 8px;
+      padding: 12px;
+    }
+    @media (max-width: 860px) {
+      main { width: min(100vw - 20px, 720px); margin-top: 18px; }
+      .grid { grid-template-columns: 1fr; }
+      .evidence-block { grid-template-columns: 1fr; }
+      dl { grid-template-columns: 112px minmax(0, 1fr); }
+      figure img { height: 220px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>video_2</h1>
+      <div class="subtitle">雅珍剧场 2026-06-15T09:23:39+08:00</div>
+    </header>
+    <section><h2>取证摘要</h2><dl><dt>搜索词</dt><dd>弃子归来震万城</dd><dt>视频标识符</dt><dd>125c267fc3381cc3</dd><dt>去重指纹</dt><dd>4f28869cdeaeeed22c545579f26c6977</dd><dt>视频链接</dt><dd><a href="https://weixin.qq.com/sph/Ao1ZFEHfsr">https://weixin.qq.com/sph/Ao1ZFEHfsr</a></dd><dt>录屏文件</dt><dd><a href="file:///D:/code/vscodeWorkDir/zscqNew/weixin/media/scrcpy_20260615_092315.mp4">D:\code\vscodeWorkDir\zscqNew\weixin\media\scrcpy_20260615_092315.mp4</a></dd><dt>JSON</dt><dd><a href="file:///D:/code/vscodeWorkDir/zscqNew/weixin/jsons/result_20260615_093233_%E5%BC%83%E5%AD%90%E5%BD%92%E6%9D%A5%E9%9C%87%E4%B8%87%E5%9F%8E_%E9%9B%85%E7%8F%8D%E5%89%A7%E5%9C%BA_125c267fc3381cc3.json">打开原始 JSON</a></dd></dl></section>
+    
+<section>
+  <h2>录屏</h2>
+  <div class="video-box">
+    <video controls preload="metadata" src="file:///D:/code/vscodeWorkDir/zscqNew/weixin/media/scrcpy_20260615_092315.mp4"></video>
+  </div>
+  <p><a href="file:///D:/code/vscodeWorkDir/zscqNew/weixin/media/scrcpy_20260615_092315.mp4">D:\code\vscodeWorkDir\zscqNew\weixin\media\scrcpy_20260615_092315.mp4</a></p>
+  <dl><dt>开始时间</dt><dd>2026-06-15T09:23:15+08:00</dd><dt>结束时间</dt><dd>2026-06-15T09:32:31+08:00</dd><dt>录制秒数</dt><dd>556</dd><dt>是否有音频</dt><dd>true</dd></dl>
+</section>
+
+    
+<section>
+  <h2>视频信息与互动数据</h2>
+  <div class="evidence-block">
+    <div class="evidence-text"><dl><dt>博主名称</dt><dd>雅珍剧场</dd><dt>视频号ID</dt><dd>sphiqp9quVJuewL</dd><dt>视频标题</dt><dd>video_2</dd><dt>发布时间</dt><dd></dd><dt>喜欢数</dt><dd>8</dd><dt>收藏数</dt><dd></dd><dt>转发数</dt><dd></dd><dt>评论数</dt><dd>4</dd><dt>视频链接</dt><dd><a href="https://weixin.qq.com/sph/Ao1ZFEHfsr">https://weixin.qq.com/sph/Ao1ZFEHfsr</a></dd></dl></div>
+    <div class="evidence-shots"><div class="shot-grid"><figure><a href="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/play_4f28869cdeae_0.png"><img src="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/play_4f28869cdeae_0.png" loading="lazy" alt=""></a><figcaption>视频播放页截图</figcaption></figure></div></div>
+  </div>
+</section>
+
+
+<section>
+  <h2>博主身份信息</h2>
+  <div class="evidence-block">
+    <div class="evidence-text"><dl><dt>博主名称</dt><dd>雅珍剧场</dd><dt>视频号ID</dt><dd>sphiqp9quVJuewL</dd><dt>主体类型</dt><dd>企业</dd><dt>企业全称</dt><dd>嘉兴九州汇天影视科技有限公司海宁第二分公司🌸</dd><dt>ID原文</dt><dd>sphiqp9quVJuewL</dd><dt>ID需复核</dt><dd>false</dd></dl></div>
+    <div class="evidence-shots"><div class="shot-grid"><figure><a href="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/profile_card_4f28869cdeae_0.png"><img src="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/profile_card_4f28869cdeae_0.png" loading="lazy" alt=""></a><figcaption>博主资料卡截图</figcaption></figure><figure><a href="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/profile_card_name_region_4f28869cdeae.png"><img src="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/profile_card_name_region_4f28869cdeae.png" loading="lazy" alt=""></a><figcaption>博主名称裁剪图</figcaption></figure><figure><a href="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/profile_info_4f28869cdeae_0.png"><img src="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/profile_info_4f28869cdeae_0.png" loading="lazy" alt=""></a><figcaption>博主更多信息页截图</figcaption></figure></div></div>
+  </div>
+</section>
+
+
+<section>
+  <h2>引流账号与公司信息</h2>
+  <div class="evidence-block">
+    <div class="evidence-text"><dl><dt>存在引流</dt><dd>true</dd><dt>引流标记</dt><dd>免费剧集:弃子归..</dd><dt>目标博主</dt><dd>比翼短剧biyi</dd><dt>目标视频号ID</dt><dd>sphghYEkUDwOsl8</dd><dt>ID原文</dt><dd>sphghYEkUDwOsl8</dd><dt>ID需复核</dt><dd>true</dd><dt>公司名</dt><dd>嘉兴奇克文化传媒有限公司🌸</dd><dt>认证时间</dt><dd>2025年7月17日完成微</dd></dl></div>
+    <div class="evidence-shots"><div class="shot-grid"><figure><a href="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/traffic_marker_region_4f28869cdeae.png"><img src="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/traffic_marker_region_4f28869cdeae.png" loading="lazy" alt=""></a><figcaption>引流标记裁剪图</figcaption></figure><figure><a href="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/traffic_page_4f28869cdeae_0.png"><img src="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/traffic_page_4f28869cdeae_0.png" loading="lazy" alt=""></a><figcaption>引流账号资料页截图</figcaption></figure><figure><a href="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/traffic_page_name_region_4f28869cdeae.png"><img src="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/traffic_page_name_region_4f28869cdeae.png" loading="lazy" alt=""></a><figcaption>引流账号名称裁剪图</figcaption></figure><figure><a href="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/traffic_info_4f28869cdeae_0.png"><img src="file:///D:/code/vscodeWorkDir/zscqNew/weixin/screenshots/traffic_info_4f28869cdeae_0.png" loading="lazy" alt=""></a><figcaption>引流账号更多信息页截图</figcaption></figure></div></div>
+  </div>
+</section>
+
+
+    <section><h2>原始 JSON</h2><details><summary>展开完整记录</summary><pre>{
+  &quot;platform&quot;: &quot;weixin&quot;,
+  &quot;search_keyword&quot;: &quot;弃子归来震万城&quot;,
+  &quot;capture_time&quot;: &quot;2026-06-15T09:23:39+08:00&quot;,
+  &quot;capture_timestamp&quot;: &quot;2026-06-15T09:23:39+08:00&quot;,
+  &quot;candidate&quot;: {
+    &quot;keyword&quot;: &quot;弃子归来震万城&quot;,
+    &quot;hit_text&quot;: &quot;video_2&quot;,
+    &quot;title_text&quot;: &quot;video_2&quot;,
+    &quot;author_name&quot;: &quot;&quot;,
+    &quot;publish_time&quot;: &quot;&quot;,
+    &quot;fingerprint&quot;: &quot;4f28869cdeaeeed22c545579f26c6977&quot;,
+    &quot;score&quot;: 1,
+    &quot;click_x&quot;: 0,
+    &quot;click_y&quot;: 0,
+    &quot;video_identifier&quot;: &quot;125c267fc3381cc3&quot;
+  },
+  &quot;video_info&quot;: {
+    &quot;blogger_name&quot;: &quot;雅珍剧场&quot;,
+    &quot;video_channel_id&quot;: &quot;sphiqp9quVJuewL&quot;,
+    &quot;video_channel_id_raw&quot;: &quot;sphiqp9quVJuewL&quot;,
+    &quot;video_channel_id_needs_review&quot;: false,
+    &quot;video_channel_id_ambiguous_positions&quot;: [],
+    &quot;video_link&quot;: &quot;https://weixin.qq.com/sph/Ao1ZFEHfsr&quot;,
+    &quot;publish_time&quot;: &quot;&quot;,
+    &quot;like_count&quot;: &quot;8&quot;,
+    &quot;comment_count&quot;: &quot;4&quot;,
+    &quot;share_count&quot;: &quot;&quot;,
+    &quot;raw_ocr&quot;: [
+      {
+        &quot;text&quot;: &quot;0.0&quot;,
+        &quot;x&quot;: 199,
+        &quot;y&quot;: 7,
+        &quot;w&quot;: 73,
+        &quot;h&quot;: 14
+      },
+      {
+        &quot;text&quot;: &quot;dY:-1000.0&quot;,
+        &quot;x&quot;: 384,
+        &quot;y&quot;: 11,
+        &quot;w&quot;: 158,
+        &quot;h&quot;: 22
+      },
+      {
+        &quot;text&quot;: &quot;XV：0.0&quot;,
+        &quot;x&quot;: 526,
+        &quot;y&quot;: 9,
+        &quot;w&quot;: 103,
+        &quot;h&quot;: 19
+      },
+      {
+        &quot;text&quot;: &quot;Yv:0.0&quot;,
+        &quot;x&quot;: 706,
+        &quot;y&quot;: 10,
+        &quot;w&quot;: 97,
+        &quot;h&quot;: 21
+      },
+      {
+        &quot;text&quot;: &quot;Prs:0.0&quot;,
+        &quot;x&quot;: 889,
+        &quot;y&quot;: 14,
+        &quot;w&quot;: 119,
+        &quot;h&quot;: 29
+      },
+      {
+        &quot;text&quot;: &quot;Size&quot;,
+        &quot;x&quot;: 1050,
+        &quot;y&quot;: 15,
+        &quot;w&quot;: 61,
+        &quot;h&quot;: 32
+      },
+      {
+        &quot;text&quot;: &quot;5&quot;,
+        &quot;x&quot;: 163,
+        &quot;y&quot;: 56,
+        &quot;w&quot;: 93,
+        &quot;h&quot;: 91
+      },
+      {
+        &quot;text&quot;: &quot;转头就当着全家面上吊&quot;,
+        &quot;x&quot;: 540,
+        &quot;y&quot;: 1357,
+        &quot;w&quot;: 781,
+        &quot;h&quot;: 121
+      },
+      {
+        &quot;text&quot;: &quot;05:47&quot;,
+        &quot;x&quot;: 907,
+        &quot;y&quot;: 1566,
+        &quot;w&quot;: 134,
+        &quot;h&quot;: 47
+      },
+      {
+        &quot;text&quot;: &quot;免费剧集:弃子归..全4集&quot;,
+        &quot;x&quot;: 382,
+        &quot;y&quot;: 1731,
+        &quot;w&quot;: 535,
+        &quot;h&quot;: 67
+      },
+      {
+        &quot;text&quot;: &quot;可能有生成来震万城》&quot;,
+        &quot;x&quot;: 502,
+        &quot;y&quot;: 1855,
+        &quot;w&quot;: 1007,
+        &quot;h&quot;: 198
+      },
+      {
+        &quot;text&quot;: &quot;y2#弃子归来震万城#免费漫剧#免费短剧#热门漫&quot;,
+        &quot;x&quot;: 540,
+        &quot;y&quot;: 2011,
+        &quot;w&quot;: 1080,
+        &quot;h&quot;: 96
+      },
+      {
+        &quot;text&quot;: &quot;剧#热短虚构&quot;,
+        &quot;x&quot;: 203,
+        &quot;y&quot;: 2060,
+        &quot;w&quot;: 409,
+        &quot;h&quot;: 114
+      },
+      {
+        &quot;text&quot;: &quot;请树立正确社会主义价值观&quot;,
+        &quot;x&quot;: 680,
+        &quot;y&quot;: 2067,
+        &quot;w&quot;: 557,
+        &quot;h&quot;: 82
+      },
+      {
+        &quot;text&quot;: &quot;热门&quot;,
+        &quot;x&quot;: 80,
+        &quot;y&quot;: 2186,
+        &quot;w&quot;: 120,
+        &quot;h&quot;: 70
+      },
+      {
+        &quot;text&quot;: &quot;短剧&quot;,
+        &quot;x&quot;: 81,
+        &quot;y&quot;: 2247,
+        &quot;w&quot;: 123,
+        &quot;h&quot;: 70
+      },
+      {
+        &quot;text&quot;: &quot;雅珍剧场&quot;,
+        &quot;x&quot;: 253,
+        &quot;y&quot;: 2228,
+        &quot;w&quot;: 159,
+        &quot;h&quot;: 48
+      },
+      {
+        &quot;text&quot;: &quot;+关注&quot;,
+        &quot;x&quot;: 449,
+        &quot;y&quot;: 2226,
+        &quot;w&quot;: 112,
+        &quot;h&quot;: 47
+      },
+      {
+        &quot;text&quot;: &quot;8&quot;,
+        &quot;x&quot;: 590,
+        &quot;y&quot;: 2275,
+        &quot;w&quot;: 27,
+        &quot;h&quot;: 29
+      },
+      {
+        &quot;text&quot;: &quot;转发&quot;,
+        &quot;x&quot;: 739,
+        &quot;y&quot;: 2279,
+        &quot;w&quot;: 93,
+        &quot;h&quot;: 50
+      },
+      {
+        &quot;text&quot;: &quot;4&quot;,
+        &quot;x&quot;: 891,
+        &quot;y&quot;: 2286,
+        &quot;w&quot;: 33,
+        &quot;h&quot;: 31
+      },
+      {
+        &quot;text&quot;: &quot;评论&quot;,
+        &quot;x&quot;: 1040,
+        &quot;y&quot;: 2294,
+        &quot;w&quot;: 79,
+        &quot;h&quot;: 38
+      }
+    ]
+  },
+  &quot;profile_info&quot;: {
+    &quot;name&quot;: &quot;雅珍剧场&quot;,
+    &quot;account&quot;: &quot;sphiqp9quVJuewL&quot;,
+    &quot;subject_type&quot;: &quot;企业&quot;,
+    &quot;company_full_name&quot;: &quot;嘉兴九州汇天影视科技有限公司海宁第二分公司🌸&quot;,
+    &quot;raw_ocr&quot;: [
+      {
+        &quot;text&quot;: &quot;dY:0.0&quot;,
+        &quot;x&quot;: 352,
+        &quot;y&quot;: 8,
+        &quot;w&quot;: 89,
+        &quot;h&quot;: 17
+      },
+      {
+        &quot;text&quot;: &quot;Xv: 0.050&quot;,
+        &quot;x&quot;: 529,
+        &quot;y&quot;: 12,
+        &quot;w&quot;: 129,
+        &quot;h&quot;: 24
+      },
+      {
+        &quot;text&quot;: &quot;Yv:0.0&quot;,
+        &quot;x&quot;: 673,
+        &quot;y&quot;: 12,
+        &quot;w&quot;: 92,
+        &quot;h&quot;: 25
+      },
+      {
+        &quot;text&quot;: &quot;Prs: 1.0&quot;,
+        &quot;x&quot;: 828,
+        &quot;y&quot;: 12,
+        &quot;w&quot;: 89,
+        &quot;h&quot;: 25
+      },
+      {
+        &quot;text&quot;: &quot;Size: 1.0&quot;,
+        &quot;x&quot;: 995,
+        &quot;y&quot;: 12,
+        &quot;w&quot;: 102,
+        &quot;h&quot;: 25
+      },
+      {
+        &quot;text&quot;: &quot;是你们背着我&quot;,
+        &quot;x&quot;: 545,
+        &quot;y&quot;: 412,
+        &quot;w&quot;: 232,
+        &quot;h&quot;: 48
+      },
+      {
+        &quot;text&quot;: &quot;基础信息&quot;,
+        &quot;x&quot;: 162,
+        &quot;y&quot;: 683,
+        &quot;w&quot;: 219,
+        &quot;h&quot;: 76
+      },
+      {
+        &quot;text&quot;: &quot;IP归属地&quot;,
+        &quot;x&quot;: 157,
+        &quot;y&quot;: 802,
+        &quot;w&quot;: 206,
+        &quot;h&quot;: 67
+      },
+      {
+        &quot;text&quot;: &quot;浙江&quot;,
+        &quot;x&quot;: 471,
+        &quot;y&quot;: 806,
+        &quot;w&quot;: 125,
+        &quot;h&quot;: 75
+      },
+      {
+        &quot;text&quot;: &quot;资料所在地&quot;,
+        &quot;x&quot;: 188,
+        &quot;y&quot;: 925,
+        &quot;w&quot;: 267,
+        &quot;h&quot;: 69
+      },
+      {
+        &quot;text&quot;: &quot;浙江杭州&quot;,
+        &quot;x&quot;: 534,
+        &quot;y&quot;: 931,
+        &quot;w&quot;: 243,
+        &quot;h&quot;: 71
+      },
+      {
+        &quot;text&quot;: &quot;视频号ID&quot;,
+        &quot;x&quot;: 156,
+        &quot;y&quot;: 1047,
+        &quot;w&quot;: 216,
+        &quot;h&quot;: 67
+      },
+      {
+        &quot;text&quot;: &quot;sphiqp9quVJuewL&quot;,
+        &quot;x&quot;: 649,
+        &quot;y&quot;: 1055,
+        &quot;w&quot;: 464,
+        &quot;h&quot;: 63
+      },
+      {
+        &quot;text&quot;: &quot;认证信息&quot;,
+        &quot;x&quot;: 156,
+        &quot;y&quot;: 1291,
+        &quot;w&quot;: 221,
+        &quot;h&quot;: 67
+      },
+      {
+        &quot;text&quot;: &quot;企业全称&quot;,
+        &quot;x&quot;: 155,
+        &quot;y&quot;: 1413,
+        &quot;w&quot;: 222,
+        &quot;h&quot;: 62
+      },
+      {
+        &quot;text&quot;: &quot;嘉兴九州汇天影视科技&quot;,
+        &quot;x&quot;: 686,
+        &quot;y&quot;: 1419,
+        &quot;w&quot;: 547,
+        &quot;h&quot;: 63
+      },
+      {
+        &quot;text&quot;: &quot;有限公司海宁第二分公&quot;,
+        &quot;x&quot;: 686,
+        &quot;y&quot;: 1509,
+        &quot;w&quot;: 550,
+        &quot;h&quot;: 70
+      },
+      {
+        &quot;text&quot;: &quot;司&quot;,
+        &quot;x&quot;: 442,
+        &quot;y&quot;: 1592,
+        &quot;w&quot;: 60,
+        &quot;h&quot;: 59
+      },
+      {
+        &quot;text&quot;: &quot;🌸&quot;,
+        &quot;x&quot;: 492,
+        &quot;y&quot;: 1592,
+        &quot;w&quot;: 51,
+        &quot;h&quot;: 50
+      },
+      {
+        &quot;text&quot;: &quot;主体类型&quot;,
+        &quot;x&quot;: 154,
+        &quot;y&quot;: 1709,
+        &quot;w&quot;: 220,
+        &quot;h&quot;: 65
+      },
+      {
+        &quot;text&quot;: &quot;企业&quot;,
+        &quot;x&quot;: 468,
+        &quot;y&quot;: 1713,
+        &quot;w&quot;: 118,
+        &quot;h&quot;: 65
+      },
+      {
+        &quot;text&quot;: &quot;认证时间&quot;,
+        &quot;x&quot;: 153,
+        &quot;y&quot;: 1827,
+        &quot;w&quot;: 219,
+        &quot;h&quot;: 69
+      },
+      {
+        &quot;text&quot;: &quot;2026年5月18日完成微&quot;,
+        &quot;x&quot;: 682,
+        &quot;y&quot;: 1833,
+        &quot;w&quot;: 546,
+        &quot;h&quot;: 66
+      },
+      {
+        &quot;text&quot;: &quot;信认证，每年腾讯及第&quot;,
+        &quot;x&quot;: 684,
+        &quot;y&quot;: 1921,
+        &quot;w&quot;: 549,
+        &quot;h&quot;: 70
+      },
+      {
+        &quot;text&quot;: &quot;三方审核机构都会对其&quot;,
+        &quot;x&quot;: 685,
+        &quot;y&quot;: 2008,
+        &quot;w&quot;: 548,
+        &quot;h&quot;: 72
+      },
+      {
+        &quot;text&quot;: &quot;资料进行审核&quot;,
+        &quot;x&quot;: 575,
+        &quot;y&quot;: 2094,
+        &quot;w&quot;: 325,
+        &quot;h&quot;: 59
+      },
+      {
+        &quot;text&quot;: &quot;一般经营范围&quot;,
+        &quot;x&quot;: 205,
+        &quot;y&quot;: 2208,
+        &quot;w&quot;: 321,
+        &quot;h&quot;: 71
+      },
+      {
+        &quot;text&quot;: &quot;一般项目：电影摄制服&quot;,
+        &quot;x&quot;: 682,
+        &quot;y&quot;: 2215,
+        &quot;w&quot;: 543,
+        &quot;h&quot;: 70
+      },
+      {
+        &quot;text&quot;: &quot;务；技术服务、技术开&quot;,
+        &quot;x&quot;: 681,
+        &quot;y&quot;: 2299,
+        &quot;w&quot;: 544,
+        &quot;h&quot;: 72
+      },
+      {
+        &quot;text&quot;: &quot;发、技术咨询、技术交&quot;,
+        &quot;x&quot;: 682,
+        &quot;y&quot;: 2376,
+        &quot;w&quot;: 539,
+        &quot;h&quot;: 48
+      }
+    ]
+  },
+  &quot;traffic_info&quot;: {
+    &quot;has_traffic_marker&quot;: true,
+    &quot;marker_text&quot;: &quot;免费剧集:弃子归..&quot;,
+    &quot;target_blogger_name&quot;: &quot;比翼短剧biyi&quot;,
+    &quot;target_video_channel_id&quot;: &quot;sphghYEkUDwOsl8&quot;,
+    &quot;target_video_channel_id_raw&quot;: &quot;sphghYEkUDwOsl8&quot;,
+    &quot;target_video_channel_id_needs_review&quot;: true,
+    &quot;target_video_channel_id_ambiguous_positions&quot;: [
+      {
+        &quot;index&quot;: 11,
+        &quot;char&quot;: &quot;O&quot;
+      },
+      {
+        &quot;index&quot;: 13,
+        &quot;char&quot;: &quot;l&quot;
+      }
+    ],
+    &quot;company_full_name&quot;: &quot;嘉兴奇克文化传媒有限公司🌸&quot;,
+    &quot;company_verified_at&quot;: &quot;2025年7月17日完成微&quot;,
+    &quot;raw_ocr&quot;: [
+      {
+        &quot;text&quot;: &quot;O&#x27;L:vp&quot;,
+        &quot;x&quot;: 190,
+        &quot;y&quot;: 9,
+        &quot;w&quot;: 82,
+        &quot;h&quot;: 19
+      },
+      {
+        &quot;text&quot;: &quot;dY:0.0&quot;,
+        &quot;x&quot;: 351,
+        &quot;y&quot;: 11,
+        &quot;w&quot;: 91,
+        &quot;h&quot;: 23
+      },
+      {
+        &quot;text&quot;: &quot;Xv:0.050&quot;,
+        &quot;x&quot;: 525,
+        &quot;y&quot;: 13,
+        &quot;w&quot;: 133,
+        &quot;h&quot;: 27
+      },
+      {
+        &quot;text&quot;: &quot;Yv:0.0&quot;,
+        &quot;x&quot;: 671,
+        &quot;y&quot;: 11,
+        &quot;w&quot;: 91,
+        &quot;h&quot;: 22
+      },
+      {
+        &quot;text&quot;: &quot;Prs: 1.0&quot;,
+        &quot;x&quot;: 827,
+        &quot;y&quot;: 11,
+        &quot;w&quot;: 90,
+        &quot;h&quot;: 23
+      },
+      {
+        &quot;text&quot;: &quot;Size:1.0&quot;,
+        &quot;x&quot;: 996,
+        &quot;y&quot;: 11,
+        &quot;w&quot;: 106,
+        &quot;h&quot;: 22
+      },
+      {
+        &quot;text&quot;: &quot;小可爱那是你弟弟&quot;,
+        &quot;x&quot;: 544,
+        &quot;y&quot;: 411,
+        &quot;w&quot;: 294,
+        &quot;h&quot;: 45
+      },
+      {
+        &quot;text&quot;: &quot;基础信息&quot;,
+        &quot;x&quot;: 162,
+        &quot;y&quot;: 681,
+        &quot;w&quot;: 221,
+        &quot;h&quot;: 71
+      },
+      {
+        &quot;text&quot;: &quot;IP归属地&quot;,
+        &quot;x&quot;: 157,
+        &quot;y&quot;: 801,
+        &quot;w&quot;: 209,
+        &quot;h&quot;: 64
+      },
+      {
+        &quot;text&quot;: &quot;浙江&quot;,
+        &quot;x&quot;: 475,
+        &quot;y&quot;: 803,
+        &quot;w&quot;: 121,
+        &quot;h&quot;: 69
+      },
+      {
+        &quot;text&quot;: &quot;资料所在地&quot;,
+        &quot;x&quot;: 188,
+        &quot;y&quot;: 923,
+        &quot;w&quot;: 271,
+        &quot;h&quot;: 65
+      },
+      {
+        &quot;text&quot;: &quot;浙江杭州&quot;,
+        &quot;x&quot;: 537,
+        &quot;y&quot;: 927,
+        &quot;w&quot;: 241,
+        &quot;h&quot;: 70
+      },
+      {
+        &quot;text&quot;: &quot;视频号ID&quot;,
+        &quot;x&quot;: 157,
+        &quot;y&quot;: 1043,
+        &quot;w&quot;: 219,
+        &quot;h&quot;: 67
+      },
+      {
+        &quot;text&quot;: &quot;sphghYEkUDwOsl8&quot;,
+        &quot;x&quot;: 662,
+        &quot;y&quot;: 1047,
+        &quot;w&quot;: 476,
+        &quot;h&quot;: 57
+      },
+      {
+        &quot;text&quot;: &quot;认证信息&quot;,
+        &quot;x&quot;: 158,
+        &quot;y&quot;: 1288,
+        &quot;w&quot;: 222,
+        &quot;h&quot;: 67
+      },
+      {
+        &quot;text&quot;: &quot;企业全称&quot;,
+        &quot;x&quot;: 157,
+        &quot;y&quot;: 1410,
+        &quot;w&quot;: 224,
+        &quot;h&quot;: 63
+      },
+      {
+        &quot;text&quot;: &quot;嘉兴奇克文化传媒有限&quot;,
+        &quot;x&quot;: 692,
+        &quot;y&quot;: 1414,
+        &quot;w&quot;: 546,
+        &quot;h&quot;: 61
+      },
+      {
+        &quot;text&quot;: &quot;公司&quot;,
+        &quot;x&quot;: 474,
+        &quot;y&quot;: 1500,
+        &quot;w&quot;: 117,
+        &quot;h&quot;: 65
+      },
+      {
+        &quot;text&quot;: &quot;🌸&quot;,
+        &quot;x&quot;: 553,
+        &quot;y&quot;: 1500,
+        &quot;w&quot;: 53,
+        &quot;h&quot;: 49
+      },
+      {
+        &quot;text&quot;: &quot;主体类型&quot;,
+        &quot;x&quot;: 157,
+        &quot;y&quot;: 1619,
+        &quot;w&quot;: 219,
+        &quot;h&quot;: 60
+      },
+      {
+        &quot;text&quot;: &quot;企业&quot;,
+        &quot;x&quot;: 474,
+        &quot;y&quot;: 1622,
+        &quot;w&quot;: 118,
+        &quot;h&quot;: 64
+      },
+      {
+        &quot;text&quot;: &quot;认证时间&quot;,
+        &quot;x&quot;: 156,
+        &quot;y&quot;: 1740,
+        &quot;w&quot;: 220,
+        &quot;h&quot;: 64
+      },
+      {
+        &quot;text&quot;: &quot;2025年7月17日完成微&quot;,
+        &quot;x&quot;: 686,
+        &quot;y&quot;: 1740,
+        &quot;w&quot;: 543,
+        &quot;h&quot;: 64
+      },
+      {
+        &quot;text&quot;: &quot;信认证，每年腾讯及第&quot;,
+        &quot;x&quot;: 689,
+        &quot;y&quot;: 1830,
+        &quot;w&quot;: 549,
+        &quot;h&quot;: 70
+      },
+      {
+        &quot;text&quot;: &quot;三方审核机构都会对其&quot;,
+        &quot;x&quot;: 690,
+        &quot;y&quot;: 1916,
+        &quot;w&quot;: 546,
+        &quot;h&quot;: 67
+      },
+      {
+        &quot;text&quot;: &quot;资料进行审核&quot;,
+        &quot;x&quot;: 582,
+        &quot;y&quot;: 2003,
+        &quot;w&quot;: 331,
+        &quot;h&quot;: 70
+      },
+      {
+        &quot;text&quot;: &quot;一般经营范围&quot;,
+        &quot;x&quot;: 210,
+        &quot;y&quot;: 2125,
+        &quot;w&quot;: 324,
+        &quot;h&quot;: 71
+      },
+      {
+        &quot;text&quot;: &quot;一般项目：组织文化艺&quot;,
+        &quot;x&quot;: 688,
+        &quot;y&quot;: 2125,
+        &quot;w&quot;: 546,
+        &quot;h&quot;: 72
+      },
+      {
+        &quot;text&quot;: &quot;术交流活动；技术服&quot;,
+        &quot;x&quot;: 662,
+        &quot;y&quot;: 2212,
+        &quot;w&quot;: 485,
+        &quot;h&quot;: 66
+      },
+      {
+        &quot;text&quot;: &quot;务、技术开发、技术咨&quot;,
+        &quot;x&quot;: 687,
+        &quot;y&quot;: 2297,
+        &quot;w&quot;: 540,
+        &quot;h&quot;: 68
+      },
+      {
+        &quot;text&quot;: &quot;询、技术交流、技术转&quot;,
+        &quot;x&quot;: 687,
+        &quot;y&quot;: 2376,
+        &quot;w&quot;: 536,
+        &quot;h&quot;: 47
+      }
+    ]
+  },
+  &quot;media_info&quot;: {
+    &quot;full_recording_required&quot;: true,
+    &quot;recording_video_path&quot;: &quot;D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260615_092315.mp4&quot;,
+    &quot;recording_audio_path&quot;: &quot;D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\media\\scrcpy_20260615_092315.wav&quot;,
+    &quot;recording_started_at&quot;: &quot;2026-06-15T09:23:15+08:00&quot;,
+    &quot;recording_ended_at&quot;: &quot;2026-06-15T09:32:31+08:00&quot;,
+    &quot;recording_duration_seconds&quot;: 556,
+    &quot;has_audio&quot;: true,
+    &quot;asr_text&quot;: &quot;&quot;,
+    &quot;asr_json_path&quot;: &quot;&quot;
+  },
+  &quot;screenshots&quot;: [
+    &quot;D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\play_4f28869cdeae_0.png&quot;,
+    &quot;D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_marker_region_4f28869cdeae.png&quot;,
+    &quot;D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_4f28869cdeae_0.png&quot;,
+    &quot;D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_name_region_4f28869cdeae.png&quot;,
+    &quot;D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_info_4f28869cdeae_0.png&quot;,
+    &quot;D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_4f28869cdeae_0.png&quot;,
+    &quot;D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_name_region_4f28869cdeae.png&quot;,
+    &quot;D:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_info_4f28869cdeae_0.png&quot;
+  ]
+}</pre></details></section>
+  </main>
+</body>
+</html>
