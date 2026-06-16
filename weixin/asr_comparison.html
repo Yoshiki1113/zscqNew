@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASR-vs-剧本 逐句对照（按分数排序）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Microsoft YaHei','PingFang SC',sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.6}
+.header{background:#161b22;padding:20px 32px;border-bottom:1px solid #30363d}
+.header h1{font-size:18px;color:#e6edf3}
+.header .meta{font-size:11px;color:#8b949e;margin-top:4px}
+.container{max-width:1500px;margin:0 auto;padding:20px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#161b22;padding:10px 12px;text-align:left;color:#8b949e;font-weight:600;font-size:10px;border-bottom:2px solid #30363d;position:sticky;top:0;z-index:1}
+td{padding:10px 12px;border-bottom:1px solid #21262d;vertical-align:top}
+tr:hover td{background:#1c2128}
+.col-num{width:35px;text-align:center;color:#58a6ff;font-weight:700;font-size:11px}
+.col-asr{min-width:260px;max-width:380px;color:#e6edf3;word-break:break-all;line-height:1.8;font-size:13px}
+.col-score{width:140px;text-align:center;font-size:10px}
+.col-script{min-width:420px}
+.exp-scores{color:#8b949e;font-size:9px;margin-top:2px;line-height:2}
+.row-hit-high td{background:#0d2b1a}
+.row-hit-mid td{background:#1e1a0d}
+.match-loc{font-size:10px;color:#8b949e;margin-bottom:4px}
+.char-tag{background:#1a3a5c;color:#79c0ff;padding:0 5px;border-radius:3px;font-size:9px}
+.match-text{color:#7ee787;font-size:13px;margin-bottom:4px;padding:8px 10px;background:#0d1b14;border-radius:4px;border-left:3px solid #238636;line-height:1.7}
+.match-ctx{margin-top:3px}
+.ctx-line{font-size:10px;padding:2px 6px;margin:1px 0;border-radius:3px;line-height:1.5}
+.ctx-focus{background:#0d2b1a;color:#7ee787;border-left:3px solid #238636;padding-left:10px}
+.ctx-other{color:#6e7681;padding-left:10px;font-size:9px}
+.legend{display:flex;gap:24px;font-size:11px;margin-bottom:16px;color:#8b949e}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.good{background:#27ae60}.mid{background:#e67e22}.low{background:#f39c12}
+.summary{background:#161b22;border-radius:8px;padding:14px 20px;margin-bottom:16px;display:flex;gap:32px;font-size:12px}
+.summary .big{font-size:22px;font-weight:700}
+.note{background:#1a2e1a;border:1px solid #2d4a2d;border-radius:6px;padding:10px 16px;margin-bottom:16px;font-size:11px;color:#81c784}
+.footer{text-align:center;padding:20px;font-size:10px;color:#484f58}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>ASR 转写 → 剧本原文 逐句对照（按匹配分降序）</h1>
+  <div class="meta">音频: scrcpy_20260615_091407.wav | 545秒 | iFlytek 12×50s切片 | 1242字→30句 | 纯对白匹配</div>
+</div>
+<div class="container">
+<div class="norme">剧本括号（...）已清洗用于匹配，展示保留原文 | 表按单句得分 ↓ 排列 | 上下文膨胀: ±1→±2→±3 句</div>
+<div class="legend"><span><span class="dot good"></span> ≥85%</span><span><span class="dot mid"></span> 65-85%</span><span><span class="dot low"></span> 45-65%</span></div>
+<div class="summary"><div>总句: <span class="big">30</span></div><div>≥85%: <span class="big" style="color:#27ae60">6</span></div><div>≥65%: <span class="big" style="color:#e67e22">11</span></div></div>
+<table>
+<thead><tr>
+  <th class="col-num">#</th><th class="col-asr">ASR 转写（iFlytek）</th><th class="col-score">单句 / ±1 / ±2 / ±3</th><th class="col-script">剧本原文 &amp; 上下文</th>
+</tr></thead>
+<tbody>
+    <tr class="hit-high">
+      <td class="col-num">20</td>
+      <td class="col-asr">委屈的在顾家每天都要防着那些如毒蛇般的算计，哪怕是睡在金丝楠木的大床上，心也是悬着的</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:77px;height:5px;background:#27ae60;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#27ae60;font-size:11px">96.5%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:43px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">54.2%</b> ±2:<span style="display:inline-block;width:20px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">25.2%</b> ±3:<span style="display:inline-block;width:41px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">51.6%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第45集 45-2 <span class="char-tag">顾倾</span></div>
+        <div class="match-text">在顾家，每天都要防着那些如毒蛇般的算计，哪怕是睡在金丝楠木的大床上，心也是悬着的。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（轻笑，眉眼间尽是温柔）傻瓜，有什么好委屈的？</div><div class="ctx-line ctx-focus">在顾家，每天都要防着那些如毒蛇般的算计，哪怕是睡在金丝楠木的大床上，心也是悬着的。</div><div class="ctx-line ctx-other">只有在这里，听着窗外偶尔经过的巡逻脚步声，我才觉得这是我这辈子待过最安稳的地方。</div></div>
+      </td>
+    </tr>
+    <tr class="hit-high">
+      <td class="col-num">10</td>
+      <td class="col-asr">既然回了顾家就得守顾家的规矩，我会给你优厚的生活豪车名表，京城的户口这些你这辈子在乡下见都没见过的东西我都能给你，但我也能让你瞬间失去一切</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:75px;height:5px;background:#27ae60;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#27ae60;font-size:11px">94.1%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:68px;height:5px;background:#27ae60;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#27ae60;font-size:11px">85.2%</b> ±2:<span style="display:inline-block;width:43px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">53.8%</b> ±3:<span style="display:inline-block;width:38px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">48.2%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第2集 2-1 <span class="char-tag">顾父</span></div>
+        <div class="match-text">（语气森然）既然回了顾家，就得守顾家的规矩。我会给你优渥的生活，豪车、名表、京城的户口，这些你这辈子在乡下见都没见过的东西，我都能给你。但——（顿了顿，眼神狠戾）我也能让你瞬间失去一切。识相点，别挑战我的底线。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（声音压得极低，透着警告）流年，当年被抱错，并不是你弟弟的错。他这些年为了讨我们欢心吃了很多苦。回了</div><div class="ctx-line ctx-focus">（语气森然）既然回了顾家，就得守顾家的规矩。我会给你优渥的生活，豪车、名表、京城的户口，这些你这辈子在乡下见都没见过的东西，我都能给你。但——（顿了顿，眼神狠戾）我也能让你瞬间失去一切。识相点，别挑战我的底线。</div><div class="ctx-line ctx-other">既然如此不欢迎我，又何必费尽周折把我找回来？</div></div>
+      </td>
+    </tr>
+    <tr class="hit-high">
+      <td class="col-num">24</td>
+      <td class="col-asr">我不要管理公司，更不想再去外面那些名利场里</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:74px;height:5px;background:#27ae60;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#27ae60;font-size:11px">93.5%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:35px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">43.9%</b> ±2:<span style="display:inline-block;width:44px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">55.3%</b> ±3:<span style="display:inline-block;width:35px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">44.3%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第45集 45-4 <span class="char-tag">顾倾</span></div>
+        <div class="match-text">（声音清冷且坚定）我不要管理公司，更不想再去外面那些名利场里抛头露面。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">哪怕我不在这里了，这些资产也足够你一辈子衣食无忧，活得光鲜亮丽。我想让你去打理公司，去做那个自由自在</div><div class="ctx-line ctx-focus">（声音清冷且坚定）我不要管理公司，更不想再去外面那些名利场里抛头露面。</div><div class="ctx-line ctx-other">（急切地）可是在这里，你没有自由！</div></div>
+      </td>
+    </tr>
+    <tr class="hit-high">
+      <td class="col-num">26</td>
+      <td class="col-asr">一旦入住这里，你的社交圈萎缩到几乎为零，你不能随便联系外界，不能随意发朋友圈，甚至连和你那些远亲通话都要受监控</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:73px;height:5px;background:#27ae60;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#27ae60;font-size:11px">91.8%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:62px;height:5px;background:#e67e22;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#e67e22;font-size:11px">77.7%</b> ±2:<span style="display:inline-block;width:38px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">48.5%</b> ±3:<span style="display:inline-block;width:32px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">40.2%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第45集 45-4 <span class="char-tag">许流年</span></div>
+        <div class="match-text">顾倾，你明白吗？一旦入驻这里，你的社交圈会萎缩到几乎为零。你不能随便联系外界，不能随意发朋友圈，甚至连和你那些远亲通话都要受监控。我……我不想把你绑在我身边。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（急切地）可是在这里，你没有自由！</div><div class="ctx-line ctx-focus">顾倾，你明白吗？一旦入驻这里，你的社交圈会萎缩到几乎为零。你不能随便联系外界，不能随意发朋友圈，甚至连和你那些远亲通话都要受监控。我……我不想把你绑在我身边。</div><div class="ctx-line ctx-other">（声音轻柔，带着一丝远入云端的怀念）许流年，你还记得吗？</div></div>
+      </td>
+    </tr>
+    <tr class="hit-high">
+      <td class="col-num">5</td>
+      <td class="col-asr">哥哥我走还行吗</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:71px;height:5px;background:#27ae60;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#27ae60;font-size:11px">89.0%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:23px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">29.8%</b> ±2:<span style="display:inline-block;width:58px;height:5px;background:#e67e22;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#e67e22;font-size:11px">72.9%</b> ±3:<span style="display:inline-block;width:38px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">47.9%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第1集 1-1 <span class="char-tag">顾坤</span></div>
+        <div class="match-text">哥哥我走还不行吗？不要再打我了，我怕！</div>
+        <div class="match-ctx"><div class="ctx-line ctx-focus">哥哥我走还不行吗？不要再打我了，我怕！</div><div class="ctx-line ctx-other">（声音嘶哑）许流年，二十年了，把你找回来是为了弥补亏欠，可你呢？你一回来坤坤就闹自杀！他昨天刚出院，</div></div>
+      </td>
+    </tr>
+    <tr class="hit-high">
+      <td class="col-num">19</td>
+      <td class="col-asr">傻瓜有什么好</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:69px;height:5px;background:#27ae60;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#27ae60;font-size:11px">87.0%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:24px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">30.3%</b> ±2:<span style="display:inline-block;width:36px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">45.5%</b> ±3:<span style="display:inline-block;width:23px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">29.8%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第45集 45-2 <span class="char-tag">顾倾</span></div>
+        <div class="match-text">（轻笑，眉眼间尽是温柔）傻瓜，有什么好委屈的？</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（嗓音低沉，带着浓重的愧疚）只有这么大点地方，委屈你了。</div><div class="ctx-line ctx-focus">（轻笑，眉眼间尽是温柔）傻瓜，有什么好委屈的？</div><div class="ctx-line ctx-other">在顾家，每天都要防着那些如毒蛇般的算计，哪怕是睡在金丝楠木的大床上，心也是悬着的。</div></div>
+      </td>
+    </tr>
+    <tr class="hit-mid">
+      <td class="col-num">17</td>
+      <td class="col-asr">不可取，你在哪里我就在哪里，嗯</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:67px;height:5px;background:#e67e22;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#e67e22;font-size:11px">84.2%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:41px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">51.7%</b> ±2:<span style="display:inline-block;width:35px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">43.9%</b> ±3:<span style="display:inline-block;width:28px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">35.5%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第43集 43-4 <span class="char-tag">顾倾</span></div>
+        <div class="match-text">你在哪里，我就在哪里。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">我既然决定跟你走，就做好了所有的准备。在这世上，除了你，我已无处可去。</div><div class="ctx-line ctx-focus">你在哪里，我就在哪里。</div><div class="ctx-line ctx-other">（眼神炽热）好。</div></div>
+      </td>
+    </tr>
+    <tr class="hit-mid">
+      <td class="col-num">21</td>
+      <td class="col-asr">只有在这里听着窗外偶尔经过的巡逻脚步声，我才觉得这是我这辈子待过最安稳的地方，顾卿听我说，当初我从顾家拿走了4,000万</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:65px;height:5px;background:#e67e22;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#e67e22;font-size:11px">81.3%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:24px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">30.7%</b> ±2:<span style="display:inline-block;width:45px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">56.4%</b> ±3:<span style="display:inline-block;width:17px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">21.3%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第45集 45-2 <span class="char-tag">顾倾</span></div>
+        <div class="match-text">只有在这里，听着窗外偶尔经过的巡逻脚步声，我才觉得这是我这辈子待过最安稳的地方。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">在顾家，每天都要防着那些如毒蛇般的算计，哪怕是睡在金丝楠木的大床上，心也是悬着的。</div><div class="ctx-line ctx-focus">只有在这里，听着窗外偶尔经过的巡逻脚步声，我才觉得这是我这辈子待过最安稳的地方。</div><div class="ctx-line ctx-other">（深吸一口气）顾倾，听我说。当初我从顾家拿走的四千万，如今已经滚成了足以惊动整个行业的人工智能帝国。</div></div>
+      </td>
+    </tr>
+    <tr class="hit-mid">
+      <td class="col-num">1</td>
+      <td class="col-asr">亲生父母明天就会因为意外断药</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:58px;height:5px;background:#e67e22;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#e67e22;font-size:11px">73.7%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:29px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">37.2%</b> ±2:<span style="display:inline-block;width:36px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">45.5%</b> ±3:<span style="display:inline-block;width:34px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">43.4%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第39集 39-2 <span class="char-tag">顾父</span></div>
+        <div class="match-text">要么，你下周乖乖跟坤坤领证，继续做你的顾太太；要么……你那对正在疗养院里靠我的钱续命的亲生父母，明天就会因为‘意外’断药。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（语气威严且阴森）顾倾，我没耐心听你在这儿要死要活。你自己考虑清楚。</div><div class="ctx-line ctx-focus">要么，你下周乖乖跟坤坤领证，继续做你的顾太太；要么……你那对正在疗养院里靠我的钱续命的亲生父母，明天就会因为‘意外’断药。</div><div class="ctx-line ctx-other">（声音发虚）许流年……你，你怎么进来的！</div></div>
+      </td>
+    </tr>
+    <tr class="hit-mid">
+      <td class="col-num">3</td>
+      <td class="col-asr">啊啊啊，精神新书不行，这8年你是我唯一的魂牵梦绕</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:55px;height:5px;background:#e67e22;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#e67e22;font-size:11px">69.7%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:42px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">52.6%</b> ±2:<span style="display:inline-block;width:27px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">33.8%</b> ±3:<span style="display:inline-block;width:47px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">59.5%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第41集 41-2 <span class="char-tag">许流年</span></div>
+        <div class="match-text">顾倾，你知不知道，这八年里，你是我唯一的魂牵梦绕。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（发出一声凄厉的哀嚎，猛地朝顾坤扑了过去）坤坤！我的坤坤啊！</div><div class="ctx-line ctx-focus">顾倾，你知不知道，这八年里，你是我唯一的魂牵梦绕。</div><div class="ctx-line ctx-other">（声音磁性且低沉，带着一股尘埃落定后的温柔）顾倾，记不记得我八年前走的时候，对你说过什么？</div></div>
+      </td>
+    </tr>
+    <tr class="hit-mid">
+      <td class="col-num">23</td>
+      <td class="col-asr">而不是困在这个连出门买个菜都要打报告的牢笼里，陪我过这种枯燥的高压生活</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:55px;height:5px;background:#e67e22;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#e67e22;font-size:11px">69.2%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:62px;height:5px;background:#e67e22;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#e67e22;font-size:11px">78.4%</b> ±2:<span style="display:inline-block;width:24px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">30.0%</b> ±3:<span style="display:inline-block;width:33px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">41.7%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第45集 45-3 <span class="char-tag">许流年</span></div>
+        <div class="match-text">哪怕我不在这里了，这些资产也足够你一辈子衣食无忧，活得光鲜亮丽。我想让你去打理公司，去做那个自由自在的‘女皇’，而不是困在这个连出门买个菜都要打报告的牢笼里，陪我过这种枯燥的高压生活。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（深吸一口气）顾倾，听我说。当初我从顾家拿走的四千万，如今已经滚成了足以惊动整个行业的人工智能帝国。</div><div class="ctx-line ctx-focus">哪怕我不在这里了，这些资产也足够你一辈子衣食无忧，活得光鲜亮丽。我想让你去打理公司，去做那个自由自在的‘女皇’，而不是困在这个连出门买个菜都要打报告的牢笼里，陪我过这种枯燥的高压生活。</div><div class="ctx-line ctx-other">（声音清冷且坚定）我不要管理公司，更不想再去外面那些名利场里抛头露面。</div></div>
+      </td>
+    </tr>
+    <tr class="hit-low">
+      <td class="col-num">9</td>
+      <td class="col-asr">不能动那些上不得台面的歪心思去排挤他知道吗</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:51px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">64.6%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:44px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">56.0%</b> ±2:<span style="display:inline-block;width:48px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">60.2%</b> ±3:<span style="display:inline-block;width:34px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">43.6%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第2集 2-1 <span class="char-tag">顾母</span></div>
+        <div class="match-text">（声音压得极低，透着警告）流年，当年被抱错，并不是你弟弟的错。他这些年为了讨我们欢心吃了很多苦。回了家，你不可以迁怒他，更不能动那些上不得台面的歪心思去排挤他，知道吗？</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">很好。原本我想给你们一个做父母的机会。</div><div class="ctx-line ctx-focus">（声音压得极低，透着警告）流年，当年被抱错，并不是你弟弟的错。他这些年为了讨我们欢心吃了很多苦。回了家，你不可以迁怒他，更不能动那些上不得台面的歪心思去排挤他，知道吗？</div><div class="ctx-line ctx-other">（语气森然）既然回了顾家，就得守顾家的规矩。我会给你优渥的生活，豪车、名表、京城的户口，这些你这辈子</div></div>
+      </td>
+    </tr>
+    <tr class="hit-low">
+      <td class="col-num">22</td>
+      <td class="col-asr">如今已经滚成了足以惊动整个行业的人工智能帝国，哪怕我不在这里了，这些资产也足够你一辈子衣食无忧，活的光鲜亮丽，我想让你去打理公司去做那个自由自在的女皇</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:50px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">63.6%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:30px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">38.3%</b> ±2:<span style="display:inline-block;width:42px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">53.7%</b> ±3:<span style="display:inline-block;width:37px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">47.4%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第45集 45-3 <span class="char-tag">许流年</span></div>
+        <div class="match-text">哪怕我不在这里了，这些资产也足够你一辈子衣食无忧，活得光鲜亮丽。我想让你去打理公司，去做那个自由自在的‘女皇’，而不是困在这个连出门买个菜都要打报告的牢笼里，陪我过这种枯燥的高压生活。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（深吸一口气）顾倾，听我说。当初我从顾家拿走的四千万，如今已经滚成了足以惊动整个行业的人工智能帝国。</div><div class="ctx-line ctx-focus">哪怕我不在这里了，这些资产也足够你一辈子衣食无忧，活得光鲜亮丽。我想让你去打理公司，去做那个自由自在的‘女皇’，而不是困在这个连出门买个菜都要打报告的牢笼里，陪我过这种枯燥的高压生活。</div><div class="ctx-line ctx-other">（声音清冷且坚定）我不要管理公司，更不想再去外面那些名利场里抛头露面。</div></div>
+      </td>
+    </tr>
+    <tr class="hit-low">
+      <td class="col-num">25</td>
+      <td class="col-asr">更不想再去外面那些名利场里抛头露面，可是在这里你没有自由顾青你明白吗</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:49px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">61.7%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:30px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">37.7%</b> ±2:<span style="display:inline-block;width:47px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">59.2%</b> ±3:<span style="display:inline-block;width:32px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">40.9%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第45集 45-4 <span class="char-tag">顾倾</span></div>
+        <div class="match-text">（声音清冷且坚定）我不要管理公司，更不想再去外面那些名利场里抛头露面。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">哪怕我不在这里了，这些资产也足够你一辈子衣食无忧，活得光鲜亮丽。我想让你去打理公司，去做那个自由自在</div><div class="ctx-line ctx-focus">（声音清冷且坚定）我不要管理公司，更不想再去外面那些名利场里抛头露面。</div><div class="ctx-line ctx-other">（急切地）可是在这里，你没有自由！</div></div>
+      </td>
+    </tr>
+    <tr class="hit-low">
+      <td class="col-num">16</td>
+      <td class="col-asr">法官宣读判决的时候，三个人哭成一团一个劲儿说对不起，可惜晚了，找个地方随便处理了，其实从一开始我从未奢望过他们对我有多好，我甚至理解他们更爱那个样子，毕竟20年的朝夕相处养只狗都会有感情，如果他们只是平淡的把我当成路人，我或许会给他们一笔钱保他们晚年无忧，可是他们真的不该我许流年从来都不是什么慈悲为怀的圣母</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:46px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">58.3%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:38px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">47.6%</b> ±2:<span style="display:inline-block;width:32px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">41.1%</b> ±3:<span style="display:inline-block;width:29px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">36.9%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第42集 42-2 <span class="char-tag">许流年</span></div>
+        <div class="match-text">我甚至理解他们更爱那个养子。毕竟二十年的朝夕相处，养只狗都会有感情。如果他们只是平淡地把我当成路人，我或许会给他们一笔钱，保他们晚年无忧。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">其实从一开始，我从未奢望过他们能对我有多好。</div><div class="ctx-line ctx-focus">我甚至理解他们更爱那个养子。毕竟二十年的朝夕相处，养只狗都会有感情。如果他们只是平淡地把我当成路人，我或许会给他们一笔钱，保他们晚年无忧。</div><div class="ctx-line ctx-other">可是，他们真的不该一次又一次地来伤我的。</div></div>
+      </td>
+    </tr>
+    <tr class="hit-low">
+      <td class="col-num">11</td>
+      <td class="col-asr">识相点别挑战我的底线，别怪哥哥</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:44px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">55.4%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:63px;height:5px;background:#e67e22;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#e67e22;font-size:11px">78.8%</b> ±2:<span style="display:inline-block;width:50px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">63.0%</b> ±3:<span style="display:inline-block;width:36px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">45.4%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第2集 2-1 <span class="char-tag">顾父</span></div>
+        <div class="match-text">（语气森然）既然回了顾家，就得守顾家的规矩。我会给你优渥的生活，豪车、名表、京城的户口，这些你这辈子在乡下见都没见过的东西，我都能给你。但——（顿了顿，眼神狠戾）我也能让你瞬间失去一切。识相点，别挑战我的底线。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（声音压得极低，透着警告）流年，当年被抱错，并不是你弟弟的错。他这些年为了讨我们欢心吃了很多苦。回了</div><div class="ctx-line ctx-focus">（语气森然）既然回了顾家，就得守顾家的规矩。我会给你优渥的生活，豪车、名表、京城的户口，这些你这辈子在乡下见都没见过的东西，我都能给你。但——（顿了顿，眼神狠戾）我也能让你瞬间失去一切。识相点，别挑战我的底线。</div><div class="ctx-line ctx-other">既然如此不欢迎我，又何必费尽周折把我找回来？</div></div>
+      </td>
+    </tr>
+    <tr class="hit-low">
+      <td class="col-num">13</td>
+      <td class="col-asr">由于你们涉嫌通过非法手段窃取公司专利，现依法对你们实施逮捕</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:43px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">54.0%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:24px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">30.9%</b> ±2:<span style="display:inline-block;width:33px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">41.5%</b> ±3:<span style="display:inline-block;width:28px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">36.0%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第42集 42-1 <span class="char-tag">办案人员</span></div>
+        <div class="match-text">（声音威严，不带一丝温度）顾振海，李翠兰，顾坤。由于你们涉嫌通过非法手段窃取并大范围传播国家机密人员身份信息，严重危害国家安全，现依法对你们实施逮捕。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（哽咽）我就知道，流年……你一定会回来，带我逃出这个吃人的牢笼。</div><div class="ctx-line ctx-focus">（声音威严，不带一丝温度）顾振海，李翠兰，顾坤。由于你们涉嫌通过非法手段窃取并大范围传播国家机密人员身份信息，严重危害国家安全，现依法对你们实施逮捕。</div><div class="ctx-line ctx-other">（歇斯底里地尖叫，试图爬向许流年）流年！我是你妈啊！你不能这么绝情！我们只是发了个微博，我们不知道什</div></div>
+      </td>
+    </tr>
+    <tr class="hit-low">
+      <td class="col-num">4</td>
+      <td class="col-asr">我我的车</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:41px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">52.0%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:44px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">56.2%</b> ±2:<span style="display:inline-block;width:51px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">64.8%</b> ±3:<span style="display:inline-block;width:49px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">62.4%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第13集 12-5 <span class="char-tag">顾倾</span></div>
+        <div class="match-text">（难掩尴尬，眼神躲闪）我……我准备去洗漱，没看到地上有人……</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（嗓音带着刚睡醒的沙哑，软绵绵的）你……你怎么睡在这儿了？</div><div class="ctx-line ctx-focus">（难掩尴尬，眼神躲闪）我……我准备去洗漱，没看到地上有人……</div><div class="ctx-line ctx-other">大小姐，你这间房统共就这么大点地方，我一个一米八几的大活人横在这儿，你都能踩上来，你这脑子果然是被顾</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">14</td>
+      <td class="col-asr">姑父在里面写了整整三页的忏悔书，顾母和顾坤也表示悔罪</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:33px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">41.9%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:42px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">52.5%</b> ±2:<span style="display:inline-block;width:29px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">36.7%</b> ±3:<span style="display:inline-block;width:27px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">34.0%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第42集 42-2 <span class="char-tag">阿龙哥</span></div>
+        <div class="match-text">心理防线彻底崩了。顾父在里面自缢，顾母和顾坤跟着……都没挺过去。这种涉及特级保密的案子，他们知道自己这辈子都不可能出来了。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（眼神微动，语气如冰）走了？</div><div class="ctx-line ctx-focus">心理防线彻底崩了。顾父在里面自缢，顾母和顾坤跟着……都没挺过去。这种涉及特级保密的案子，他们知道自己这辈子都不可能出来了。</div><div class="ctx-line ctx-other">（沉默良久）倒是省了那一颗颗子弹。</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">15</td>
+      <td class="col-asr">这种涉及特级保密的案子，他们知道自己这辈子都出不来了，认罪了，嗯，心理防线早就崩了</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:32px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">40.3%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:36px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">45.1%</b> ±2:<span style="display:inline-block;width:31px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">39.5%</b> ±3:<span style="display:inline-block;width:27px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">34.0%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第2集 2-4 <span class="char-tag">许流年</span></div>
+        <div class="match-text">这种级别的绿茶手段……看来接下来的日子想安静是不太可能了。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（断断续续）咳咳……爸……别怪哥哥……是我自己……不配在这个家待下去……</div><div class="ctx-line ctx-focus">这种级别的绿茶手段……看来接下来的日子想安静是不太可能了。</div><div class="ctx-line ctx-other">（惊魂未定地大叫）坤坤！坤坤你别吓爸爸！能呼吸吗？说话！快说话啊！</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">27</td>
+      <td class="col-asr">我不想把你绑在我身边，许流年你还记得吗</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:30px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">38.0%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:44px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">55.2%</b> ±2:<span style="display:inline-block;width:38px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">47.9%</b> ±3:<span style="display:inline-block;width:27px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">34.2%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第45集 45-4 <span class="char-tag">顾倾</span></div>
+        <div class="match-text">（声音清冷且坚定）我不要管理公司，更不想再去外面那些名利场里抛头露面。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">哪怕我不在这里了，这些资产也足够你一辈子衣食无忧，活得光鲜亮丽。我想让你去打理公司，去做那个自由自在</div><div class="ctx-line ctx-focus">（声音清冷且坚定）我不要管理公司，更不想再去外面那些名利场里抛头露面。</div><div class="ctx-line ctx-other">（急切地）可是在这里，你没有自由！</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">18</td>
+      <td class="col-asr">我守家了，只有这么大点地方委屈你了</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:29px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">37.1%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:41px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">52.2%</b> ±2:<span style="display:inline-block;width:34px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">43.1%</b> ±3:<span style="display:inline-block;width:26px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">32.6%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第17集 12-5 <span class="char-tag">顾父</span></div>
+        <div class="match-text">我实话实说了吧。之所以费尽周折把你从乡下带回来，就是看中了你的成绩。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（声音低沉，带着上位者的施舍感）行了，许流年。</div><div class="ctx-line ctx-focus">我实话实说了吧。之所以费尽周折把你从乡下带回来，就是看中了你的成绩。</div><div class="ctx-line ctx-other">只要你安心留在顾家读书，在接下来的高考里拿个省状元回来，你的开销、学费，甚至你想要的那种奢侈生活，钱</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">7</td>
+      <td class="col-asr">石头做的吗</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:28px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">35.8%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:45px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">57.5%</b> ±2:<span style="display:inline-block;width:42px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">53.3%</b> ±3:<span style="display:inline-block;width:33px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">42.2%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第44集 44-3 <span class="char-tag">顾倾</span></div>
+        <div class="match-text">（眉眼弯弯，对着许流年温柔一笑）食堂的师傅手艺真好。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">这一生，我守家国，亦守你。</div><div class="ctx-line ctx-focus">（眉眼弯弯，对着许流年温柔一笑）食堂的师傅手艺真好。</div><div class="ctx-line ctx-other">（嗓音低沉，带着浓重的愧疚）只有这么大点地方，委屈你了。</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">29</td>
+      <td class="col-asr">顾清谢谢，傻话我一直都在男人隐姓埋名七年带着顶级ai</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:28px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">35.4%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:22px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">28.3%</b> ±2:<span style="display:inline-block;width:21px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">26.7%</b> ±3:<span style="display:inline-block;width:29px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">36.4%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第41集 41-2 <span class="char-tag">许流年</span></div>
+        <div class="match-text">顾倾，你知不知道，这八年里，你是我唯一的魂牵梦绕。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（发出一声凄厉的哀嚎，猛地朝顾坤扑了过去）坤坤！我的坤坤啊！</div><div class="ctx-line ctx-focus">顾倾，你知不知道，这八年里，你是我唯一的魂牵梦绕。</div><div class="ctx-line ctx-other">（声音磁性且低沉，带着一股尘埃落定后的温柔）顾倾，记不记得我八年前走的时候，对你说过什么？</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">2</td>
+      <td class="col-asr">动了动手，爸爸，我的狗回来了</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:27px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">34.8%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:36px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">45.5%</b> ±2:<span style="display:inline-block;width:34px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">43.4%</b> ±3:<span style="display:inline-block;width:27px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">33.8%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第40集 40-3 <span class="char-tag">许流年</span></div>
+        <div class="match-text">（淡然开口）动手。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（轻蔑地挑眉）好，那就默认是两只手都动了。</div><div class="ctx-line ctx-focus">（淡然开口）动手。</div><div class="ctx-line ctx-other">（发出一声杀猪般的惨叫）啊——！救命！爸！妈！救我！</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">12</td>
+      <td class="col-asr">现在你等到了，我就知道流年，你一定会回来带我逃出这个吃人的牢笼，顾振海李翠兰</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:26px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">33.2%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:38px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">48.4%</b> ±2:<span style="display:inline-block;width:49px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">61.9%</b> ±3:<span style="display:inline-block;width:40px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">50.6%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第10集 10-2 <span class="char-tag">顾父</span></div>
+        <div class="match-text">（咬牙，眼神变得阴狠）先稳住他。等他高考出了好成绩，把顾家的名声打出去，到时候他要是还这么不听话，我有的是办法让他知道什么是社会的残酷。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（语气冷厉）妇人之见！京城圈子里，谁不知道坤坤身体弱，学习也只能算中等？要是出了个省状元，那是多大的</div><div class="ctx-line ctx-focus">（咬牙，眼神变得阴狠）先稳住他。等他高考出了好成绩，把顾家的名声打出去，到时候他要是还这么不听话，我有的是办法让他知道什么是社会的残酷。</div><div class="ctx-line ctx-other">（语气中带着防备）这是你的房间。</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">30</td>
+      <td class="col-asr">隐姓埋名七年，带着顶级ai算法荣耀归来，谁知刚下飞机就被亲生父母带着假千金当众堵截，为了逼男人认祖归宗，这家人竟不惜在酒店门口集体下跪，哭得撕心裂肺，甚至买通水军把视频顶上热搜，企图用道德绑架逼他就范</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:25px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">31.7%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:23px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">29.9%</b> ±2:<span style="display:inline-block;width:22px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">28.3%</b> ±3:<span style="display:inline-block;width:21px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">26.7%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第45集 45-4 <span class="char-tag">许流年</span></div>
+        <div class="match-text">顾倾，你明白吗？一旦入驻这里，你的社交圈会萎缩到几乎为零。你不能随便联系外界，不能随意发朋友圈，甚至连和你那些远亲通话都要受监控。我……我不想把你绑在我身边。</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（急切地）可是在这里，你没有自由！</div><div class="ctx-line ctx-focus">顾倾，你明白吗？一旦入驻这里，你的社交圈会萎缩到几乎为零。你不能随便联系外界，不能随意发朋友圈，甚至连和你那些远亲通话都要受监控。我……我不想把你绑在我身边。</div><div class="ctx-line ctx-other">（声音轻柔，带着一丝远入云端的怀念）许流年，你还记得吗？</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">28</td>
+      <td class="col-asr">心中所爱在何处，那何处才是自由，这位就是你的贤内助，我要的是一个能够具有自我净化，你已经连续工作36个小时了，该休息了，又陪我到这么晚，明天不用起这么早，你安心忙，只要我一抬头能看见你，我就不累</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:25px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">31.7%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:25px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">32.0%</b> ±2:<span style="display:inline-block;width:29px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">36.4%</b> ±3:<span style="display:inline-block;width:28px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">36.1%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第8集 8-1 <span class="char-tag">顾父</span></div>
+        <div class="match-text">（指着许流年的鼻子，唾沫横飞）这里是顾家！是我顾振海的地盘！你流着老子的血，吃着老子的饭，竟然敢在这儿装大爷？你个乡下来的野种，没教养的东西！我今天非替你那个短命的养父好好教训教训你！</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">（猛地跨出一步，嗓门几乎震碎了吊灯）许流年！你以为你是谁？你以为你现在是在对谁发号施令！</div><div class="ctx-line ctx-focus">（指着许流年的鼻子，唾沫横飞）这里是顾家！是我顾振海的地盘！你流着老子的血，吃着老子的饭，竟然敢在这儿装大爷？你个乡下来的野种，没教养的东西！我今天非替你那个短命的养父好好教训教训你！</div><div class="ctx-line ctx-other">（满脸通红，口水顺着香蕉边缘流下）唔……呕……咳咳咳！</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">6</td>
+      <td class="col-asr">不要再打我了，我怕去流年20年了把你找回来是为了弥补亏欠，可你呢，你一回来坤坤就闹自杀，他昨天刚出院，今天就又被你打成这样许流年，你这解释是</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:22px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">28.1%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:27px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">34.8%</b> ±2:<span style="display:inline-block;width:21px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">27.2%</b> ±3:<span style="display:inline-block;width:38px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">48.3%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第39集 39-1 <span class="char-tag">顾坤</span></div>
+        <div class="match-text">（指着顾倾，歇斯底里地吼叫）不要在我面前提他！那个乡下来的贱种，他算什么东西？</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">甚至拿你跟许流年相提并论，对他来说都是一种莫大的侮辱！</div><div class="ctx-line ctx-focus">（指着顾倾，歇斯底里地吼叫）不要在我面前提他！那个乡下来的贱种，他算什么东西？</div><div class="ctx-line ctx-other">听清楚了，我才是顾家唯一的儿子！我才是这间别墅未来的主人！</div></div>
+      </td>
+    </tr>
+    <tr class="">
+      <td class="col-num">8</td>
+      <td class="col-asr">这种表演，那是你弟弟，这一巴掌下去，顾家那种单薄的并不是你弟弟的错，他这些年为了讨我们欢心吃了很多苦，回了家你不可以迁怒他，更不能动那些上不得台面的歪心思去</td>
+      <td class="col-score">
+        <div><span style="display:inline-block;width:22px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">27.8%</b></div>
+        <div class="exp-scores">±1:<span style="display:inline-block;width:58px;height:5px;background:#e67e22;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#e67e22;font-size:11px">73.0%</b> ±2:<span style="display:inline-block;width:34px;height:5px;background:#999;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#999;font-size:11px">43.6%</b> ±3:<span style="display:inline-block;width:37px;height:5px;background:#f39c12;border-radius:2px;vertical-align:middle;margin-right:2px"></span><b style="color:#f39c12;font-size:11px">47.5%</b></div>
+      </td>
+      <td class="col-script">
+        <div class="match-loc">第8集 9-1 <span class="char-tag">许流年</span></div>
+        <div class="match-text">这种见过血的杀气，就凭他一个在写字楼里指手画脚的奸商，受得了？</div>
+        <div class="match-ctx"><div class="ctx-line ctx-other">老子从有记忆起，就跟村里那群没轻没重的小崽子干架。</div><div class="ctx-line ctx-focus">这种见过血的杀气，就凭他一个在写字楼里指手画脚的奸商，受得了？</div><div class="ctx-line ctx-other">（声音颤抖，指着许流年的手抖得像筛糠）你……你你……你这个畜生……你竟然敢用这种眼神看我！</div></div>
+      </td>
+    </tr></tbody>
+</table>
+<div class="footer">Weixin Video Monitor | 纯对白匹配 | 按得分降序</div>
+</div></body></html>

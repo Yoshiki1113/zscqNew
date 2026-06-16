@@ -884,6 +884,15 @@ def attach_recording_media(record, video_path: str, started_at: str, ended_at: s
         else:
             if wav_path:
                 record.media_info["recording_audio_path"] = str(wav_path)
+                # --- ASR (SenseVoice first, Paraformer fallback) ---
+                try:
+                    from store import build_video_identifier
+                    vid = build_video_identifier(record.to_dict())
+                    record.candidate["video_identifier"] = vid
+                    from asr_sensevoice import run_asr_pipeline
+                    run_asr_pipeline(record, str(wav_path), vid)
+                except Exception as asr_exc:
+                    print(f"[record] ASR failed: {asr_exc}")
 
 
 async def run():

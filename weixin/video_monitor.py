@@ -5,7 +5,7 @@
   2. 截图 + OCR 获取页面信息
   3. 搜索关键词
   4. 打开视频提取账号ID
-  5. 音频转录（Vosk ASR）
+  5. 音频转录（SenseVoice ASR）
 """
 import asyncio, base64, json, os, re, sys, time
 

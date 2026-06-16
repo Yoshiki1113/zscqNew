@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 from datetime import datetime
 
-from models import EvidenceRecord
+from models import EvidenceRecord, Task, ReviewResult
 
 
 CREATE_TABLE_SQL = """
@@ -56,7 +56,10 @@ CREATE TABLE IF NOT EXISTS weixin_video_evidence (
     recording_duration_seconds INT NOT NULL DEFAULT 0,
     has_audio BOOLEAN NULL DEFAULT NULL,
     asr_text LONGTEXT NOT NULL,
+    asr_text_path VARCHAR(1000) NOT NULL DEFAULT '',
     asr_json_path VARCHAR(1000) NOT NULL DEFAULT '',
+    asr_model VARCHAR(32) NOT NULL DEFAULT '',
+    asr_source_video_identifier VARCHAR(64) NOT NULL DEFAULT '',
 
     screenshots_json LONGTEXT NOT NULL,
 
@@ -139,6 +142,72 @@ def evidence_record_to_db_row(record: EvidenceRecord) -> dict:
         "recording_duration_seconds": int(media_info.get("recording_duration_seconds", 0) or 0),
         "has_audio": media_info.get("has_audio", None),
         "asr_text": media_info.get("asr_text", "") or "",
+        "asr_text_path": media_info.get("asr_text_path", "") or "",
         "asr_json_path": media_info.get("asr_json_path", "") or "",
+        "asr_model": media_info.get("asr_model", "") or "",
+        "asr_source_video_identifier": media_info.get("asr_source_video_identifier", "") or "",
         "screenshots_json": _json_dumps(record.screenshots or []),
+    }
+
+
+# -------------------------------------------------------------
+# Additional tables for web platform
+# -------------------------------------------------------------
+
+ALTER_EVIDENCE_TABLE_SQL = """
+ALTER TABLE weixin_video_evidence
+    ADD COLUMN review_status VARCHAR(16) NOT NULL DEFAULT '不确定';
+""".strip()
+
+ALTER_EVIDENCE_TABLE_SQL2 = """
+ALTER TABLE weixin_video_evidence
+    ADD COLUMN video_identifier VARCHAR(64) NOT NULL DEFAULT '';
+""".strip()
+
+CREATE_TASKS_TABLE_SQL = """
+CREATE TABLE IF NOT EXISTS tasks (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    keyword VARCHAR(255) NOT NULL DEFAULT '',
+    status VARCHAR(16) NOT NULL DEFAULT 'pending',
+    log_json LONGTEXT NOT NULL,
+    video_count INT NOT NULL DEFAULT 0,
+    started_at DATETIME NULL DEFAULT NULL,
+    ended_at DATETIME NULL DEFAULT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+""".strip()
+
+CREATE_REVIEW_RESULTS_TABLE_SQL = """
+CREATE TABLE IF NOT EXISTS review_results (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    evidence_row_id BIGINT NOT NULL,
+    review_status VARCHAR(16) NOT NULL DEFAULT '不确定',
+    reviewer VARCHAR(64) NOT NULL DEFAULT '',
+    notes TEXT NOT NULL,
+    reviewed_at DATETIME NULL DEFAULT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uk_evidence_row (evidence_row_id)
+);
+""".strip()
+
+
+def task_to_db_row(task: Task) -> dict:
+    return {
+        "keyword": task.keyword or "",
+        "status": task.status or "pending",
+        "log_json": json.dumps(task.log_lines or [], ensure_ascii=False),
+        "video_count": int(task.video_count or 0),
+        "started_at": task.started_at or None,
+        "ended_at": task.ended_at or None,
+    }
+
+
+def review_result_to_db_row(review: ReviewResult) -> dict:
+    return {
+        "evidence_row_id": int(review.evidence_row_id or 0),
+        "review_status": review.review_status or "不确定",
+        "reviewer": review.reviewer or "",
+        "notes": review.notes or "",
+        "reviewed_at": review.reviewed_at or None,
     }

@@ -1,0 +1,597 @@
+{
+  "platform": "weixin",
+  "search_keyword": "弃子归来震万城",
+  "capture_time": "2026-06-15T10:45:20+08:00",
+  "capture_timestamp": "2026-06-15T10:45:20+08:00",
+  "candidate": {
+    "keyword": "弃子归来震万城",
+    "hit_text": "video_1",
+    "title_text": "video_1",
+    "author_name": "",
+    "publish_time": "",
+    "fingerprint": "16f1a0824ee5a99e7302756c4c21f818",
+    "score": 1,
+    "click_x": 0,
+    "click_y": 0,
+    "video_identifier": "ca2705186611a2b6"
+  },
+  "video_info": {
+    "blogger_name": "安然小懒猫剧场",
+    "video_channel_id": "sphE9DRHmCGilXG",
+    "video_channel_id_raw": "sphE9DRHmCGilXG",
+    "video_channel_id_needs_review": true,
+    "video_channel_id_ambiguous_positions": [
+      {
+        "index": 12,
+        "char": "l"
+      }
+    ],
+    "video_link": "https://weixin.qq.com/sph/AdlZPyeEUe",
+    "publish_time": "",
+    "like_count": "16",
+    "comment_count": "5",
+    "share_count": "",
+    "raw_ocr": [
+      {
+        "text": "10:45",
+        "x": 84,
+        "y": 57,
+        "w": 115,
+        "h": 35
+      },
+      {
+        "text": "10:28",
+        "x": 264,
+        "y": 59,
+        "w": 156,
+        "h": 42
+      },
+      {
+        "text": "0100%",
+        "x": 933,
+        "y": 56,
+        "w": 250,
+        "h": 42
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 44,
+        "y": 131,
+        "w": 89,
+        "h": 38
+      },
+      {
+        "text": "dx: 1.0",
+        "x": 195,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 353,
+        "y": 132,
+        "w": 99,
+        "h": 35
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 523,
+        "y": 130,
+        "w": 135,
+        "h": 36
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 648,
+        "y": 131,
+        "w": 115,
+        "h": 27
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 817,
+        "y": 131,
+        "w": 92,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 974,
+        "y": 131,
+        "w": 102,
+        "h": 27
+      },
+      {
+        "text": "6",
+        "x": 181,
+        "y": 183,
+        "w": 58,
+        "h": 63
+      },
+      {
+        "text": "6d",
+        "x": 977,
+        "y": 1530,
+        "w": 85,
+        "h": 36
+      },
+      {
+        "text": "免费剧集：十年掏..．全45集",
+        "x": 400,
+        "y": 1699,
+        "w": 487,
+        "h": 42
+      },
+      {
+        "text": "《弃子归来震万城》",
+        "x": 542,
+        "y": 1794,
+        "w": 377,
+        "h": 58
+      },
+      {
+        "text": "可能含有AI生成内容",
+        "x": 260,
+        "y": 1836,
+        "w": 376,
+        "h": 43
+      },
+      {
+        "text": "剧情演绎请勿模仿",
+        "x": 540,
+        "y": 1926,
+        "w": 400,
+        "h": 58
+      },
+      {
+        "text": "安然小懒猫剧场（38r#蕉击差卡葡【免费剧集】；",
+        "x": 525,
+        "y": 1964,
+        "w": 965,
+        "h": 58
+      },
+      {
+        "text": "不花一分钱看全集#影视综艺#热门漫剧",
+        "x": 450,
+        "y": 2027,
+        "w": 805,
+        "h": 50
+      },
+      {
+        "text": "安然小懒猫",
+        "x": 286,
+        "y": 2179,
+        "w": 169,
+        "h": 42
+      },
+      {
+        "text": "+关注",
+        "x": 460,
+        "y": 2178,
+        "w": 106,
+        "h": 47
+      },
+      {
+        "text": "16",
+        "x": 594,
+        "y": 2224,
+        "w": 36,
+        "h": 32
+      },
+      {
+        "text": "5",
+        "x": 729,
+        "y": 2226,
+        "w": 17,
+        "h": 17
+      }
+    ]
+  },
+  "profile_info": {
+    "name": "安然小懒猫剧场",
+    "account": "sphE9DRHmCGilXG",
+    "subject_type": "个人",
+    "company_full_name": "",
+    "raw_ocr": [
+      {
+        "text": "10:46",
+        "x": 84,
+        "y": 59,
+        "w": 115,
+        "h": 38
+      },
+      {
+        "text": "11:53",
+        "x": 252,
+        "y": 60,
+        "w": 142,
+        "h": 44
+      },
+      {
+        "text": "0100%",
+        "x": 932,
+        "y": 57,
+        "w": 254,
+        "h": 51
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 44,
+        "y": 130,
+        "w": 89,
+        "h": 36
+      },
+      {
+        "text": "dx: 1.0",
+        "x": 195,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 353,
+        "y": 131,
+        "w": 94,
+        "h": 27
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 524,
+        "y": 131,
+        "w": 133,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 650,
+        "y": 131,
+        "w": 111,
+        "h": 27
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 816,
+        "y": 131,
+        "w": 90,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 973,
+        "y": 131,
+        "w": 104,
+        "h": 27
+      },
+      {
+        "text": "基础信息",
+        "x": 172,
+        "y": 769,
+        "w": 209,
+        "h": 62
+      },
+      {
+        "text": "性别",
+        "x": 122,
+        "y": 879,
+        "w": 108,
+        "h": 58
+      },
+      {
+        "text": "女",
+        "x": 449,
+        "y": 878,
+        "w": 61,
+        "h": 60
+      },
+      {
+        "text": "IP归属地",
+        "x": 166,
+        "y": 987,
+        "w": 209,
+        "h": 67
+      },
+      {
+        "text": "广东",
+        "x": 475,
+        "y": 987,
+        "w": 116,
+        "h": 65
+      },
+      {
+        "text": "资料所在地",
+        "x": 198,
+        "y": 1098,
+        "w": 260,
+        "h": 60
+      },
+      {
+        "text": "黑龙江 齐齐哈尔",
+        "x": 610,
+        "y": 1100,
+        "w": 376,
+        "h": 60
+      },
+      {
+        "text": "视频号ID",
+        "x": 172,
+        "y": 1208,
+        "w": 205,
+        "h": 53
+      },
+      {
+        "text": "sphE9DRHmCGilXG",
+        "x": 651,
+        "y": 1205,
+        "w": 464,
+        "h": 60
+      }
+    ]
+  },
+  "traffic_info": {
+    "has_traffic_marker": true,
+    "marker_text": "免费剧集：十年掏...全45集",
+    "target_blogger_name": "岁岁平安短剧",
+    "target_video_channel_id": "sphj24mfqdR8q36",
+    "target_video_channel_id_raw": "sphj24mfqdR8q36",
+    "target_video_channel_id_needs_review": false,
+    "target_video_channel_id_ambiguous_positions": [],
+    "company_full_name": "惠州市云尘传媒有限公司",
+    "company_verified_at": "2026年4月27日完成微",
+    "raw_ocr": [
+      {
+        "text": "10:46",
+        "x": 83,
+        "y": 57,
+        "w": 118,
+        "h": 45
+      },
+      {
+        "text": "11:19",
+        "x": 247,
+        "y": 58,
+        "w": 138,
+        "h": 53
+      },
+      {
+        "text": "%00L",
+        "x": 934,
+        "y": 57,
+        "w": 253,
+        "h": 50
+      },
+      {
+        "text": "P: 0 /1",
+        "x": 43,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dx: 1.0",
+        "x": 195,
+        "y": 130,
+        "w": 87,
+        "h": 36
+      },
+      {
+        "text": "dY: 0.0",
+        "x": 352,
+        "y": 131,
+        "w": 96,
+        "h": 27
+      },
+      {
+        "text": "Xv: 0.050",
+        "x": 522,
+        "y": 131,
+        "w": 132,
+        "h": 27
+      },
+      {
+        "text": "Yv: 0.0",
+        "x": 658,
+        "y": 130,
+        "w": 106,
+        "h": 36
+      },
+      {
+        "text": "Prs: 1.0",
+        "x": 818,
+        "y": 131,
+        "w": 85,
+        "h": 27
+      },
+      {
+        "text": "Size: 1.0",
+        "x": 974,
+        "y": 131,
+        "w": 102,
+        "h": 27
+      },
+      {
+        "text": "老婆苏婉慧的声音",
+        "x": 537,
+        "y": 545,
+        "w": 289,
+        "h": 50
+      },
+      {
+        "text": "基础信息",
+        "x": 172,
+        "y": 768,
+        "w": 209,
+        "h": 60
+      },
+      {
+        "text": "IP归属地",
+        "x": 168,
+        "y": 876,
+        "w": 200,
+        "h": 53
+      },
+      {
+        "text": "广东",
+        "x": 475,
+        "y": 877,
+        "w": 116,
+        "h": 65
+      },
+      {
+        "text": "视频号ID",
+        "x": 171,
+        "y": 988,
+        "w": 207,
+        "h": 60
+      },
+      {
+        "text": "sphj24mfqdR8q36",
+        "x": 644,
+        "y": 985,
+        "w": 451,
+        "h": 66
+      },
+      {
+        "text": "认证信息",
+        "x": 172,
+        "y": 1205,
+        "w": 209,
+        "h": 60
+      },
+      {
+        "text": "企业全称",
+        "x": 174,
+        "y": 1315,
+        "w": 212,
+        "h": 60
+      },
+      {
+        "text": "惠州市云尘传媒有限公",
+        "x": 675,
+        "y": 1311,
+        "w": 506,
+        "h": 53
+      },
+      {
+        "text": "司",
+        "x": 470,
+        "y": 1395,
+        "w": 102,
+        "h": 60
+      },
+      {
+        "text": "主体类型",
+        "x": 173,
+        "y": 1504,
+        "w": 203,
+        "h": 52
+      },
+      {
+        "text": "企业",
+        "x": 473,
+        "y": 1503,
+        "w": 109,
+        "h": 57
+      },
+      {
+        "text": "认证时间",
+        "x": 173,
+        "y": 1614,
+        "w": 207,
+        "h": 52
+      },
+      {
+        "text": "2026年4月27日完成微",
+        "x": 684,
+        "y": 1613,
+        "w": 521,
+        "h": 50
+      },
+      {
+        "text": "信认证，每年腾讯及第",
+        "x": 675,
+        "y": 1691,
+        "w": 506,
+        "h": 53
+      },
+      {
+        "text": "三方审核机构都会对其",
+        "x": 678,
+        "y": 1772,
+        "w": 509,
+        "h": 55
+      },
+      {
+        "text": "资料进行审核",
+        "x": 575,
+        "y": 1851,
+        "w": 306,
+        "h": 53
+      },
+      {
+        "text": "一般经营范围",
+        "x": 227,
+        "y": 1963,
+        "w": 294,
+        "h": 43
+      },
+      {
+        "text": "一般项目：广告发布；",
+        "x": 660,
+        "y": 1962,
+        "w": 497,
+        "h": 55
+      },
+      {
+        "text": "互联网销售（除销售需",
+        "x": 677,
+        "y": 2042,
+        "w": 507,
+        "h": 55
+      },
+      {
+        "text": "要许可的商品）；玩具",
+        "x": 677,
+        "y": 2122,
+        "w": 507,
+        "h": 55
+      },
+      {
+        "text": "销售；文具用品批发；",
+        "x": 666,
+        "y": 2203,
+        "w": 485,
+        "h": 58
+      },
+      {
+        "text": "办公用品销售；办公设",
+        "x": 676,
+        "y": 2282,
+        "w": 514,
+        "h": 55
+      }
+    ]
+  },
+  "media_info": {
+    "full_recording_required": true,
+    "recording_video_path": "",
+    "recording_audio_path": "",
+    "recording_started_at": "",
+    "recording_ended_at": "",
+    "recording_duration_seconds": 0,
+    "has_audio": null,
+    "asr_text": "",
+    "asr_json_path": ""
+  },
+  "screenshots": [
+    "d:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\play_16f1a0824ee5_0.png",
+    "d:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_marker_region_16f1a0824ee5.png",
+    "d:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_16f1a0824ee5_0.png",
+    "d:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_page_name_region_16f1a0824ee5.png",
+    "d:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\traffic_info_16f1a0824ee5_0.png",
+    "d:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_16f1a0824ee5_0.png",
+    "d:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_card_name_region_16f1a0824ee5.png",
+    "d:\\code\\vscodeWorkDir\\zscqNew\\weixin\\screenshots\\profile_info_16f1a0824ee5_0.png"
+  ]
+}

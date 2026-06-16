@@ -206,3 +206,86 @@ characters (I/l/1, O/0).
 |----------|---------|
 | `compact_ocr_id(text)` | Strip non-ID characters |
 | `analyze_video_channel_id(raw_text)` | Return normalized ID + list of ambiguous positions for review |
+
+---
+
+## ASR Modules (see also: `asr-script-matching` skill)
+
+### asr_xunfei.py (~220 lines)
+
+**Role**: iFlytek cloud ASR using WebSocket v2 API. Primary backend with best
+accuracy and punctuation. Auto-slices audio >60s into 50s chunks.
+
+| Function | Purpose |
+|----------|---------|
+| `transcribe_wav(path)` | Main entry: transcribe with auto-slicing for long audio |
+| `_transcribe_pcm_chunk(data)` | Core WebSocket v2 call for single PCM chunk |
+| `_read_wav_pcm(path)` | Read raw PCM bytes from WAV |
+| `_create_url(appid, apikey, apisecret)` | Build signed WebSocket URL |
+
+**Constants**: `MAX_AUDIO_SECONDS=60`, `CHUNK_SECONDS=50`, overlap 2s.
+
+### asr_sensevoice.py (~260 lines)
+
+**Role**: SenseVoice offline ASR via sherpa-onnx. Also contains the **main
+ASR pipeline dispatcher** `run_asr_pipeline()`.
+
+| Function | Purpose |
+|----------|---------|
+| `run_asr_pipeline(record, wav, vid)` | **Main dispatcher**: iFlytek → SenseVoice → Paraformer fallback |
+| `transcribe_wav(path)` | Standalone SenseVoice transcription |
+| `core_transcribe_for_record(rec, wav, vid)` | Attach SenseVoice result to record |
+| `_run_script_match(record)` | Auto-trigger script matching after ASR success |
+
+### asr_paraformer.py (~90 lines)
+
+**Role**: Paraformer offline ASR via sherpa-onnx. Fastest backend (~164x real-time).
+
+| Function | Purpose |
+|----------|---------|
+| `transcribe_wav(path)` | Standalone Paraformer transcription |
+| `core_transcribe_for_record(rec, wav, vid)` | Attach Paraformer result to record |
+
+---
+
+## script_matcher.py (~380 lines)
+
+**Role**: Reference script matching engine. Matches ASR-transcribed text against
+a drama script using pinyin-based length-normalized fuzzy matching.
+
+### Classes
+
+| Class | Purpose |
+|-------|---------|
+| `ScriptIndex` | Load script, parse dialog lines, build pinyin index, run matching |
+| `DialogLine` | One parsed dialog with `text` (cleaned) + `display_text` (original) |
+
+### Key Functions
+
+| Function | Purpose |
+|----------|---------|
+| `match_query(text, top_n, min_score)` | Convenience: match ASR text against script |
+| `get_index(path)` | Get/init singleton `ScriptIndex` |
+| `ScriptIndex.match(query, top_n, min_score)` | Core: three-layer matching with length-normalized windowing |
+| `ScriptIndex._load_and_parse()` | Parse `_script_raw.txt` → 447 dialog lines |
+| `ScriptIndex._build_index()` | Build pinyin prefix index for fast candidate filtering |
+
+### Matching Algorithm
+
+1. **Pinyin conversion** — `pypinyin.lazy_pinyin()` on both query and script lines.
+2. **Length-normalized windowing** — `target = ceil(query_chars × 1.1)`; extract
+   sliding windows from candidate lines; `fuzz.ratio()` on equal-length windows.
+3. **Char-level confirmation** — `SequenceMatcher` on punctuation-stripped text;
+   combined score = pinyin × 0.6 + char × 0.4.
+
+### Script Text Cleaning
+
+All `（...）` parenthetical content (stage directions, OS markers) stripped before
+matching. `display_text` preserves original for display.
+
+### Integration
+
+`script_match` field in `record.media_info`:
+```json
+{ "status": "matched", "best_match": {...}, "top_candidates": [...] }
+```

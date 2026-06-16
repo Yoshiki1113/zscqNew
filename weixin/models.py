@@ -1,5 +1,8 @@
 """Data structures for Weixin video monitoring."""
+from __future__ import annotations
+
 from dataclasses import dataclass, field
+from datetime import datetime
 
 
 @dataclass
@@ -85,7 +88,15 @@ class EvidenceRecord:
         "recording_duration_seconds": 0,
         "has_audio": None,
         "asr_text": "",
+        "asr_text_path": "",
         "asr_json_path": "",
+        "asr_model": "",
+        "asr_source_video_identifier": "",
+        "script_match": {
+            "status": "pending",   # pending / matched / not_found / script_unavailable / error
+            "best_match": {},
+            "top_candidates": [],
+        },
     })
 
     screenshots: list = field(default_factory=list)
@@ -104,3 +115,41 @@ class EvidenceRecord:
             "media_info": self.media_info,
             "screenshots": self.screenshots,
         }
+
+
+# -------------------------------------------------------------
+# Web platform dataclasses
+# -------------------------------------------------------------
+
+
+@dataclass
+class Task:
+    """One forensic-collection task initiated via the web UI."""
+    id: int = 0
+    keyword: str = ""
+    status: str = "pending"  # pending / running / completed / failed
+    log_lines: list[str] = field(default_factory=list)
+    video_count: int = 0
+    started_at: str = ""
+    ended_at: str = ""
+    created_at: str = ""
+
+    def __post_init__(self):
+        if not self.created_at:
+            self.created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+@dataclass
+class ReviewResult:
+    """A human review verdict on one collected video."""
+    id: int = 0
+    evidence_row_id: int = 0
+    review_status: str = "不确定"  # 侵权 / 白名单 / 不确定
+    reviewer: str = ""
+    notes: str = ""
+    reviewed_at: str = ""
+    created_at: str = ""
+
+    def __post_init__(self):
+        if not self.created_at:
+            self.created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")

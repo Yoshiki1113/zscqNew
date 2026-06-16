@@ -100,6 +100,15 @@ async def collect_current_video(session, keyword, candidate_dict, seen, recordin
             wav_path = extract_audio(video_path)
             if wav_path:
                 record.media_info["recording_audio_path"] = str(wav_path)
+                # --- ASR (SenseVoice first, Paraformer fallback) ---
+                try:
+                    from store import build_video_identifier
+                    vid = build_video_identifier(record.to_dict())
+                    record.candidate["video_identifier"] = vid
+                    from asr_sensevoice import run_asr_pipeline
+                    run_asr_pipeline(record, str(wav_path), vid)
+                except Exception as asr_exc:
+                    print(f"[evidence] ASR failed: {asr_exc}")
         print(f"[evidence] use pre-recorded segment: {video_path} audio={has_audio}")
 
     print("[evidence] capture playback screenshot...")

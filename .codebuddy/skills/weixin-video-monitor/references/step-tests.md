@@ -26,6 +26,11 @@ full collection flow.
 | `test_clipboard_read.py` | 1.7 KB | Clipboard read | Tests `read_phone_clipboard()` and `set_phone_clipboard()` |
 | `test_fast_profile_flow.py` | 2.4 KB | Fast profile entry | Tests rapid avatar → three-dot → more-info flow |
 | `test_insert_json_to_db.py` | 548 B | DB insert | Tests `insert_json_file()` from an existing JSON result |
+| `test_xunfei_asr.py` | ~2 KB | iFlytek cloud ASR | Tests `transcribe_wav()` with iFlytek WebSocket API |
+| `test_sensevoice_asr.py` | ~2 KB | SenseVoice offline ASR | Tests `transcribe_wav()` with SenseVoice (sherpa-onnx) |
+| `test_paraformer_asr.py` | ~2 KB | Paraformer offline ASR | Tests `transcribe_wav()` with Paraformer (sherpa-onnx) |
+| `test_all_asr.py` | ~3 KB | All 3 backends | Runs all three STT backends on same WAV for comparison |
+| `test_script_matcher.py` | ~3 KB | Script matching | Tests `match_query()` with simulated ASR errors → script lines |
 | `大模型中文语音识别.py` | 8.1 KB | ASR (Chinese STT) | Tests large-model Chinese speech recognition |
 
 ## Usage
