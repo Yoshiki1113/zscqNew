@@ -115,9 +115,9 @@ weixin/
 │   ├── PLATFORM_SPEC.md        # 平台设计规范
 │   └── MULTI_DEVICE_PLATFORM_SPEC.md
 │
-├── screenshots/                # 采集截图输出（.gitignore）
-├── jsons/                      # 证据 JSON 输出（.gitignore）
-├── media/                      # 录屏/音频临时文件（.gitignore）
+├── screenshots/                # 采集截图输出（已迁移到 core/screenshots/）
+├── jsons/                      # 证据 JSON 输出（已迁移到 core/jsons/）
+├── media/                      # 录屏/音频临时文件（已迁移到 core/media/）
 ├── run.bat                     # Windows 一键启动脚本
 └── .gitignore
 ```
@@ -238,9 +238,9 @@ conda run -n zscq python core/main.py
                          ▼
 ┌────────────────────────────────────────────────────────────┐
 │  任务结束：                                                 │
-│    - JSON 证据包落盘                                         │
-│    - 可选：导入 MySQL（db_mapping.py）                        │
-│    - 可选：ASR 转写 + 剧本比对（script_matcher.py）          │
+│    - JSON 证据包落盘（core/jsons/）                         │
+│    - 可选：导入 MySQL（scripts/batch_import_db.py）           │
+│    - 可选：ASR 转写 + 剧本比对（scripts/batch_asr_json.py）    │
 └────────────────────────────────────────────────────────────┘
 ```
 
@@ -250,12 +250,12 @@ conda run -n zscq python core/main.py
 
 | 文件 | 说明 |
 |------|------|
-| `result_*.json` | 结构化证据数据（OCR 文本、数字、博主信息、链接） |
-| `result_*.html` | 人工预览页面（截图画廊 + 结构化字段） |
-| `screenshots/` | 播放页、博主资料卡、更多信息页、引流截图 |
-| `record_*.mp4` | 播放页录屏（含视频画面 + 音频） |
-| `audio_*.wav` | 录屏提取的音频（用于 ASR 转写） |
-| `asr_*.txt` | ASR 转写文本（SenseVoice / Paraformer） |
+| `core/jsons/result_*.json` | 结构化证据数据（OCR 文本、数字、博主信息、链接） |
+| `core/jsons/result_*.html` | 人工预览页面（截图画廊 + 结构化字段） |
+| `core/screenshots/*.png` | 播放页、博主资料卡、更多信息页、引流截图 |
+| `core/media/record_*.mp4` | 播放页录屏（含视频画面 + 音频） |
+| `core/media/audio_*.wav` | 录屏提取的音频（用于 ASR 转写） |
+| `core/media/asr_*.txt` | ASR 转写文本（SenseVoice / Paraformer） |
 
 ### 视频标识符规则
 
@@ -268,18 +268,28 @@ conda run -n zscq python core/main.py
 
 ## 数据库（可选）
 
-如需将证据导入 MySQL：
+如需将证据导入 MySQL，系统会自动建库、建表、补全缺失字段：
 
-```python
-# 配置数据库连接（db.py 或环境变量）
-DB_HOST = "localhost"
-DB_PORT = 3306
-DB_USER = "root"
-DB_PASSWORD = "xxx"
-DB_NAME = "zscq"
+```bash
+# 批量导入（推荐）
+cd weixin
+conda run -n zscq python scripts/batch_import_db.py
+```
 
-# 运行导入
-python db/mapping.py --json jsons/result_xxx.json
+单条导入（测试用）：
+
+```bash
+python step_tests/test_insert_json_to_db.py core/jsons/result_xxx.json
+```
+
+数据库连接配置（通过环境变量）：
+
+```bash
+set WEIXIN_DB_HOST=localhost
+set WEIXIN_DB_PORT=3306
+set WEIXIN_DB_USER=root
+set WEIXIN_DB_PASSWORD=1234
+set WEIXIN_DB_NAME=zscq
 ```
 
 Schema 包含：候选基础信息、视频/博主/引流核心字段、截图列表、媒体录制字段、`captured_at` 时间戳。
