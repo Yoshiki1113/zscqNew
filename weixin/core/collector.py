@@ -2,9 +2,14 @@
 from __future__ import annotations
 
 import asyncio
+import atexit
+import json
 import os
+import queue
 import re
 import subprocess
+import sys
+import threading
 from datetime import datetime
 
 import cv2
@@ -29,10 +34,10 @@ CLIPBOARD_POPUP_CLOSE_Y = 2062
 
 TRAFFIC_MARKER_X = 192
 TRAFFIC_MARKER_Y = 1693
-TRAFFIC_MARKER_LEFT = 66
-TRAFFIC_MARKER_TOP = 1635
-TRAFFIC_MARKER_RIGHT = 666
-TRAFFIC_MARKER_BOTTOM = 1721
+TRAFFIC_MARKER_LEFT = 40
+TRAFFIC_MARKER_TOP = 1640
+TRAFFIC_MARKER_RIGHT = 675
+TRAFFIC_MARKER_BOTTOM = 1872
 TRAFFIC_FIRST_EPISODE_X = 130
 TRAFFIC_FIRST_EPISODE_Y = 1342
 TRAFFIC_AVATAR_X = 140
@@ -54,9 +59,12 @@ AUTHOR_CARD_NAME_RIGHT = 790
 AUTHOR_CARD_NAME_BOTTOM = 885
 
 _LOCAL_PADDLE_OCR = None
+_LOCAL_OCR_WORKER = None
 
 MIN_FULL_SCREENSHOT_BYTES = 4096
 PADDLEX_CACHE_DIR = os.path.join(os.path.dirname(__file__), ".paddlex-cache")
+OCR_WORKER_PATH = os.path.join(os.path.dirname(__file__), "ocr_worker.py")
+OCR_WORKER_TIMEOUT_SECONDS = float(os.environ.get("WEIXIN_OCR_WORKER_TIMEOUT_SECONDS", "45") or "45")
 
 
 def configure_paddle_runtime_env() -> None:
@@ -68,7 +76,7 @@ def configure_paddle_runtime_env() -> None:
     os.environ["PADDLE_PDX_DISABLE_MKLDNN_MODEL_BL"] = "True"
     os.environ["FLAGS_use_mkldnn"] = "0"
     os.environ["FLAGS_use_onednn"] = "0"
-    os.environ.setdefault("FLAGS_allocator_strategy", "auto_growth")
+    os.environ.setdefault("FLAGS_allocator_strategy", "naive_best_fit")
 
 
 configure_paddle_runtime_env()
@@ -188,6 +196,7 @@ def validate_screenshot_file(path: str, min_size: int = MIN_FULL_SCREENSHOT_BYTE
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     mean = float(gray.mean())
     std = float(gray.std())
+    del img, gray  # 释放 OpenCV 图像内存
     if mean < 3.0 and std < 2.0:
         return False, f"near-black image (mean={mean:.2f}, std={std:.2f})"
     if std < 0.5:
@@ -416,7 +425,7 @@ def find_copy_link_button_from_image(image_path: str, tag: str) -> tuple[int, in
 
 async def collect_traffic_info(session, record: EvidenceRecord, slug: str, play_ocr=None) -> None:
     """Open the free-series traffic entry and collect target subject info."""
-    marker_text, region_path = await detect_traffic_marker(session, slug)
+    marker_text, region_path, marker_point = await detect_traffic_marker(session, slug)
     if region_path:
         record.screenshots.append(region_path)
     if not marker_text:
@@ -429,9 +438,12 @@ async def collect_traffic_info(session, record: EvidenceRecord, slug: str, play_
 
     record.traffic_info["has_traffic_marker"] = True
     record.traffic_info["marker_text"] = marker_text
+    if marker_point:
+        record.traffic_info["marker_click_x"] = marker_point[0]
+        record.traffic_info["marker_click_y"] = marker_point[1]
     print(f"[traffic] found marker: {marker_text}")
 
-    await open_traffic_subject(session)
+    await open_traffic_subject(session, marker_point)
     await open_traffic_avatar_card(session)
 
     traffic_page_path = os.path.join(SCREENSHOT_DIR, f"traffic_page_{slug}_0.png")
@@ -596,11 +608,11 @@ def is_probable_author_name(text: str) -> bool:
     return bool(re.search(r"[\u4e00-\u9fa5A-Za-z0-9]", text))
 
 
-async def detect_traffic_marker(session, slug: str) -> tuple[str, str]:
+async def detect_traffic_marker(session, slug: str) -> tuple[str, str, tuple[int, int] | None]:
     """Detect the free-series marker from a cropped playback-page region."""
     screen_path = os.path.join(SCREENSHOT_DIR, f"traffic_marker_full_{slug}.png")
     if not await capture_single_with_adb_fallback(session, screen_path, f"traffic_marker_{slug}"):
-        return "", ""
+        return "", "", None
 
     region_path = os.path.join(SCREENSHOT_DIR, f"traffic_marker_region_{slug}.png")
     left, top, right, bottom = scale_rect(
@@ -617,13 +629,13 @@ async def detect_traffic_marker(session, slug: str) -> tuple[str, str]:
         right,
         bottom,
     ):
-        return "", ""
+        return "", "", None
 
-    marker_text = find_traffic_marker_text_local(region_path)
+    marker_text, marker_point = find_traffic_marker_target_local(region_path, left, top)
     print(f"[ocr] traffic marker region text={marker_text!r}")
     if marker_text:
-        print(f"[traffic] region OCR marker: {marker_text}")
-    return marker_text, region_path
+        print(f"[traffic] region OCR marker: {marker_text} tap={marker_point}")
+    return marker_text, region_path, marker_point
 
 
 def crop_image_region(src_path: str, dst_path: str, left: int, top: int, right: int, bottom: int) -> bool:
@@ -636,10 +648,113 @@ def crop_image_region(src_path: str, dst_path: str, left: int, top: int, right: 
     right = max(left + 1, min(right, width))
     bottom = max(top + 1, min(bottom, height))
     region = img[top:bottom, left:right]
+    del img  # 释放原图内存
     if region.size == 0:
         return False
     os.makedirs(os.path.dirname(dst_path), exist_ok=True)
-    return bool(cv2.imwrite(dst_path, region))
+    ok = bool(cv2.imwrite(dst_path, region))
+    del region  # 释放裁剪区域内存
+    return ok
+
+
+def local_ocr_worker_enabled() -> bool:
+    mode = os.environ.get("WEIXIN_OCR_MODE", "worker").strip().lower()
+    return mode not in ("inprocess", "direct", "legacy", "off", "0", "false")
+
+
+def stop_local_ocr_worker() -> None:
+    global _LOCAL_OCR_WORKER
+    proc = _LOCAL_OCR_WORKER
+    _LOCAL_OCR_WORKER = None
+    if proc is None:
+        return
+    try:
+        if proc.stdin:
+            proc.stdin.close()
+    except Exception:
+        pass
+    try:
+        if proc.poll() is None:
+            proc.terminate()
+            proc.wait(timeout=3)
+    except Exception:
+        try:
+            proc.kill()
+        except Exception:
+            pass
+
+
+atexit.register(stop_local_ocr_worker)
+
+
+def get_local_ocr_worker():
+    global _LOCAL_OCR_WORKER
+    if _LOCAL_OCR_WORKER is not None and _LOCAL_OCR_WORKER.poll() is None:
+        return _LOCAL_OCR_WORKER
+    if _LOCAL_OCR_WORKER is not None:
+        stop_local_ocr_worker()
+
+    _LOCAL_OCR_WORKER = subprocess.Popen(
+        [sys.executable, OCR_WORKER_PATH],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        bufsize=1,
+    )
+    return _LOCAL_OCR_WORKER
+
+
+def read_ocr_worker_line(proc, timeout_seconds: float) -> str:
+    if proc.stdout is None:
+        raise RuntimeError("OCR worker stdout is not available")
+    result_queue: queue.Queue[str] = queue.Queue(maxsize=1)
+
+    def _reader() -> None:
+        try:
+            result_queue.put(proc.stdout.readline())
+        except Exception:
+            result_queue.put("")
+
+    thread = threading.Thread(target=_reader, daemon=True)
+    thread.start()
+    try:
+        return result_queue.get(timeout=timeout_seconds)
+    except queue.Empty as exc:
+        raise TimeoutError(f"OCR worker timed out after {timeout_seconds:.1f}s") from exc
+
+
+def local_ocr_image_via_worker(image_path: str) -> list[dict] | None:
+    if not local_ocr_worker_enabled():
+        return None
+
+    payload = json.dumps({"image_path": image_path}, ensure_ascii=False)
+    for attempt in range(2):
+        try:
+            proc = get_local_ocr_worker()
+            if proc.stdin is None or proc.stdout is None:
+                raise RuntimeError("OCR worker pipes are not available")
+            proc.stdin.write(payload + "\n")
+            proc.stdin.flush()
+            line = read_ocr_worker_line(proc, OCR_WORKER_TIMEOUT_SECONDS)
+            if not line:
+                raise RuntimeError("OCR worker closed without response")
+            response = json.loads(line)
+            if response.get("restart"):
+                print(
+                    "[ocr] worker restart requested "
+                    f"jobs={response.get('jobs')} memory_mb={response.get('memory_mb')}"
+                )
+                stop_local_ocr_worker()
+            if response.get("ok"):
+                return response.get("items") or []
+            raise RuntimeError(response.get("error", "unknown OCR worker error"))
+        except Exception as exc:
+            print(f"[ocr] worker failed for {image_path} attempt={attempt + 1}: {exc}")
+            stop_local_ocr_worker()
+    return None
 
 
 def get_local_paddle_ocr():
@@ -653,6 +768,15 @@ def get_local_paddle_ocr():
 
 
 def local_ocr_image(image_path: str) -> list[dict]:
+    worker_items = local_ocr_image_via_worker(image_path)
+    if worker_items is not None:
+        return worker_items
+    return local_ocr_image_inprocess(image_path)
+
+
+def local_ocr_image_inprocess(image_path: str) -> list[dict]:
+    import gc
+
     try:
         ocr = get_local_paddle_ocr()
         result = run_local_ocr(ocr, image_path)
@@ -661,6 +785,7 @@ def local_ocr_image(image_path: str) -> list[dict]:
         return []
 
     lines = extract_ocr_lines(result)
+    del result  # 释放 PaddleOCR 结果内存
     if not lines:
         return []
 
@@ -686,6 +811,7 @@ def local_ocr_image(image_path: str) -> list[dict]:
                 "h": max(ys) - min(ys),
             }
         )
+    gc.collect()  # 强制清理 PaddleOCR 产生的临时对象
     return items
 
 
@@ -842,8 +968,96 @@ def fill_video_fields_from_ocr(video_info: dict, ocr_items) -> None:
 
 
 def find_traffic_marker_text_local(image_path: str) -> str:
-    texts = [item["text"] for item in local_ocr_image(image_path)]
-    return find_traffic_marker_text_from_texts(texts)
+    marker_text, _ = find_traffic_marker_target_local(image_path)
+    return marker_text
+
+
+def find_traffic_marker_target_local(
+    image_path: str,
+    offset_x: int = 0,
+    offset_y: int = 0,
+) -> tuple[str, tuple[int, int] | None]:
+    items = local_ocr_image(image_path)
+    candidate = find_traffic_marker_candidate(items, offset_x=offset_x, offset_y=offset_y)
+    if not candidate:
+        return "", None
+    return candidate["text"], (candidate["x"], candidate["y"])
+
+
+def find_traffic_marker_candidate(
+    ocr_items,
+    offset_x: int = 0,
+    offset_y: int = 0,
+) -> dict | None:
+    items = [item for item in (ocr_items or []) if (item.get("text", "") or "").strip()]
+    candidates = []
+
+    for item in items:
+        text = (item.get("text", "") or "").strip()
+        if is_traffic_marker_text(text):
+            x = int(item.get("x", 0)) + offset_x
+            y = int(item.get("y", 0)) + offset_y
+            width = int(item.get("w", 0) or 0)
+            height = int(item.get("h", 0) or 0)
+            candidates.append(
+                {
+                    "text": text,
+                    "x": x,
+                    "y": y,
+                    "left": x - width // 2,
+                    "right": x + width // 2,
+                    "top": y - height // 2,
+                    "bottom": y + height // 2,
+                    "score": marker_candidate_score(text, width, height),
+                }
+            )
+
+    for row in group_ocr_items_by_row(items):
+        merged = "".join((item.get("text", "") or "").strip() for item in row)
+        if not is_traffic_marker_text(merged):
+            continue
+        left = min(int(item.get("x", 0) - (item.get("w", 0) or 0) / 2) for item in row) + offset_x
+        right = max(int(item.get("x", 0) + (item.get("w", 0) or 0) / 2) for item in row) + offset_x
+        top = min(int(item.get("y", 0) - (item.get("h", 0) or 0) / 2) for item in row) + offset_y
+        bottom = max(int(item.get("y", 0) + (item.get("h", 0) or 0) / 2) for item in row) + offset_y
+        candidates.append(
+            {
+                "text": merged,
+                "x": int((left + right) / 2),
+                "y": int((top + bottom) / 2),
+                "left": left,
+                "right": right,
+                "top": top,
+                "bottom": bottom,
+                "score": marker_candidate_score(merged, right - left, bottom - top) + 2,
+            }
+        )
+
+    if not candidates:
+        return None
+    candidates.sort(key=lambda item: (-item["score"], item["y"], item["x"]))
+    return candidates[0]
+
+
+def group_ocr_items_by_row(items: list[dict]) -> list[list[dict]]:
+    rows: list[list[dict]] = []
+    for item in sorted(items, key=lambda value: (value.get("y", 0), value.get("x", 0))):
+        y = int(item.get("y", 0))
+        height = int(item.get("h", 0) or 0)
+        threshold = max(24, height * 2)
+        matched = None
+        for row in rows:
+            row_y = sum(int(entry.get("y", 0)) for entry in row) / len(row)
+            if abs(y - row_y) <= threshold:
+                matched = row
+                break
+        if matched is None:
+            rows.append([item])
+        else:
+            matched.append(item)
+    for row in rows:
+        row.sort(key=lambda value: value.get("x", 0))
+    return rows
 
 
 def find_traffic_marker_text_from_items(ocr_items) -> str:
@@ -855,16 +1069,40 @@ def find_traffic_marker_text_from_texts(texts: list[str]) -> str:
     for text in texts:
         if not text:
             continue
-        if "免费剧集" in text or re.search(r"全\s*\d+\s*集", text):
+        if is_traffic_marker_text(text):
             return text
     merged = "".join(text for text in texts if text)
-    if "免费剧集" in merged or re.search(r"全\s*\d+\s*集", merged):
+    if is_traffic_marker_text(merged):
         return merged
     return ""
 
 
-async def open_traffic_subject(session) -> None:
-    marker_x, marker_y = scale_point(TRAFFIC_MARKER_X, TRAFFIC_MARKER_Y)
+def is_traffic_marker_text(text: str) -> bool:
+    compact = re.sub(r"\s+", "", text or "")
+    if not compact:
+        return False
+    return "免费剧集" in compact or bool(re.search(r"全\d{1,4}集", compact))
+
+
+def marker_candidate_score(text: str, width: int, height: int) -> int:
+    compact = re.sub(r"\s+", "", text or "")
+    score = 0
+    if "免费剧集" in compact:
+        score += 5
+    if re.search(r"全\d{1,4}集", compact):
+        score += 4
+    if width >= 80:
+        score += 1
+    if height >= 16:
+        score += 1
+    return score
+
+
+async def open_traffic_subject(session, marker_point: tuple[int, int] | None = None) -> None:
+    if marker_point:
+        marker_x, marker_y = int(marker_point[0]), int(marker_point[1])
+    else:
+        marker_x, marker_y = scale_point(TRAFFIC_MARKER_X, TRAFFIC_MARKER_Y)
     episode_x, episode_y = scale_point(TRAFFIC_FIRST_EPISODE_X, TRAFFIC_FIRST_EPISODE_Y)
     code = f"""
 import time
