@@ -14,7 +14,7 @@ from datetime import datetime
 
 import cv2
 
-from main import SCREENSHOT_DIR, find_adb, run_on_phone, scale_point, scale_rect
+from main import SCREENSHOT_DIR, find_adb, run_on_phone, scale_point, scale_rect, scale_y
 from media_capture import extract_audio, probe_audio
 from db.models import EvidenceRecord
 from utils.text_quality import analyze_video_channel_id
@@ -57,6 +57,8 @@ AUTHOR_CARD_NAME_LEFT = 310
 AUTHOR_CARD_NAME_TOP = 735
 AUTHOR_CARD_NAME_RIGHT = 790
 AUTHOR_CARD_NAME_BOTTOM = 885
+AUTHOR_NAME_COPY_POPUP_OFFSET_Y = 120
+AUTHOR_NAME_LONG_PRESS_DURATION_MS = 700
 
 _LOCAL_PADDLE_OCR = None
 _LOCAL_OCR_WORKER = None
@@ -388,12 +390,26 @@ print("CLIPBOARD_END")
     end = log.find("CLIPBOARD_END")
     if start < 0 or end <= start:
         return ""
-    return log[start + len("CLIPBOARD_START"):end].strip()
+    raw_text = log[start + len("CLIPBOARD_START"):end].strip()
+    return strip_phone_log_wrappers(raw_text)
 
 
 def extract_link_from_clipboard_text(raw_text: str) -> str:
     match = re.search(r"https?://\S+", raw_text or "")
     return match.group(0).rstrip(")]}>,.;'\"") if match else ""
+
+
+def strip_phone_log_wrappers(raw_text: str) -> str:
+    if not raw_text:
+        return ""
+    cleaned = re.sub(
+        r"\[INFO\]\s*\d{4}-\d{2}-\d{2}\s*\d{2}:\d{2}:\d{2}:\d{3}",
+        "",
+        raw_text,
+    )
+    cleaned = cleaned.replace("[INFO]", "")
+    cleaned = "".join(line.strip() for line in cleaned.splitlines() if line.strip())
+    return cleaned or raw_text.strip()
 
 
 def find_copy_link_button_from_image(image_path: str, tag: str) -> tuple[int, int] | None:
@@ -465,7 +481,14 @@ async def collect_traffic_info(session, record: EvidenceRecord, slug: str, play_
             bottom,
         ):
             record.screenshots.append(traffic_name_region_path)
-        target_name = extract_author_name_from_card_image(traffic_page_path, traffic_name_region_path)
+        target_name = await extract_author_name_with_clipboard_fallback(
+            session,
+            traffic_page_path,
+            traffic_name_region_path,
+            left,
+            top,
+            f"traffic_{slug}",
+        )
         if not target_name:
             target_name = extract_theater_account_name_from_image(traffic_page_path)
         record.traffic_info["target_blogger_name"] = target_name
@@ -539,7 +562,14 @@ async def capture_author_profile_card(session, record: EvidenceRecord, slug: str
     ):
         record.screenshots.append(region_path)
 
-    blogger_name = extract_author_name_from_card_image(card_path, region_path)
+    blogger_name = await extract_author_name_with_clipboard_fallback(
+        session,
+        card_path,
+        region_path,
+        left,
+        top,
+        slug,
+    )
     if blogger_name:
         record.video_info["blogger_name"] = blogger_name
         record.profile_info["name"] = blogger_name
@@ -548,35 +578,138 @@ async def capture_author_profile_card(session, record: EvidenceRecord, slug: str
         print("[profile] author card blogger name not found")
 
 
-def extract_author_name_from_card_image(card_path: str, region_path: str = "") -> str:
+async def extract_author_name_with_clipboard_fallback(
+    session,
+    card_path: str,
+    region_path: str,
+    region_left: int,
+    region_top: int,
+    tag: str = "",
+) -> str:
+    candidate = find_best_author_name_candidate_from_image(
+        card_path,
+        region_path,
+        region_left,
+        region_top,
+    )
+    if candidate and candidate.get("trusted"):
+        return candidate["text"]
+
+    if candidate and candidate.get("screen_x") is not None and candidate.get("screen_y") is not None:
+        copied_name = await copy_author_name_via_long_press(
+            session,
+            int(candidate["screen_x"]),
+            int(candidate["screen_y"]),
+            tag=tag,
+        )
+        if copied_name:
+            print(f"[profile] author name copied from long press: {copied_name}")
+            return copied_name
+
+    return candidate["text"] if candidate else ""
+
+
+def extract_author_name_from_card_image(
+    card_path: str,
+    region_path: str = "",
+    region_left: int = 0,
+    region_top: int = 0,
+) -> str:
+    candidate = find_best_author_name_candidate_from_image(
+        card_path,
+        region_path,
+        region_left,
+        region_top,
+    )
+    return candidate["text"] if candidate else ""
+
+
+def find_best_author_name_candidate_from_image(
+    card_path: str,
+    region_path: str = "",
+    region_left: int = 0,
+    region_top: int = 0,
+) -> dict | None:
     if region_path and os.path.exists(region_path):
         region_items = local_ocr_image(region_path)
         print(f"[ocr] profile card name region items={len(region_items)}")
-        name = extract_author_name_from_card_items(region_items, cropped=True)
-        if name:
-            return name
+        candidate = extract_author_name_from_card_items(
+            region_items,
+            cropped=True,
+            offset_x=region_left,
+            offset_y=region_top,
+        )
+        if candidate:
+            return candidate
 
     card_items = local_ocr_image(card_path)
     print(f"[ocr] profile card items={len(card_items)}")
     return extract_author_name_from_card_items(card_items, cropped=False)
 
 
-def extract_author_name_from_card_items(ocr_items, cropped: bool = False) -> str:
+def extract_author_name_from_card_items(
+    ocr_items,
+    cropped: bool = False,
+    offset_x: int = 0,
+    offset_y: int = 0,
+) -> dict | None:
     items = ocr_items if isinstance(ocr_items, list) else []
-    candidates = []
+    visible_items = []
     for item in items:
-        text = (item.get("text", "") or "").strip()
-        x = item.get("x", 0)
-        y = item.get("y", 0)
-        if not is_probable_author_name(text):
+        text = normalize_author_candidate_text(item.get("text", ""))
+        if not text:
             continue
-        if cropped:
-            candidates.append((abs(y - 70) + abs(x - 240) / 10, text))
+        x = int(item.get("x", 0))
+        y = int(item.get("y", 0))
+        if not cropped:
+            if not (
+                AUTHOR_CARD_NAME_LEFT <= x <= AUTHOR_CARD_NAME_RIGHT
+                and AUTHOR_CARD_NAME_TOP <= y <= AUTHOR_CARD_NAME_BOTTOM
+            ):
+                continue
+        visible_items.append(
+            {
+                "text": text,
+                "x": x,
+                "y": y,
+                "w": int(item.get("w", 0) or 0),
+                "h": int(item.get("h", 0) or 0),
+            }
+        )
+
+    row_candidates = []
+    for row in group_ocr_items_by_row(visible_items):
+        merged_text = normalize_author_candidate_text("".join(item.get("text", "") for item in row))
+        if not merged_text or is_author_ui_noise(merged_text):
             continue
-        if AUTHOR_CARD_NAME_LEFT <= x <= AUTHOR_CARD_NAME_RIGHT and AUTHOR_CARD_NAME_TOP <= y <= AUTHOR_CARD_NAME_BOTTOM:
-            candidates.append((abs(y - 808) + abs(x - 550) / 10, text))
-    candidates.sort(key=lambda item: item[0])
-    return candidates[0][1] if candidates else ""
+        center_x = int(sum(item.get("x", 0) for item in row) / len(row))
+        center_y = int(sum(item.get("y", 0) for item in row) / len(row))
+        company_like = is_company_like_name(merged_text)
+        trusted = is_probable_author_name(merged_text) and not company_like
+        anchor_x = 240 if cropped else 550
+        anchor_y = 70 if cropped else 808
+        score = (
+            (120 if trusted else 0)
+            + (40 if not company_like else -20)
+            - abs(center_y - anchor_y)
+            - abs(center_x - anchor_x) / 12
+            - max(0, len(merged_text) - 20) * 2
+        )
+        row_candidates.append(
+            {
+                "text": merged_text,
+                "trusted": trusted,
+                "company_like": company_like,
+                "screen_x": center_x + offset_x,
+                "screen_y": center_y + offset_y,
+                "score": score,
+            }
+        )
+
+    if not row_candidates:
+        return None
+    row_candidates.sort(key=lambda item: item["score"], reverse=True)
+    return row_candidates[0]
 
 
 def is_probable_author_name(text: str) -> bool:
@@ -606,6 +739,113 @@ def is_probable_author_name(text: str) -> bool:
     if any(token in text for token in ignored_tokens):
         return False
     return bool(re.search(r"[\u4e00-\u9fa5A-Za-z0-9]", text))
+
+
+def normalize_author_candidate_text(text: str) -> str:
+    compact = re.sub(r"\s+", "", text or "")
+    compact = compact.strip("：:;；,，|/\\-_.。·•")
+    compact = re.sub(r"^[品•·.。]+", "", compact)
+    compact = re.sub(r"[•·.。]+$", "", compact)
+    return compact
+
+
+def is_author_ui_noise(text: str) -> bool:
+    if not text:
+        return True
+    noise_tokens = (
+        "关注",
+        "私信",
+        "视频号",
+        "账号",
+        "主页",
+        "评论",
+        "获赞",
+        "资料",
+        "更多",
+        "搜索",
+        "归属地",
+    )
+    return any(token in text for token in noise_tokens)
+
+
+def is_company_like_name(text: str) -> bool:
+    if not text:
+        return False
+    company_tokens = (
+        "有限公司",
+        "有限责任公司",
+        "集团",
+        "传媒",
+        "科技",
+        "文化",
+        "商贸",
+        "工作室",
+        "企业",
+        "所属",
+    )
+    return any(token in text for token in company_tokens)
+
+
+def extract_author_name_from_clipboard_text(raw_text: str) -> str:
+    text = normalize_author_candidate_text(strip_phone_log_wrappers(raw_text))
+    if not text:
+        return ""
+    if is_author_ui_noise(text):
+        return ""
+    if is_company_like_name(text):
+        return ""
+    if not re.search(r"[\u4e00-\u9fa5A-Za-z0-9]", text):
+        return ""
+    return text
+
+
+async def copy_author_name_via_long_press(session, press_x: int, press_y: int, tag: str = "") -> str:
+    sentinel = f"__WEIXIN_AUTHOR_COPY_PENDING_{tag or datetime.now().strftime('%Y%m%d_%H%M%S')}__"
+    await set_phone_clipboard(session, sentinel)
+
+    adb = find_adb()
+    subprocess.run(
+        [
+            adb,
+            "shell",
+            "input",
+            "swipe",
+            str(press_x),
+            str(press_y),
+            str(press_x),
+            str(press_y),
+            str(AUTHOR_NAME_LONG_PRESS_DURATION_MS),
+        ],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
+    await asyncio.sleep(1.0)
+
+    copy_x = press_x
+    copy_y = max(1, press_y - scale_y(AUTHOR_NAME_COPY_POPUP_OFFSET_Y))
+    subprocess.run(
+        [adb, "shell", "input", "tap", str(copy_x), str(copy_y)],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        check=False,
+    )
+    await asyncio.sleep(0.8)
+
+    for attempt in range(1, 4):
+        raw_text = await read_phone_clipboard(session)
+        text = extract_author_name_from_clipboard_text(raw_text)
+        print(f"[profile] author-name clipboard read {attempt}/3: {raw_text!r}")
+        if text and sentinel not in raw_text:
+            return text
+        await asyncio.sleep(0.4)
+    return ""
 
 
 async def detect_traffic_marker(session, slug: str) -> tuple[str, str, tuple[int, int] | None]:
@@ -1133,26 +1373,10 @@ print("[OK] TRAFFIC_AVATAR_CARD_OPENED")
 
 
 def extract_theater_account_name_from_image(image_path: str) -> str:
-    items = local_ocr_image(image_path)
-    candidates = []
-    for item in items:
-        text = (item.get("text", "") or "").strip()
-        x = item.get("x", 0)
-        y = item.get("y", 0)
-        if not text or len(text) < 2:
-            continue
-        if "免费剧集" in text or ("第" in text and "集" in text):
-            continue
-        if "关注" in text or "+关注" in text:
-            clean = text.replace("+关注", "").replace("关注", "").strip()
-            if clean:
-                return clean
-        if any(token in text for token in ("有限公司", "有限责任公司", "原创内容", "关注", "私信", "主页", "视频", "剧集", "评论", "获赞", "粉丝")):
-            continue
-        if 720 <= y <= 980 and 120 <= x <= 760 and 2 <= len(text) <= 20:
-            candidates.append((abs(y - 845) + abs(x - 420) / 10, text))
-    candidates.sort(key=lambda item: item[0])
-    return candidates[0][1] if candidates else ""
+    candidate = find_best_author_name_candidate_from_image(image_path)
+    if candidate:
+        return candidate["text"]
+    return ""
 
 
 def fill_profile_fields_from_ocr(profile_info: dict, ocr_items) -> None:
