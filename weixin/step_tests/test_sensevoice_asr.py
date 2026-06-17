@@ -68,7 +68,7 @@ def main():
     # --- SenseVoice ---
     _print_separator("SenseVoice (sherpa-onnx)")
     try:
-        from asr_sensevoice import transcribe_wav
+        from asr.sensevoice import transcribe_wav
 
         t0 = time.time()
         sv_text = transcribe_wav(str(audio_path), model_dir=args.model)

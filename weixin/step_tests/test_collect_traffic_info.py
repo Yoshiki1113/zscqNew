@@ -10,8 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 import main  # noqa: E402
-from collector import collect_traffic_info  # noqa: E402
-from models import EvidenceRecord  # noqa: E402
+from core.collector import collect_traffic_info  # noqa: E402
+from db.models import EvidenceRecord  # noqa: E402
 from mcp import ClientSession, StdioServerParameters  # noqa: E402
 from mcp.client.stdio import stdio_client  # noqa: E402
 

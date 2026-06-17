@@ -1,0 +1,13 @@
+# Weixin evidence collection artifacts
+jsons/
+media/
+screenshots/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Temporary files
+*.tmp
+*.log

@@ -66,17 +66,17 @@ def main():
     results = []
 
     if not args.skip_xunfei:
-        from asr_xunfei import transcribe_wav as xf_fn
+        from asr.xunfei import transcribe_wav as xf_fn
         r = _run_model("iFlytek (cloud)", xf_fn, str(audio_path))
         if r: results.append(r)
 
     if not args.skip_sensevoice:
-        from asr_sensevoice import transcribe_wav as sv_fn
+        from asr.sensevoice import transcribe_wav as sv_fn
         r = _run_model("SenseVoice", sv_fn, str(audio_path))
         if r: results.append(r)
 
     if not args.skip_paraformer:
-        from asr_paraformer import transcribe_wav as pf_fn
+        from asr.paraformer import transcribe_wav as pf_fn
         r = _run_model("Paraformer", pf_fn, str(audio_path))
         if r: results.append(r)
 

@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 import main  # noqa: E402
-from collector import capture_single_via_adb_execout, crop_image_region, local_ocr_image  # noqa: E402
+from core.collector import capture_single_via_adb_execout, crop_image_region, local_ocr_image  # noqa: E402
 
 sys.stdout.reconfigure(encoding="utf-8")
 

@@ -2,7 +2,7 @@
 import sys
 sys.stdout.reconfigure(encoding="utf-8")
 
-from script_matcher import match_query, get_index
+from asr.script_matcher import match_query, get_index
 
 
 def main():

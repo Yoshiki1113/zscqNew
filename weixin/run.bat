@@ -6,15 +6,16 @@ echo ================================================
 echo   AScript MCP 微信视频号采集管线
 echo ================================================
 echo.
+
 echo   用法:
-echo     run.bat                        纯截图5张
-echo     run.bat search 关键词           搜索+截图
-echo     run.bat search 关键词 张数       搜索+截图(指定张数)
+echo     run.bat                        默认运行（采集 2 个视频）
+echo     set WEIXIN_MAX_VIDEOS=5 ^&^& run.bat   指定采集视频数量
+echo     set WEIXIN_MAX_VIDEOS=0 ^&^& run.bat   全量采集（不限制，自动停止）
 echo.
 
 if "%1"=="" (
-    conda run -n zscq python main.py
+    conda run -n zscq python core/main.py
 ) else (
-    conda run -n zscq python main.py %*
+    conda run -n zscq python core/main.py %*
 )
 pause

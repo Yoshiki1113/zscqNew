@@ -73,7 +73,7 @@ def main():
     print(f"  Duration: {info['duration_sec']}s @ {info['sample_rate']}Hz")
 
     # --- Paraformer ---
-    from asr_paraformer import transcribe_wav as pf_transcribe
+    from asr.paraformer import transcribe_wav as pf_transcribe
 
     pf = _run_model("Paraformer", pf_transcribe, str(audio_path), model_dir=args.model)
 
@@ -95,7 +95,7 @@ def main():
         _print_separator("Two-way Comparison (Paraformer + SenseVoice)")
 
         # SenseVoice
-        from asr_sensevoice import transcribe_wav as sv_transcribe
+        from asr.sensevoice import transcribe_wav as sv_transcribe
         sv = _run_model("SenseVoice", sv_transcribe, str(audio_path))
 
         results = [r for r in [pf, sv] if r is not None]

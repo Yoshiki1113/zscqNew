@@ -33,7 +33,7 @@ def main():
         print(f"[ERROR] Audio not found: {audio_path}")
         sys.exit(1)
 
-    from asr_xunfei import transcribe_wav
+    from asr.xunfei import transcribe_wav
 
     try:
         text = transcribe_wav(
