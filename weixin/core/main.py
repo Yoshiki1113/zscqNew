@@ -930,9 +930,12 @@ async def run():
             max_videos = env_int("WEIXIN_MAX_VIDEOS", 2)
             verify_video_page = env_bool("WEIXIN_VERIFY_VIDEO_PAGE", False)
             write_db = env_bool("WEIXIN_WRITE_DB", False)
+            realtime_ocr = env_bool("WEIXIN_REALTIME_OCR", False)
+            realtime_traffic_ocr = env_bool("WEIXIN_REALTIME_TRAFFIC_OCR", True)
             print(
                 f"[config] max_videos={max_videos}, hold_seconds={hold_seconds}, "
-                f"capture_method={capture_method}, prefer_scrcpy={capture_prefer_scrcpy}"
+                f"capture_method={capture_method}, prefer_scrcpy={capture_prefer_scrcpy}, "
+                f"realtime_ocr={realtime_ocr}, realtime_traffic_ocr={realtime_traffic_ocr}"
             )
 
             segment = None

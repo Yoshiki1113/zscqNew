@@ -522,6 +522,10 @@ def screenshot_label(path: str) -> str:
         return "引流标记裁剪图"
     if lower.startswith("traffic_marker_full_"):
         return "引流标记整页截图"
+    if lower.startswith("traffic_popup_"):
+        return "traffic popup screenshot"
+    if lower.startswith("traffic_landing_"):
+        return "traffic landing screenshot"
     if lower.startswith("traffic_page_name_region_"):
         return "引流账号名称裁剪图"
     if lower.startswith("traffic_page_"):

@@ -88,11 +88,27 @@ def _now_iso() -> str:
     return datetime.now().astimezone().isoformat(timespec="seconds")
 
 
+def _env_bool(name: str, default: bool) -> bool:
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in ("1", "true", "yes", "on")
+
+
+def realtime_ocr_enabled() -> bool:
+    return _env_bool("WEIXIN_REALTIME_OCR", False)
+
+
+def realtime_traffic_ocr_enabled() -> bool:
+    return _env_bool("WEIXIN_REALTIME_TRAFFIC_OCR", True)
+
+
 async def collect_current_video(session, keyword, candidate_dict, seen, recording_video_path: str = ""):
     """Collect one complete evidence record from the current playback page."""
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     slug = candidate_dict.get("fingerprint", ts)[:12]
     capture_time = _now_iso()
+    realtime_ocr = realtime_ocr_enabled()
 
     record = EvidenceRecord(
         search_keyword=keyword,
@@ -121,17 +137,20 @@ async def collect_current_video(session, keyword, candidate_dict, seen, recordin
     play_ocr = []
     if await capture_single_with_adb_fallback(session, play_path, f"play_{slug}"):
         record.screenshots.append(play_path)
-        play_ocr = local_ocr_image(play_path)
-        print(f"[ocr] playback items={len(play_ocr)}")
-        record.video_info["raw_ocr"] = play_ocr
-        fill_video_fields_from_ocr(record.video_info, play_ocr)
+        if realtime_ocr:
+            play_ocr = local_ocr_image(play_path)
+            print(f"[ocr] playback items={len(play_ocr)}")
+            record.video_info["raw_ocr"] = play_ocr
+            fill_video_fields_from_ocr(record.video_info, play_ocr)
+        else:
+            print("[ocr] playback OCR deferred to offline batch")
 
     print("[evidence] collect traffic info if a free-series marker is present...")
     await collect_traffic_info(session, record, slug, play_ocr)
 
     print("[evidence] open author profile card...")
     await open_author_profile_card(session)
-    await capture_author_profile_card(session, record, slug)
+    await capture_author_profile_card(session, record, slug, do_ocr=realtime_ocr)
 
     print("[evidence] open author more-info page...")
     await open_author_more_info_from_card(session)
@@ -140,13 +159,16 @@ async def collect_current_video(session, keyword, candidate_dict, seen, recordin
     profile_path = os.path.join(SCREENSHOT_DIR, f"profile_info_{slug}_0.png")
     if await capture_single_with_adb_fallback(session, profile_path, f"profile_info_{slug}"):
         record.screenshots.append(profile_path)
-        profile_ocr = local_ocr_image(profile_path)
-        print(f"[ocr] profile info items={len(profile_ocr)}")
-        record.profile_info["raw_ocr"] = profile_ocr
-        fill_profile_fields_from_ocr(record.profile_info, profile_ocr)
-        if not record.profile_info.get("name"):
-            record.profile_info["name"] = record.video_info.get("blogger_name", "")
-        fill_video_channel_id_from_profile(record.video_info, record.profile_info)
+        if realtime_ocr:
+            profile_ocr = local_ocr_image(profile_path)
+            print(f"[ocr] profile info items={len(profile_ocr)}")
+            record.profile_info["raw_ocr"] = profile_ocr
+            fill_profile_fields_from_ocr(record.profile_info, profile_ocr)
+            if not record.profile_info.get("name"):
+                record.profile_info["name"] = record.video_info.get("blogger_name", "")
+            fill_video_channel_id_from_profile(record.video_info, record.profile_info)
+        else:
+            print("[ocr] profile info OCR deferred to offline batch")
 
     fp = candidate_dict.get("fingerprint", "")
     if fp:
@@ -283,12 +305,15 @@ async def copy_video_link(session, slug: str = "") -> str:
     share_path = os.path.join(SCREENSHOT_DIR, f"share_sheet_{tag}_0.png")
     copy_x, copy_y = COPY_LINK_X, COPY_LINK_Y
     if await capture_single_with_adb_fallback(session, share_path, f"share_sheet_{tag}"):
-        found = find_copy_link_button_from_image(share_path, tag)
-        if found:
-            copy_x, copy_y = found
-            print(f"[evidence] copy-link OCR target: ({copy_x}, {copy_y})")
+        if realtime_ocr_enabled():
+            found = find_copy_link_button_from_image(share_path, tag)
+            if found:
+                copy_x, copy_y = found
+                print(f"[evidence] copy-link OCR target: ({copy_x}, {copy_y})")
+            else:
+                print(f"[evidence] copy-link OCR target not found; using fixed ({copy_x}, {copy_y})")
         else:
-            print(f"[evidence] copy-link OCR target not found; using fixed ({copy_x}, {copy_y})")
+            print(f"[evidence] share copy OCR deferred; using fixed ({copy_x}, {copy_y})")
 
     await tap_copy_link_button(session, copy_x, copy_y)
 
@@ -441,6 +466,10 @@ def find_copy_link_button_from_image(image_path: str, tag: str) -> tuple[int, in
 
 async def collect_traffic_info(session, record: EvidenceRecord, slug: str, play_ocr=None) -> None:
     """Open the free-series traffic entry and collect target subject info."""
+    if not realtime_traffic_ocr_enabled():
+        print("[traffic] realtime traffic OCR disabled; skip traffic collection")
+        return
+
     marker_text, region_path, marker_point = await detect_traffic_marker(session, slug)
     if region_path:
         record.screenshots.append(region_path)
@@ -460,6 +489,15 @@ async def collect_traffic_info(session, record: EvidenceRecord, slug: str, play_
     print(f"[traffic] found marker: {marker_text}")
 
     await open_traffic_subject(session, marker_point)
+    traffic_popup_path = os.path.join(SCREENSHOT_DIR, f"traffic_popup_{slug}_0.png")
+    if await capture_single_with_adb_fallback(session, traffic_popup_path, f"traffic_popup_{slug}"):
+        record.screenshots.append(traffic_popup_path)
+
+    await open_traffic_first_episode(session)
+    traffic_landing_path = os.path.join(SCREENSHOT_DIR, f"traffic_landing_{slug}_0.png")
+    if await capture_single_with_adb_fallback(session, traffic_landing_path, f"traffic_landing_{slug}"):
+        record.screenshots.append(traffic_landing_path)
+
     await open_traffic_avatar_card(session)
 
     traffic_page_path = os.path.join(SCREENSHOT_DIR, f"traffic_page_{slug}_0.png")
@@ -539,7 +577,7 @@ print("[OK] AUTHOR_MORE_INFO_OPENED")
     await asyncio.sleep(0.8)
 
 
-async def capture_author_profile_card(session, record: EvidenceRecord, slug: str) -> None:
+async def capture_author_profile_card(session, record: EvidenceRecord, slug: str, do_ocr: bool = True) -> None:
     card_path = os.path.join(SCREENSHOT_DIR, f"profile_card_{slug}_0.png")
     if not await capture_single_with_adb_fallback(session, card_path, f"profile_card_{slug}"):
         return
@@ -561,6 +599,10 @@ async def capture_author_profile_card(session, record: EvidenceRecord, slug: str
         bottom,
     ):
         record.screenshots.append(region_path)
+
+    if not do_ocr:
+        print("[ocr] author card OCR deferred to offline batch")
+        return
 
     blogger_name = await extract_author_name_with_clipboard_fallback(
         session,
@@ -1343,13 +1385,24 @@ async def open_traffic_subject(session, marker_point: tuple[int, int] | None = N
         marker_x, marker_y = int(marker_point[0]), int(marker_point[1])
     else:
         marker_x, marker_y = scale_point(TRAFFIC_MARKER_X, TRAFFIC_MARKER_Y)
-    episode_x, episode_y = scale_point(TRAFFIC_FIRST_EPISODE_X, TRAFFIC_FIRST_EPISODE_Y)
     code = f"""
 import time
 from ascript.android import action
 
 action.click({marker_x}, {marker_y})
 time.sleep(1.5)
+print("[OK] TRAFFIC_POPUP_OPENED")
+"""
+    await run_on_phone(session, code, log_sec=5)
+    await asyncio.sleep(0.8)
+
+
+async def open_traffic_first_episode(session) -> None:
+    episode_x, episode_y = scale_point(TRAFFIC_FIRST_EPISODE_X, TRAFFIC_FIRST_EPISODE_Y)
+    code = f"""
+import time
+from ascript.android import action
+
 action.click({episode_x}, {episode_y})
 time.sleep(2.8)
 print("[OK] TRAFFIC_SUBJECT_OPENED")
